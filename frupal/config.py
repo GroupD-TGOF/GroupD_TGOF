@@ -20,7 +20,3 @@ class Config:
     def __del__(self):
         fout = open('out.pickle', 'wb')
         pickle.dump(self, file=fout)
-
-c = Config.load_config('out.pickle')
-print('c.x: ', c.x)
-del c

@@ -19,4 +19,3 @@ def menuscreen():
 	print("Start Game!".center(width))
 	for i in range(middle - 2):
 		print()
-	

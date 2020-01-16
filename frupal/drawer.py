@@ -9,7 +9,7 @@ class Drawer:
 	middle = height // 2
 
 	def __init__(self):
-        #x = os.get_terminal_size().columns
+        	#x = os.get_terminal_size().columns
 		#y = os.get_terminal_size().lines
 		x = 20
 		y = 20

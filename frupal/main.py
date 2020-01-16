@@ -3,7 +3,7 @@ import displaymgr
 import mapmgr
 
 def main():
-	print('\n')
+	mapmgr.printmap()
 	
 if __name__ == '__main__':
 	main()

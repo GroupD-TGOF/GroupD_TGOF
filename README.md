@@ -13,5 +13,6 @@ Group D's Members:
 - Adam LaFleur
 - Silas Marvin
 - Jonathan Sabini
-- 
+- Nicholas Grout 
+-
 

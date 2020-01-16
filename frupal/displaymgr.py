@@ -11,3 +11,11 @@ def titlescreen():
 	for i in range(middle):
 		print()
 	
+def menuscreen():
+	for i in range(middle - 2):
+		print()
+	print("The Game of Frugal!".center(width))
+	print("Start Game!".center(width))
+	for i in range(middle - 2):
+		print()
+	

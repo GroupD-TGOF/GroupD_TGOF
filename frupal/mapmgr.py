@@ -2,8 +2,10 @@ import crayons
 import os;
 
 def createmap():
-	x = os.get_terminal_size().columns
-	y = os.get_terminal_size().lines
+	#x = os.get_terminal_size().columns
+	#y = os.get_terminal_size().lines
+	x = 40
+	y = 30
 	a = ['L'] * y
 	for i in range(y):
 		a[i] = ['L'] * x
@@ -12,5 +14,5 @@ def createmap():
 def printmap(a):
 	for j in range(len(a)):
 		for k in range(len(a[j])):
-			print(crayons.green(a[j][k]), end='');
-		#print()
+			print(crayons.green(a[j][k]), end=' ');
+		print()

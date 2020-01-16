@@ -1,5 +1,5 @@
 import crayons
-import os;
+import os
 
 def createmap():
 	#x = os.get_terminal_size().columns

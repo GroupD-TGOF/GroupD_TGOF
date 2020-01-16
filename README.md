@@ -14,5 +14,5 @@ Group D's Members:
 - Silas Marvin
 - Jonathan Sabini
 - Nicholas Grout 
--
+- Matthew Cole
 

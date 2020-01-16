@@ -15,8 +15,7 @@ def createmap():
 def printmap(a):
 	margin = 40;
 	for j in range(len(a)):
-		for k in range(0, len(a[j])):
+		for k in range(len(a[j])):
 			print(crayons.green(a[j][k]), end = ' ')
-			margin += 2
 		print()
 	

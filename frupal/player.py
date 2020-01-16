@@ -1,4 +1,4 @@
-from .map import Direction
+from map import Direction
 
 
 class Player:

@@ -9,8 +9,6 @@ class Drawer:
 	middle = height // 2
 
 	def __init__(self):
-        #x = os.get_terminal_size().columns
-		#y = os.get_terminal_size().lines
 		x = 20
 		y = 20
 		self.a = ['T'] * y
@@ -23,16 +21,18 @@ class Drawer:
 		print(crayons.green("The Game of Frugal!".center(self.width)))
 		for i in range(self.middle):
 			print()
-		time.sleep(2)
-	
+		time.sleep(3)
+
 	def menuscreen(self):
-		for i in range(self.middle - 2):
+		for i in range(self.middle - 4):
 			print()
 		print(crayons.green("The Game of Frugal!".center(self.width)))
-		print("Start Game!".center(self.width))
-		for i in range(self.middle - 2):
+		print(crayons.yellow("1. Start Game!".center(self.width)))
+		print(crayons.yellow("2. Configuration?".center(self.width)))
+		print(crayons.yellow("3. Exit Game.".center(self.width)))
+		for i in range(self.middle - 5):
 			print()
-		time.sleep(2)
+		return int(input("Enter your choice: ".center(self.width)))
 
 	def printmap(self):
 		for j in range(len(self.a)):

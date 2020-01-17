@@ -4,9 +4,9 @@ from drawer import Drawer
 
 
 if __name__ == "__main__":
-    #config = Config.load_config()
-    #Make the player
-	#player = Player(energy=config.start_energy, money=config.start_money)
+        #config = Config.load_config()
+        #Make the player
+        #player = Player(energy=config.start_energy, money=config.start_money)
 	playing = True
 	drawer = Drawer()
 	drawer.titlescreen()

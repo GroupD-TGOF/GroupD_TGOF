@@ -9,11 +9,11 @@ class Drawer:
 	middle = height // 2
 
 	def __init__(self):
-		x = 20
-		y = 20
-		self.a = ['T'] * y
+		x = 30
+		y = 30
+		self.a = [' '] * y
 		for i in range(y):
-			self.a[i] = ['T'] * x
+			self.a[i] = [u"\u25A0"] * x
 		
 	def titlescreen(self):
 		for i in range(self.middle):

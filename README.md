@@ -2,9 +2,11 @@
 
 ## Branching (do before working!)
 
+> [Download github desktop](https://desktop.github.com/)
 * Switch to `inprogress` branch
 * Branch off this branch
 * Push while on your branch
+* Open a pull request, ask others to review
 
 ```bash
 git checkout -b [myname]-[mycomponent]

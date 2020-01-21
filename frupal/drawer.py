@@ -1,19 +1,13 @@
 import crayons
 import os
 import time
+from map import Map
 
 class Drawer:
-	a = None
-	width = os.get_terminal_size().columns
-	height = os.get_terminal_size().lines
-	middle = height // 2
-
 	def __init__(self):
-		x = 20
-		y = 20
-		self.a = [' '] * y
-		for i in range(y):
-			self.a[i] = [u"\u25A0"] * x
+		self.width = os.get_terminal_size().columns
+		self.height = os.get_terminal_size().lines
+		self.middle = self.height // 2
 		
 	def titlescreen(self):
 		for i in range(self.middle):
@@ -34,13 +28,39 @@ class Drawer:
 			print()
 		return int(input("Enter your choice: ".center(self.width)))
 		
-	def printstats(self):
-		for i in range(4):
+	def printstats(self, player):
+		for i in range(2):
 			print()
-		print(crayons.yellow("Energy: " + "          " + "Money: "))
+		print(crayons.yellow("Energy: " + str(player.getenergy()) + "          " + "Money: " + str(player.getmoney())))
 
-	def printmap(self):
-		for j in range(len(self.a)):
-			for k in range(len(self.a[j])):
-				print(crayons.green(self.a[j][k]), end = ' ')
+	def printmap(self, player, map):
+		b = player.getposition()
+		for j in range(map.get_columns()):
+			for k in range(map.get_rows()):
+				if(k == b[0] and j == b[1]):
+					print(crayons.red(u"\u25CB"), end = ' ')
+				else:
+					print(crayons.green(map.get_tile(j, k)), end = ' ')
 			print()
+	
+	def storemenu(self):
+		for i in range (self.height):
+			print();
+	
+	def movemenu(self, player):
+		direction = input("What choice do you want to make (north, east, south, west): ")
+		player.move(direction.lower())
+		
+	def gamemenu(self, player):
+		choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3:Quit): "))
+		if(choice == 1):
+			#Access Menu for Move
+			self.movemenu(player)
+			return True
+		if(choice == 2):
+			#Access Menu for Store	
+			self.storemenu()
+			return True
+		if(choice == 3):
+			return False
+		

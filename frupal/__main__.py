@@ -1,6 +1,7 @@
 from config import Config
 from player import Player
 from drawer import Drawer
+from map import Map
      
 def switchmenu(choice: int):
         if(choice == 1):
@@ -13,11 +14,12 @@ def switchmenu(choice: int):
 if __name__ == "__main__":
         #config = Config.load_config()
         #Make the player
-        #player = Player(energy=config.start_energy, money=config.start_money)
+	map = Map(10, 20)
+	player = Player(20, 20)
 	drawer = Drawer()
 	drawer.titlescreen()
 	playing = switchmenu(drawer.menuscreen())
 	while playing:
-		drawer.printmap()
-		drawer.printstats()
-		playing = False
+		drawer.printmap(player, map)
+		drawer.printstats(player)
+		playing = drawer.gamemenu(player)

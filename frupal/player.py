@@ -1,25 +1,37 @@
-from map import Direction
+import enum
+
+
+class Direction(enum.Enum):
+	NORTH = "north"
+	EAST = "east"
+	SOUTH = "south"
+	WEST = "west"
 
 
 class Player:
-    def __init__(self, energy: float, money: float):
-        """
-        Create a new player class
-        :param energy: the starting energy
-        :param money:  the starting money
-        """
-        self.energy = energy
-        self.money = money
-        self.position = (0, 0)
+	def __init__(self, energy, money):
+		self.energy = energy
+		self.money = money
+		self.position = [3, 5]
 
-    def move(self, direction: Direction):
-        """
-        Move the player in a specific direction
-        :param direction: Direction enum
-        :return:
-        """
-        if direction == Direction.NORTH:
-            self.position[0] += 1
-        #TODO implement other directions
-        pass
+	# Needs a case for the boundary wall?
+	def move(self, direction, map):
+		if direction == Direction.NORTH:
+			self.position[1] += -1
+		if (direction == "west"):
+			self.position[0] += -1
+		if (direction == "east"):
+			self.position[0] += 1
+		if (direction == "south"):
+			self.position[1] += 1
+		self.energy += -(map.get_req(self.position[0], self.position[1]))
+
+	def getenergy(self):
+		return self.energy
+
+	def getmoney(self):
+		return self.money
+
+	def getposition(self):
+		return self.position
 

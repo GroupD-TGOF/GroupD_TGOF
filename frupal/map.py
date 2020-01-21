@@ -1,30 +1,24 @@
 import enum
-
-
-class Direction(enum.Enum):
-    NORTH = 'north'
-    EAST = 'east'
-    SOUTH = 'south'
-    WEST = 'west'
+from .tiles import Tile
+from .player import Player
+from .config import Config
 
 
 class Map:
-    def __init__(self):
-        self.rows = []
+	#Needs map generator, basic format that fills map with default tile.
+	def __init__(self, x, y):
+		self.columns = x
+		self.rows = y
+		self.tiles = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
 
-    def get_row(self, n: int):
-        """
-        Get a specific row from the map
-        :param n: the row index to return
-        :return:
-        """
-        return self.rows[n]
+	def get_rows(self):
+		return self.rows
 
-    def get_tile(self, x: int, y: int):
-        """
-        Get a specific tile
-        :param x: the x coordinate
-        :param y: the y coordinate
-        :return:
-        """
-        return self.rows[x][y]
+	def get_columns(self):
+		return self.columns
+
+	def get_row(self, n):
+		return self.tiles[n]
+
+	def get_tile(self, x, y):
+		return self.tiles[y][x]

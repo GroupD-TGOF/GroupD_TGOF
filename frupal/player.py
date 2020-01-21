@@ -1,4 +1,4 @@
-from map import Direction
+from .map import Direction
 
 
 class Player:
@@ -18,13 +18,13 @@ class Player:
 		if (direction == "south"):
 			self.position[1] += 1
 		self.energy += -(map.get_req(self.position[0], self.position[1]));
-		
+
 	def getenergy(self):
 		return self.energy
-	
+
 	def getmoney(self):
 		return self.money
-		
+
 	def getposition(self):
 		return self.position
 

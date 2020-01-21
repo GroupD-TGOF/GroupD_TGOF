@@ -1,7 +1,8 @@
 import crayons
 import os
 import time
-from map import Map
+from .map import Map
+
 
 class Drawer:
 	def __init__(self):

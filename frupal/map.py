@@ -1,12 +1,13 @@
 import enum
-from tiles import Tile
+from .tiles import Tile
+from .player import Player
 
 
 class Direction(enum.Enum):
-    NORTH = "north"
-    EAST = "east"
-    SOUTH = "south"
-    WEST = "west"
+	NORTH = "north"
+	EAST = "east"
+	SOUTH = "south"
+	WEST = "west"
 
 
 class Map:
@@ -15,11 +16,11 @@ class Map:
 		self.columns = x
 		self.rows = y
 		self.a = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
-		self.a[0][0].seen_set(True);
-	
+		self.a[0][0].seen_set(True)
+
 	def get_rows(self):
 		return self.rows
-	
+
 	def get_columns(self):
 		return self.columns
 
@@ -28,9 +29,9 @@ class Map:
 
 	def get_tile(self, x, y):
 		return self.a[y][x].get_name()
-		
+
 	def get_req(self, x, y):
 		return self.a[y][x].get_energy_req()
-		
+
 	def get_seen(self, x, y):
 		return self.a[y][x].seen_status()

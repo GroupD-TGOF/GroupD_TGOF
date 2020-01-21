@@ -1,6 +1,7 @@
 import enum
 from .tiles import Tile
 from .player import Player
+from .config import Config
 
 
 class Direction(enum.Enum):
@@ -15,8 +16,8 @@ class Map:
 	def __init__(self, x, y):
 		self.columns = x
 		self.rows = y
-		self.a = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
-		self.a[0][0].seen_set(True)
+		self.tiles = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
+		self.tiles[0][0].seen_set(True)
 
 	def get_rows(self):
 		return self.rows
@@ -25,13 +26,13 @@ class Map:
 		return self.columns
 
 	def get_row(self, n):
-		return self.a[n]
+		return self.tiles[n]
 
 	def get_tile(self, x, y):
-		return self.a[y][x].get_name()
+		return self.tiles[y][x].get_name()
 
 	def get_req(self, x, y):
-		return self.a[y][x].get_energy_req()
+		return self.tiles[y][x].get_energy_req()
 
 	def get_seen(self, x, y):
-		return self.a[y][x].seen_status()
+		return self.tiles[y][x].seen_status()

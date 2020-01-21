@@ -1,4 +1,5 @@
 import enum
+from tiles import Tile
 
 
 class Direction(enum.Enum):
@@ -9,22 +10,27 @@ class Direction(enum.Enum):
 
 
 class Map:
+	#Needs map generator, basic format that fills map with default tile.
 	def __init__(self, x, y):
-		self.y = y
-		self.x = x
-		self.a = [' '] * self.y
-		for i in range(self.y):
-			#temp fill map with character for tile
-			self.a[i] = [u"\u25A0"] * self.x
+		self.columns = x
+		self.rows = y
+		self.a = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
+		self.a[0][0].seen_set(True);
 	
 	def get_rows(self):
-		return self.y
+		return self.rows
 	
 	def get_columns(self):
-		return self.x
+		return self.columns
 
 	def get_row(self, n):
 		return self.a[n]
 
 	def get_tile(self, x, y):
-		return self.a[y][x]
+		return self.a[y][x].get_name()
+		
+	def get_req(self, x, y):
+		return self.a[y][x].get_energy_req()
+		
+	def get_seen(self, x, y):
+		return self.a[y][x].seen_status()

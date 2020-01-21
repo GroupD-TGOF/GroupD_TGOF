@@ -40,22 +40,25 @@ class Drawer:
 				if(k == b[0] and j == b[1]):
 					print(crayons.red(u"\u25CB"), end = ' ')
 				else:
-					print(crayons.green(map.get_tile(j, k)), end = ' ')
+					if(map.get_seen(j, k) == True):
+						print(crayons.green(map.get_tile(j, k)), end = ' ')
+					else:
+						print(' ', end = ' ');
 			print()
 	
 	def storemenu(self):
 		for i in range (self.height):
 			print();
 	
-	def movemenu(self, player):
+	def movemenu(self, player, map):
 		direction = input("What choice do you want to make (north, east, south, west): ")
-		player.move(direction.lower())
+		player.move(direction.lower(), map)
 		
-	def gamemenu(self, player):
+	def gamemenu(self, player, map):
 		choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3:Quit): "))
 		if(choice == 1):
 			#Access Menu for Move
-			self.movemenu(player)
+			self.movemenu(player, map)
 			return True
 		if(choice == 2):
 			#Access Menu for Store	

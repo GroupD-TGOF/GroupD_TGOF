@@ -22,4 +22,4 @@ if __name__ == "__main__":
 	while playing:
 		drawer.printmap(player, map)
 		drawer.printstats(player)
-		playing = drawer.gamemenu(player)
+		playing = drawer.gamemenu(player, map)

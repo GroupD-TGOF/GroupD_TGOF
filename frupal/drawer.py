@@ -1,6 +1,7 @@
 import crayons
 import os
 import time
+from .player import Direction
 from .map import Map
 
 
@@ -42,14 +43,14 @@ class Drawer:
 					print(crayons.red(u"\u25CB"), end = ' ')
 				else:
 					if(map.get_seen(j, k) == True):
-						print(crayons.green(map.get_tile(j, k)), end = ' ')
+						print(crayons.green(map.get_tile(j, k).name), end = ' ')
 					else:
-						print(' ', end = ' ');
+						print(' ', end = ' ')
 			print()
 	
 	def storemenu(self):
 		for i in range (self.height):
-			print();
+			print()
 	
 	def movemenu(self, player, map):
 		direction = input("What choice do you want to make (north, east, south, west): ")

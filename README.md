@@ -1,5 +1,15 @@
 # GroupD_TGOF
 
+## Branching (do before working!)
+
+* Switch to `inprogress` branch
+* Branch off this branch
+* Push while on your branch
+
+```bash
+git checkout -b [myname]-[mycomponent]
+```
+
 ## Setup
 
 ```bash

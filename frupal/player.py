@@ -1,4 +1,11 @@
-from .map import Direction
+import enum
+
+
+class Direction(enum.Enum):
+	NORTH = "north"
+	EAST = "east"
+	SOUTH = "south"
+	WEST = "west"
 
 
 class Player:
@@ -9,7 +16,7 @@ class Player:
 
 	# Needs a case for the boundary wall?
 	def move(self, direction, map):
-		if (direction == "north"):
+		if direction == Direction.NORTH:
 			self.position[1] += -1
 		if (direction == "west"):
 			self.position[0] += -1
@@ -17,7 +24,7 @@ class Player:
 			self.position[0] += 1
 		if (direction == "south"):
 			self.position[1] += 1
-		self.energy += -(map.get_req(self.position[0], self.position[1]));
+		self.energy += -(map.get_req(self.position[0], self.position[1]))
 
 	def getenergy(self):
 		return self.energy

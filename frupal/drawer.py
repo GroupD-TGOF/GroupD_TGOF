@@ -9,8 +9,8 @@ class Drawer:
 	middle = height // 2
 
 	def __init__(self):
-		x = 30
-		y = 30
+		x = 20
+		y = 20
 		self.a = [' '] * y
 		for i in range(y):
 			self.a[i] = [u"\u25A0"] * x
@@ -33,6 +33,11 @@ class Drawer:
 		for i in range(self.middle - 5):
 			print()
 		return int(input("Enter your choice: ".center(self.width)))
+		
+	def printstats(self):
+		for i in range(4):
+			print()
+		print(crayons.yellow("Energy: " + "          " + "Money: "))
 
 	def printmap(self):
 		for j in range(len(self.a)):

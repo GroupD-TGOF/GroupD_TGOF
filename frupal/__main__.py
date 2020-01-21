@@ -18,5 +18,6 @@ if __name__ == "__main__":
 	drawer.titlescreen()
 	playing = switchmenu(drawer.menuscreen())
 	while playing:
-                drawer.printmap()
-                playing = False
+		drawer.printmap()
+		drawer.printstats()
+		playing = False

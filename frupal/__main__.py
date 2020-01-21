@@ -15,7 +15,7 @@ def switchmenu(choice: int):
 		return False
 
 if __name__ == "__main__":
-	config = Config.load_config()
+	#config = Config.load_config()
 	#Make the player
 	map = Map(10, 20)
 	player = Player(20, 20)

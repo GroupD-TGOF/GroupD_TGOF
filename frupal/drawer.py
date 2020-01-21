@@ -42,8 +42,8 @@ class Drawer:
 				if(k == b[0] and j == b[1]):
 					print(crayons.red(u"\u25CB"), end = ' ')
 				else:
-					if(map.get_seen(j, k) == True):
-						print(crayons.green(map.get_tile(j, k).name), end = ' ')
+					if(map.get_tile(j, k).seen_status() == True):
+						print(crayons.green(map.get_tile(j, k).get_name()), end = ' ')
 					else:
 						print(' ', end = ' ')
 			print()

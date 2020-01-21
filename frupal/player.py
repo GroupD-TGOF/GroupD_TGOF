@@ -16,7 +16,7 @@ class Player:
 
 	# Needs a case for the boundary wall?
 	def move(self, direction, map):
-		if direction == Direction.NORTH:
+		if (direction == "north"):
 			self.position[1] += -1
 		if (direction == "west"):
 			self.position[0] += -1
@@ -24,7 +24,7 @@ class Player:
 			self.position[0] += 1
 		if (direction == "south"):
 			self.position[1] += 1
-		self.energy += -(map.get_req(self.position[0], self.position[1]))
+		self.energy += -(map.get_tile(self.position[0], self.position[1]).get_energy_req())
 
 	def getenergy(self):
 		return self.energy

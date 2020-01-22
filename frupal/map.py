@@ -22,3 +22,6 @@ class Map:
 
 	def get_tile(self, x, y):
 		return self.tiles[y][x]
+
+	def get_size(self):
+                return [self.columns, self.rows]

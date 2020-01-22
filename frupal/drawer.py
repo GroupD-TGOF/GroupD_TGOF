@@ -36,17 +36,24 @@ class Drawer:
 		print(crayons.yellow("Energy: " + str(player.getenergy()) + "          " + "Money: " + str(player.getmoney())))
 
 	def printmap(self, player, map):
-		b = player.getposition()
-		for j in range(map.get_columns()):
-			for k in range(map.get_rows()):
-				if(k == b[0] and j == b[1]):
-					print(crayons.red(u"\u25CB"), end = ' ')
-				else:
-					if(map.get_tile(j, k).seen_status() == True):
-						print(crayons.green(map.get_tile(j, k).get_name()), end = ' ')
-					else:
-						print(' ', end = ' ')
-			print()
+                b = player.getposition()
+                size = map.get_size()
+                spacer = self.height - size[0]
+                spacer = spacer // 2
+                for i in range(spacer):
+                        print()
+                for j in range(map.get_columns()):
+                        for k in range(map.get_rows()):
+                                if(k == b[0] and j == b[1]):
+                                        print(crayons.red(u"\u25CB"), end = ' ')
+                                else:
+                                        if(map.get_tile(j, k).seen_status() == True):
+                                                print(crayons.green(map.get_tile(j, k).get_name()), end = ' ')
+                                        else:
+                                                print(' ', end = ' ')
+                        print()
+                for i in range(spacer):
+                        print()
 	
 	def storemenu(self):
 		for i in range (self.height):
@@ -57,7 +64,7 @@ class Drawer:
 		player.move(direction.lower(), map)
 		
 	def gamemenu(self, player, map):
-		choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3:Quit): "))
+		choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))
 		if(choice == 1):
 			#Access Menu for Move
 			self.movemenu(player, map)

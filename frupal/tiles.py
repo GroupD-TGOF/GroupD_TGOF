@@ -1,8 +1,11 @@
 
 class Tile:
-	def __init__(self, title, energy_req):
+	def __init__(self, title, energy_req, debug):
 		self.title = title
-		self.is_seen = True
+		if debug:
+			self.is_seen = True
+		else:
+			self.is_seen = False
 		self.energy_req = energy_req
 
 	def get_name(self):

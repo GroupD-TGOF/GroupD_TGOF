@@ -2,36 +2,42 @@ import enum
 
 
 class Direction(enum.Enum):
-	NORTH = "north"
-	EAST = "east"
-	SOUTH = "south"
-	WEST = "west"
+    NORTH = "North"
+    EAST = "East"
+    SOUTH = "South"
+    WEST = "West"
+    NULL = "Wrong Direction"
 
 
 class Player:
-	def __init__(self, energy, money):
-		self.energy = energy
-		self.money = money
-		self.position = [3, 5]
+    def __init__(self, energy, money, debug):
+        if not debug:
+            self.energy = energy
+            self.money = money
+        else:
+            self.energy = 100
+            self.money = 100
 
-	# Needs a case for the boundary wall?
-	def move(self, direction, map):
-		if (direction == "north"):
-			self.position[1] += -1
-		if (direction == "west"):
-			self.position[0] += -1
-		if (direction == "east"):
-			self.position[0] += 1
-		if (direction == "south"):
-			self.position[1] += 1
-		self.energy += -(map.get_tile(self.position[0], self.position[1]).get_energy_req())
+        self.position = [0, 0]
 
-	def getenergy(self):
-		return self.energy
+    # Needs a case for the boundary wall?
+    def move(self, direction, game_map):
+        if self.energy > 0 and direction != Direction.NULL:
+            if direction == Direction.NORTH:
+                self.position[1] += -1
+            elif direction == Direction.WEST:
+                self.position[0] += -1
+            elif direction == Direction.EAST:
+                self.position[0] += 1
+            elif direction == Direction.SOUTH:
+                self.position[1] += 1
+            self.energy += -(game_map.get_tile(self.position[1], self.position[0]).get_energy_req())
 
-	def getmoney(self):
-		return self.money
+    def get_energy(self):
+        return self.energy
 
-	def getposition(self):
-		return self.position
+    def get_money(self):
+        return self.money
 
+    def get_position(self):
+        return self.position

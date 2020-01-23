@@ -28,5 +28,3 @@ if __name__ == "__main__":
         drawer.print_map(player, game_map)
         drawer.print_stats(player)
         playing = drawer.game_menu(player, game_map)
-        if player.get_energy() == 0 and player.get_money() == 0:
-            playing = False

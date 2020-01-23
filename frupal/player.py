@@ -9,22 +9,25 @@ class Direction(enum.Enum):
 
 
 class Player:
-	def __init__(self, energy, money):
+	def __init__(self, energy, money, map):
 		self.energy = energy
 		self.money = money
-		self.position = [3, 5]
+		self.position = [0,0]
+		self.discover(map)
 
 	# Needs a case for the boundary wall?
 	def move(self, direction, map):
-		if (direction == "north"):
-			self.position[1] += -1
-		if (direction == "west"):
-			self.position[0] += -1
-		if (direction == "east"):
-			self.position[0] += 1
-		if (direction == "south"):
-			self.position[1] += 1
-		self.energy += -(map.get_tile(self.position[0], self.position[1]).get_energy_req())
+                if(self.energy > 0):
+                        if (direction == "north"):
+                                self.position[1] += -1
+                        if (direction == "west"):
+                                self.position[0] += -1
+                        if (direction == "east"):
+                                self.position[0] += 1
+                        if (direction == "south"):
+                                self.position[1] += 1
+                        self.energy += -(map.get_tile(self.position[1], self.position[0]).get_energy_req())
+
 
 	def getenergy(self):
 		return self.energy

@@ -2,7 +2,7 @@
 class Tile:
 	def __init__(self, title, energy_req):
 		self.title = title
-		self.is_seen = True
+		self.is_seen = False
 		self.energy_req = energy_req
 
 	def get_name(self):

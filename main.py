@@ -18,7 +18,7 @@ if __name__ == "__main__":
 	#config = Config.load_config()
 	#Make the player
 	map = Map(10, 20)
-	player = Player(20, 20)
+	player = Player(20, 20, map)
 	drawer = Drawer()
 	drawer.titlescreen()
 	playing = switchmenu(drawer.menuscreen())

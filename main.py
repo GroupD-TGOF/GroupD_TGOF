@@ -16,10 +16,11 @@ def switch_menu(choice: int):
 
 
 if __name__ == "__main__":
+    debug = True;
     # config = Config.load_config()
     # Make the player
-    game_map = Map(10, 20)
-    player = Player(20, 20, game_map)
+    game_map = Map(10, 20, debug)
+    player = Player(20, 20, debug)
     drawer = Drawer()
     drawer.title_screen()
     playing = switch_menu(drawer.menu_screen())

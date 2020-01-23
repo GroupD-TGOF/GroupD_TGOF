@@ -16,10 +16,11 @@ def switch_menu(choice: int):
 
 
 if __name__ == "__main__":
+    debug = True;
     # config = Config.load_config()
     # Make the player
-    game_map = Map(10, 20)
-    player = Player(20, 20, game_map)
+    game_map = Map(10, 20, debug)
+    player = Player(20, 20, debug)
     drawer = Drawer()
     drawer.title_screen()
     playing = switch_menu(drawer.menu_screen())
@@ -27,3 +28,5 @@ if __name__ == "__main__":
         drawer.print_map(player, game_map)
         drawer.print_stats(player)
         playing = drawer.game_menu(player, game_map)
+        if player.get_energy() == 0 and player.get_money() == 0:
+            playing = False

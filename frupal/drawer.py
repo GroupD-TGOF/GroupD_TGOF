@@ -52,18 +52,30 @@ class Drawer:
         for i in range(spacer):
             print()
 
-    def store_menu(self):
-        for i in range(self.height):
-            print()
-
-    def move_menu(self, player, game_map):
-        direction = input("What choice do you want to make (north, east, south, west): ")
-        player.move(direction.lower(), game_map)
-
     def print_stats(self, player):
         for i in range(2):
             print()
         print(crayons.yellow("Energy: " + str(player.get_energy()) + "          " + "Money: " + str(player.get_money())))
+
+    # To move to user input module
+    def move_menu(self, player, game_map):
+        dir_inp = input("What choice do you want to make (north, east, south, west): ")
+        dir_inp = dir_inp.lower()
+        if dir_inp == "north":
+            direction = Direction.NORTH
+        elif dir_inp == "west":
+            direction = Direction.WEST
+        elif dir_inp == "east":
+            direction = Direction.EAST
+        elif dir_inp == "south":
+            direction = Direction.SOUTH
+        else:
+            direction = Direction.NULL
+        player.move(direction, game_map)
+
+    def store_menu(self):
+        for i in range(self.height):
+            print()
 
     def game_menu(self, player, game_map):
         choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))

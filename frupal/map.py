@@ -6,10 +6,10 @@ from .config import Config
 
 class Map:
     # Needs map generator, basic format that fills map with default tile.
-    def __init__(self, x, y):
+    def __init__(self, x, y, debug):
         self.columns = x
         self.rows = y
-        self.tiles = [[Tile(u"\u25A0", 1) for j in range(self.columns)] for i in range(self.rows)]
+        self.tiles = [[Tile(u"\u25A0", 1, debug) for j in range(self.columns)] for i in range(self.rows)]
 
     def get_rows(self):
         return self.rows

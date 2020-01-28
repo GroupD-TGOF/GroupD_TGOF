@@ -8,7 +8,7 @@ def test_map_1():
     print(len(m._array[0]))
     m[2][1] = Tile('B', 1, False)
     print(m)
-    print(m.get_size())
+    print(m.get_size)
 
 def test_map_construction():
     m = Map(5, 4)
@@ -43,8 +43,8 @@ tile, tile, tile, tile, tile,
 def test_map_get_size():
     expected = (5, 4)
     m = Map(*expected) # same as Map(5, 4)
-    print(m.get_size())
-    assert m.get_size() == expected
+    print(m.get_size)
+    assert m.get_size == expected
 
 @pytest.mark.skip('Skipping until config is implemented')
 def test_map_generation():

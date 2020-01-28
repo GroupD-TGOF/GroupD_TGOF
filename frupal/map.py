@@ -21,21 +21,23 @@ class Map:
         :returns: a generated map
         """
         # TODO(Nick) implement map generation once config is finished
-        #new_map = Map(config.rows, config.columns)
+        # new_map = Map(config.rows, config.columns)
         new_map = Map(5, 3)
         # Make 1d array of all tiles (easier for tile assignment)
         tiles = []
         for col in new_map._array:
             tiles += col
         # BUG: when we have multiple tile types, they could overwrite each other
+        '''
         for i in range(config.boulder_count):
             random_index = randint(0, len(map_arr) - 1)
             tiles[random_index] = BoulderTile()
             # ETC
         for i, tile in enumerate(tiles):
             print(i, tile.title + ', ')
+        '''
 
-    def __init__(self, rows: int, columns: int):
+    def __init__(self, rows: int, columns: int, debug: bool):
         """
         :param rows: the x dimension of the map
         :param columns: the y dimension of the map
@@ -43,7 +45,7 @@ class Map:
         """
         self._array = [[] for i in range(rows)]
         for i in range(len(self._array)):
-            self._array[i] = [Tile('tile', 1, False) for i in range(columns)]
+            self._array[i] = [Tile('tile', 1, debug) for i in range(columns)]
 
     def __getitem__(self, row: int):
         """
@@ -63,10 +65,10 @@ class Map:
             return_str += "\n"
         return return_str
 
+    @property
     def get_size(self):
         """
         Returns (ROWS, COLUMNS)
         :returns: the dimensions of the 2D array as a tuple. 
         """
-        return (len(self._array), len(self._array[0]))
-
+        return len(self._array), len(self._array[0])

@@ -34,18 +34,20 @@ class Drawer:
 
     def print_map(self, player, game_map):
         b = player.get_position()
-        size = game_map.get_size()
+        size = game_map.get_size
         spacer = self.height - size[0]
         spacer = spacer // 2
+        map_size = game_map.get_size
         for i in range(spacer):
             print()
-        for j in range(game_map.get_columns()):
-            for k in range(game_map.get_rows()):
+        for j in range(map_size[0]):
+            for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
-                    print(crayons.red(u"\u25CB"), end=' ')
+                    print(crayons.red('player'), end=' ')
                 else:
-                    if game_map.get_tile(j, k).seen_status():
-                        print(crayons.green(game_map.get_tile(j, k).get_name()), end=' ')
+
+                    if game_map[j][k].seen_status():
+                        print(game_map[j][k].get_name(), end=' ')
                     else:
                         print(' ', end=' ')
             print()

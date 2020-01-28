@@ -31,7 +31,7 @@ class Player:
                 self.position[0] += 1
             elif direction == Direction.SOUTH:
                 self.position[1] += 1
-            self.energy += -(game_map.get_tile(self.position[1], self.position[0]).get_energy_req())
+            self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req())
 
     def get_energy(self):
         return self.energy

@@ -2,7 +2,6 @@ import crayons
 import os
 import time
 from .player import Direction
-from .map import Map
 
 
 class Drawer:
@@ -43,11 +42,12 @@ class Drawer:
         for j in range(map_size[0]):
             for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
-                    print(crayons.red('player'), end=' ')
+                    print(crayons.red(u"\u25CF"), end=' ')
                 else:
 
                     if game_map[j][k].seen_status():
-                        print(game_map[j][k].get_name(), end=' ')
+                        if game_map[j][k].get_name() == 'tile':
+                            print(crayons.green(u"\u25A0"), end=' ')
                     else:
                         print(' ', end=' ')
             print()

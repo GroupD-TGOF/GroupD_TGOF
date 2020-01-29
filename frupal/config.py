@@ -119,4 +119,4 @@ class Config:
     def printSettings(self):
         print("Creating " + size(inputSize).name + " " + style(difficulty).name + "...")
         print(self.map['trees'] + " trees, " + self.map['boulder'] + " boulders, " + self.map['water'] + " sqrft of water, and " + self.map['mud'] + " sqrft of mud.")
-        
+        print("Creating player with " + self.player['energy'] + " starting energy and " + self.player['money'] + " starting Ethereum.")

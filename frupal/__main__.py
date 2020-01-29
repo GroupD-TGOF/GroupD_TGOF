@@ -16,8 +16,8 @@ def switch_menu(choice: int):
 
 
 if __name__ == "__main__":
-    debug = True;
-    # config = Config.load_config()
+    debug = True
+    config = Config.load_config()
     # Make the player
     game_map = Map(10, 20, debug)
     player = Player(20, 20, debug)

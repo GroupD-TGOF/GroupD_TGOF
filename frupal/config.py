@@ -22,7 +22,6 @@ class Config:
     difficulty: 0
 
     def __init__(self):
-
         self.map = {
             'total': 0,
             'height': 0,

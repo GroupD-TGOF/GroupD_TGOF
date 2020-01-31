@@ -110,7 +110,7 @@ class Config:
             print("Must be 1-100")
             self.player['money'] = int(input("Input your player's starting money(1-100): "))
 
-    def print_settings(self):
+    def print_config(self):
         import enum
 
         class Size(enum.Enum):  # Creates enum classes for print_settings
@@ -139,9 +139,9 @@ class Config:
               self.map['boulder'], "boulders,",
               self.map['water'], "sqrft of water, and",
               self.map['mud'], "sqrft of mud....")
-        print(
+        print()
         print("Good Luck!")
 
 
 config = Config()
-config.print_settings()
+config.print_config()

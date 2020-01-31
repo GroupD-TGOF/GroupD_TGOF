@@ -35,70 +35,70 @@ class Config:
 
     def map_size(self):
         print("Frupal Settings:")
-        print("Set your game map size:")
-        print("1. Small (10 x 10)")                                         # Prints size options in ascending order
+        print("Set your game map size:")                               # Prints size options in ascending order
+        print("1. Small (10 x 10)")
         print("2. Medium (20 x 20)")
-        print("3. Large (20 x 40)")           # User inputs size choice
-        while self.map['height'] == 0:                               # Ensures proper input
+        print("3. Large (20 x 40)")
+        while self.map['height'] == 0:                                 # User inputs size choice (H X W)
             self.input_size = int(input("Enter selection (1-3): "))
-            if self.input_size == 1:
+            if self.input_size == 1:                                   # Small 10 x 10
                 self.map["height"] = 10
                 self.map["width"] = 10
-            elif self.input_size == 2:
+            elif self.input_size == 2:                                 # Medium 20 x 20
                 self.map["height"] = 20
                 self.map["width"] = 20
-            elif self.input_size == 3:
+            elif self.input_size == 3:                                 # Large 20 x 40
                 self.map["height"] = 20
                 self.map["width"] = 40
-            else:
+            else:                                                      # Bad input
                 print("Must be 1, 2, or 3")
         self.map['total'] = self.map['height'] * self.map['width']
 
     def map_style(self):
-        print('Select your game style (Ranked by difficulty)')
-        print('1. Park')                                             # Prints map style options ranked by difficulty
+        print('Select your game style (Ranked by difficulty)')         # Prints map style options ranked by difficulty
+        print('1. Park')
         print('2. Forest')
         print('3. Rocky Forest')
         print('4. Rain Forest')
-        print('5. Marsh')
-        print('6. Rocky Swamp')
+        print('5. Bog')
+        print('6. Stony Swamp')
         print('7. Quarry')
-        while self.map['trees'] == 0:                                    # User inputs difficulty choice
+        while self.map['trees'] == 0:                                  # User inputs difficulty choice
             self.input_style = int(input('Enter Selection (1-7): '))
-            if self.input_style == 1:
+            if self.input_style == 1:                                  # Park: trees 20%, boulders 5%, water 5%, mud 0%
                 self.map['trees'] = int(self.map['total'] / 5)
                 self.map['boulder'] = int(self.map['total'] / 20)
                 self.map['water'] = int(self.map['total'] / 20)
-            elif self.input_style == 2:
+            elif self.input_style == 2:                               # Forest: trees 50%, boulders 5%, water 5%, mud 0%
                 self.map['trees'] = int(self.map['total'] / 2)
                 self.map['boulder'] = int(self.map['total'] / 20)
                 self.map['water'] = int(self.map['total'] / 20)
-            elif self.input_style == 3:
+            elif self.input_style == 3:                         # RockyForest: trees 50%, boulders 20%, water 5%, mud 0%
                 self.map['trees'] = int(self.map['total'] / 2)
                 self.map['boulder'] = int(self.map['total'] / 5)
                 self.map['water'] = int(self.map['total'] / 20)
-            elif self.input_style == 4:
+            elif self.input_style == 4:                         # RainForest: trees 50%, boulders 5%, water 10%, mud 10%
                 self.map['trees'] = int(self.map['total'] / 2)
                 self.map['boulder'] = int(self.map['total'] / 20)
                 self.map['water'] = int(self.map['total'] / 10)
                 self.map['mud'] = int(self.map['total'] / 10)
-            elif self.input_style == 5:
+            elif self.input_style == 5:                                # Bog: trees 20%, boulders 5%, water 20%, mud 50%
                 self.map['trees'] = int(self.map['total'] / 5)
                 self.map['boulder'] = int(self.map['total'] / 20)
                 self.map['water'] = int(self.map['total'] / 6)
                 self.map['mud'] = int(self.map['total'] / 2)
-            elif self.input_style == 6:
+            elif self.input_style == 6:                        # StonySwamp: trees 10%, boulders 20%, water 20%, mud 50%
                 self.map['trees'] = int(self.map['total'] / 10)
                 self.map['boulder'] = int(self.map['total'] / 6)
                 self.map['water'] = int(self.map['total'] / 6)
                 self.map['mud'] = int(self.map['total'] / 2)
-            elif self.input_style == 7:
+            elif self.input_style == 7:                              # Quarry: trees 5%, boulders 33%, water 10%, mud 5%
                 self.map['trees'] = int(self.map['total'] / 20)
                 self.map['boulder'] = int(self.map['total'] / 6)
                 self.map['water'] = int(self.map['total'] / 20)
                 self.map['mud'] = int(self.map['total'] / 20)
-            else:  # default, could also just omit condition or 'if True'
-                print("Must be 1-7")                                     # Ensures proper input
+            else:                                                    # default, for bad input
+                print("Must be 1-7")
 
     def player_stats(self):
         self.player['energy'] = int(input("Input your player's starting energy(1-100): "))
@@ -123,20 +123,23 @@ class Config:
             Forest = 2
             Rocky_Forest = 3
             Rain_Forest = 4
-            Marsh = 5
-            Rocky_Swamp = 6
+            Bog = 5
+            Stony_Swamp = 6
             Quarry = 7
+
         print()
-        print("Creating a",                                           # Prints map size and style
+        print("Loading your player's stats:")  # Prints user starting energy and money
+        print(self.player['energy'], "starting energy and",
+              self.player['money'], "starting Ethereum.")
+        print()
+        print("Transporting your player to a",                                           # Prints map size and style
               Size(self.input_size).name,
               Style(self.input_style).name, ":")
         print(self.map['trees'], "trees,",                     # Prints quantity of each tile user can expect to find
               self.map['boulder'], "boulders,",
               self.map['water'], "sqrft of water, and",
               self.map['mud'], "sqrft of mud....")
-        print("Creating your player:")  # Prints user starting energy and money
-        print(self.player['energy'], "starting energy and",
-              self.player['money'], "starting Ethereum.")
+        print(
         print("Good Luck!")
 
 

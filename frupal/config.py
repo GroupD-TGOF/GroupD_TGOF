@@ -1,4 +1,4 @@
-
+import json
 
 class Config:
     static = None
@@ -29,9 +29,40 @@ class Config:
             'money': 0
         }
 
+        if self.load_config():
+            self.print_config()
+            self.input_config = input("Do you want to use your previous settings? (y or n): ")
+            while self.input_config != 'y' or self.input_config != 'n':
+                self.input_config = input("Do you want to use your previous settings? (y or n): ")
+            if self.input_config == 'y':
+                return
+
         self.map_size()
         self.map_style()
         self.player_stats()
+        self.create_config()
+        self.print_config()
+
+    def create_config(self):
+        total = {
+            "player": self.player,
+            "map": self.map
+        }
+        f = open("config.txt", "w")
+        f.write(json.dumps(total))
+        f.close()
+
+    def load_config(self):
+        try:
+            with open("config.txt") as file:
+                total = file.read()
+                total = json.loads(total)
+                self.player = total["player"]
+                self.map = total["map"]
+                return True
+        except FileNotFoundError:
+            print("This is your first time playing! Let's set up a map:")
+            return False
 
     def map_size(self):
         print("Frupal Settings:")

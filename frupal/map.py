@@ -1,3 +1,7 @@
+"""
+Nick Grout 1/23/2020
+"""
+from random import randint
 import enum
 from .tiles import Tile
 from .player import Player
@@ -5,23 +9,65 @@ from .config import Config
 
 
 class Map:
-    # Needs map generator, basic format that fills map with default tile.
-    def __init__(self, x, y, debug):
-        self.columns = x
-        self.rows = y
-        self.tiles = [[Tile(u"\u25A0", 1, debug) for j in range(self.columns)] for i in range(self.rows)]
+    """
+    This is the main map class. It constructs and manages the 2d array of
+    tiles
+    """
 
-    def get_rows(self):
-        return self.rows
+    @staticmethod
+    def generate_map(config: Config):
+        """
+        Generate a new map from the given config, with randomly placed tiles according to the
+        :returns: a generated map
+        """
+        # TODO(Nick) implement map generation once config is finished
+        # new_map = Map(config.rows, config.columns)
+        new_map = Map(5, 3)
+        # Make 1d array of all tiles (easier for tile assignment)
+        tiles = []
+        for col in new_map._array:
+            tiles += col
+        # BUG: when we have multiple tile types, they could overwrite each other
+        '''
+        for i in range(config.boulder_count):
+            random_index = randint(0, len(map_arr) - 1)
+            tiles[random_index] = BoulderTile()
+            # ETC
+        for i, tile in enumerate(tiles):
+            print(i, tile.title + ', ')
+        '''
 
-    def get_columns(self):
-        return self.columns
+    def __init__(self, rows: int, columns: int, debug: bool):
+        """
+        :param rows: the x dimension of the map
+        :param columns: the y dimension of the map
+        :returns: a new map object with a basic (all normal Tiles) 2d array
+        """
+        self._array = [[] for i in range(rows)]
+        for i in range(len(self._array)):
+            self._array[i] = [Tile('tile', 1, debug) for i in range(columns)]
 
-    def get_row(self, n):
-        return self.tiles[n]
+    def __getitem__(self, row: int):
+        """
+        Access an item in the 2d array
+        """
+        return self._array[row]
 
-    def get_tile(self, x, y):
-        return self.tiles[y][x]
+    def __str__(self):
+        """
+        Output a representation of the map to a string
+        :returns: a string representation (human readable format) of the map
+        """
+        return_str = "****** FOR DEBUG PURPOSE ONLY\n"
+        for i in range(len(self._array[0])):
+            for j in range(len(self._array)):
+                return_str += self._array[j][i].title + ", "
+            return_str += "\n"
+        return return_str
 
     def get_size(self):
-        return [self.columns, self.rows]
+        """
+        Returns (ROWS, COLUMNS)
+        :returns: the dimensions of the 2D array as a tuple. 
+        """
+        return len(self._array), len(self._array[0])

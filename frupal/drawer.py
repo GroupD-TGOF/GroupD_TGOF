@@ -2,7 +2,6 @@ import crayons
 import os
 import time
 from .player import Direction
-from .map import Map
 
 
 class Drawer:
@@ -16,7 +15,7 @@ class Drawer:
     def title_screen(self):
         for i in range(self.middle):
             print()
-        print(crayons.green("The Game of Frugal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!".center(self.width)))
         for i in range(self.middle):
             print()
         time.sleep(3)
@@ -24,7 +23,7 @@ class Drawer:
     def menu_screen(self):
         for i in range(self.middle - 4):
             print()
-        print(crayons.green("The Game of Frugal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!".center(self.width)))
         print(crayons.yellow("1. Start Game!".center(self.width)))
         print(crayons.yellow("2. Configuration?".center(self.width)))
         print(crayons.yellow("3. Exit Game.".center(self.width)))
@@ -37,15 +36,18 @@ class Drawer:
         size = game_map.get_size()
         spacer = self.height - size[0]
         spacer = spacer // 2
+        map_size = game_map.get_size()
         for i in range(spacer):
             print()
-        for j in range(game_map.get_columns()):
-            for k in range(game_map.get_rows()):
+        for j in range(map_size[0]):
+            for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
-                    print(crayons.red(u"\u25CB"), end=' ')
+                    print(crayons.red(u"\u25CF"), end=' ')
                 else:
-                    if game_map.get_tile(j, k).seen_status():
-                        print(crayons.green(game_map.get_tile(j, k).get_name()), end=' ')
+
+                    if game_map[j][k].seen_status():
+                        if game_map[j][k].get_name() == 'tile':
+                            print(crayons.green(u"\u25A0"), end=' ')
                     else:
                         print(' ', end=' ')
             print()

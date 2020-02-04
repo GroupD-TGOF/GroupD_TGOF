@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.pickle
+build/
+main.spec
 
 # Environments
 .env
@@ -17,3 +19,4 @@ venv.bak/
 .mypy_cache/
 .idea/*
 .vscode/*
+.cache

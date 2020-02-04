@@ -65,7 +65,6 @@ class Map:
             return_str += "\n"
         return return_str
 
-    @property
     def get_size(self):
         """
         Returns (ROWS, COLUMNS)

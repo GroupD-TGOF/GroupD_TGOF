@@ -33,10 +33,10 @@ class Drawer:
 
     def print_map(self, player, game_map):
         b = player.get_position()
-        size = game_map.get_size
+        size = game_map.get_size()
         spacer = self.height - size[0]
         spacer = spacer // 2
-        map_size = game_map.get_size
+        map_size = game_map.get_size()
         for i in range(spacer):
             print()
         for j in range(map_size[0]):

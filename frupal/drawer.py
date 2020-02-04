@@ -15,7 +15,7 @@ class Drawer:
     def title_screen(self):
         for i in range(self.middle):
             print()
-        print(crayons.green("The Game of Frugal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!".center(self.width)))
         for i in range(self.middle):
             print()
         time.sleep(3)
@@ -23,7 +23,7 @@ class Drawer:
     def menu_screen(self):
         for i in range(self.middle - 4):
             print()
-        print(crayons.green("The Game of Frugal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!".center(self.width)))
         print(crayons.yellow("1. Start Game!".center(self.width)))
         print(crayons.yellow("2. Configuration?".center(self.width)))
         print(crayons.yellow("3. Exit Game.".center(self.width)))

@@ -1,4 +1,5 @@
 import json
+import enum
 
 
 class Config:
@@ -149,7 +150,6 @@ class Config:
             self.player['money'] = int(input("Input your player's starting money(1-100): "))
 
     def print_config(self):
-        import enum
 
         class Size(enum.Enum):  # Creates enum classes for print_settings
             Small = 1
@@ -180,5 +180,6 @@ class Config:
 
 
 config = Config()
+print("Starting game...")
 print("Good Luck!")
 # config.print_config()

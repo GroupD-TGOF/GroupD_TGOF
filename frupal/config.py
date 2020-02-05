@@ -172,14 +172,14 @@ class Config:
         print()
         print("Loading your map data:")
         print(Size(self.input['size']).name,
-              Style(self.input['style']).name, ": ",
+              Style(self.input['style']).name,
+              '(', self.map['height'], "x", self.map['width'], ' sqyds) with',
               self.map['trees'], "trees,",                     # Prints quantity of each tile user can expect to find
               self.map['boulder'], "boulders,",
-              self.map['water'], "sqrft of water, and",
-              self.map['mud'], "sqrft of mud....")
+              self.map['water'], "sqyds of water, and",
+              self.map['mud'], "sqyds of mud....")
 
 
 config = Config()
 print("Starting game...")
 print("Good Luck!")
-# config.print_config()

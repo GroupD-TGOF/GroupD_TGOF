@@ -6,12 +6,12 @@ class Config:
     static = None
 
     # @staticmethod
-    def get_map(k):                                                      # Defines get function for Map Library
-        return config.map[k]
+    def get_map(self, k):                                                      # Defines get function for Map Library
+        return self.map[k]
 
     # @staticmethod
-    def get_player(k):                                                   # Defines get function for Player Stats Library
-        return config.player[k]
+    def get_player(self, k):                                                   # Defines get function for Player Stats Library
+        return self.player[k]
 
     def __init__(self):
         self.map = {                                                     # Creates Map Library

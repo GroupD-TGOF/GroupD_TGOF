@@ -5,11 +5,11 @@ import enum
 class Config:
     static = None
 
-    @staticmethod
+    # @staticmethod
     def get_map(k):                                                      # Defines get function for Map Library
         return config.map[k]
 
-    @staticmethod
+    # @staticmethod
     def get_player(k):                                                   # Defines get function for Player Stats Library
         return config.player[k]
 

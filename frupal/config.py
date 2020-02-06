@@ -5,11 +5,9 @@ import enum
 class Config:
     static = None
 
-    # @staticmethod
     def get_map(self, k):                                                      # Defines get function for Map Library
         return self.map[k]
 
-    # @staticmethod
     def get_player(self, k):                                                   # Defines get function for Player Stats Library
         return self.player[k]
 
@@ -25,7 +23,10 @@ class Config:
         }
         self.player = {                                                  # Creates Player Library
             'energy': 0,                                                 # Initializes player stats
-            'money': 0
+            'money': 0,
+            'p_x': 0,
+            'p_y': 0
+
         }
         self.map_Input = {                                               # Creates Input Library
             'style': 0,                                                  # Initializes Input variables
@@ -183,5 +184,3 @@ class Config:
               self.map['water'], "sq. yards of water, and",
               self.map['mud'], "sq. yards of mud....")
 
-
-config = Config()

@@ -1,7 +1,6 @@
 import crayons
 import os
 import time
-from .player import Direction
 
 
 class Drawer:
@@ -19,17 +18,6 @@ class Drawer:
         for i in range(self.middle):
             print()
         time.sleep(3)
-
-    def menu_screen(self):
-        for i in range(self.middle - 4):
-            print()
-        print(crayons.green("The Game of Frupal!".center(self.width)))
-        print(crayons.yellow("1. Start Game!".center(self.width)))
-        print(crayons.yellow("2. Configuration?".center(self.width)))
-        print(crayons.yellow("3. Exit Game.".center(self.width)))
-        for i in range(self.middle - 5):
-            print()
-        return int(input("Enter your choice: ".center(self.width)))
 
     def print_map(self, player, game_map):
         b = player.get_position()
@@ -58,36 +46,3 @@ class Drawer:
         for i in range(2):
             print()
         print(crayons.yellow("Energy: " + str(player.get_energy()) + "          " + "Money: " + str(player.get_money())))
-
-    # To move to user input module
-    def move_menu(self, player, game_map):
-        dir_inp = input("What choice do you want to make (north, east, south, west): ")
-        dir_inp = dir_inp.lower()
-        if dir_inp == "north":
-            direction = Direction.NORTH
-        elif dir_inp == "west":
-            direction = Direction.WEST
-        elif dir_inp == "east":
-            direction = Direction.EAST
-        elif dir_inp == "south":
-            direction = Direction.SOUTH
-        else:
-            direction = Direction.NULL
-        player.move(direction, game_map)
-
-    def store_menu(self):
-        for i in range(self.height):
-            print()
-
-    def game_menu(self, player, game_map):
-        choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))
-        if choice == 1:
-            # Access Menu for Move
-            self.move_menu(player, game_map)
-            return True
-        if choice == 2:
-            # Access Menu for Store
-            self.store_menu()
-            return True
-        if choice == 3:
-            return False

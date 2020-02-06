@@ -37,15 +37,15 @@ class Map:
             print(i, tile.title + ', ')
         '''
 
-    def __init__(self, rows: int, columns: int, debug: bool):
+    def __init__(self, config: Config, debug: bool):
         """
         :param rows: the x dimension of the map
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
-        self._array = [[] for i in range(rows)]
+        self._array = [[] for i in range(config.get_map("height"))]
         for i in range(len(self._array)):
-            self._array[i] = [Tile('tile', 1, debug) for i in range(columns)]
+            self._array[i] = [Tile('tile', 1, debug) for i in range(config.get_map("width"))]
 
     def __getitem__(self, row: int):
         """

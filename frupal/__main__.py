@@ -2,29 +2,30 @@ from frupal import (
     Map,
     Config,
     Player,
-    Drawer
+    Drawer,
+    User
 )
 
-
-def switch_menu(choice: int):
-    if choice == 1:
-        return True
-    if choice == 2:
-        return False
-    if choice == 3:
-        return False
-
-
 if __name__ == "__main__":
-    debug = True
-    config = Config.load_config()
-    # Make the player
-    game_map = Map(10, 20, debug)
-    player = Player(20, 20, debug)
+    # Draw Game Title Screen
     drawer = Drawer()
+    user = User()
     drawer.title_screen()
-    playing = switch_menu(drawer.menu_screen())
+
+    # Initializations
+    debug = True
+    config = Config()
+    game_map = Map(config, debug)
+    player = Player(config, debug)
+
+    # Take user input
+    playing = user.main_menu(config)
+
+    # Main Game Loop
     while playing:
+        # Print Game Screen
         drawer.print_map(player, game_map)
         drawer.print_stats(player)
-        playing = drawer.game_menu(player, game_map)
+
+        # Conditions for continuing
+        playing = user.game_menu(player, game_map) or (player.get_energy() != 0)

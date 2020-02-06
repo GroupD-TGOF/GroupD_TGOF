@@ -1,0 +1,1 @@
+{"player": {"energy": 5, "money": 5}, "map": {"total": 400, "height": 20, "width": 20, "trees": 200, "boulders": 0, "water": 40, "mud": 40, "boulder": 20}, "map_Input": {"style": 4, "size": 2}}

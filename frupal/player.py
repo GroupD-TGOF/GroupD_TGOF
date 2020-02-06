@@ -1,4 +1,5 @@
 import enum
+from .config import Config
 
 
 class Direction(enum.Enum):
@@ -10,15 +11,16 @@ class Direction(enum.Enum):
 
 
 class Player:
-    def __init__(self, energy, money, debug):
+    def __init__(self, config: Config, debug):
         if not debug:
-            self.energy = energy
-            self.money = money
+            self.energy = config.get_player('energy')
+            self.money = config.get_player('money')
+            self.position = [0, 0]
+
         else:
             self.energy = 100
             self.money = 100
-
-        self.position = [0, 0]
+            self.position = [config.get_map('width') // 2, config.get_map('height') // 2]
 
     # Needs a case for the boundary wall?
     def move(self, direction, game_map):

@@ -5,9 +5,14 @@ import time
 
 class Drawer:
     def __init__(self):
-        # self.width = os.get_terminal_size().columns
+        '''
+        if os.get_terminal_size().columns != 0 and os.get_terminal_size().lines != 0:
+            self.width = os.get_terminal_size().columns
+            self.height = os.get_terminal_size().lines
+
+        else:
+        '''
         self.width = 40
-        # self.height = os.get_terminal_size().lines
         self.height = 30
         self.middle = self.height // 2
 
@@ -35,7 +40,11 @@ class Drawer:
 
                     if game_map[j][k].seen_status():
                         if game_map[j][k].get_name() == 'tile':
-                            print(crayons.green(u"\u25A0"), end=' ')
+                            print(crayons.green(game_map[j][k].get_icon()), end=' ')
+                        if game_map[j][k].get_name() == 'water':
+                            print(crayons.blue(game_map[j][k].get_icon()), end=' ')
+                        if game_map[j][k].get_name() == 'tree':
+                            print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
                     else:
                         print(' ', end=' ')
             print()

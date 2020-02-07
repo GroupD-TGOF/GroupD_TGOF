@@ -1,22 +1,33 @@
 from .player import Direction
 from .config import Config
 from .drawer import Drawer
+import os
 import crayons
 
 
 class User:
 
     def __init__(self):
-        # self.width = os.get_terminal_size().columns
+        '''
+        if os.get_terminal_size().columns != 0 and os.get_terminal_size().lines != 0:
+            self.width = os.get_terminal_size().columns
+            self.height = os.get_terminal_size().lines
+
+        else:
+        '''
         self.width = 40
-        # self.height = os.get_terminal_size().lines
         self.height = 30
         self.middle = self.height // 2
+        self.store = {  # Creates Store Library
+            'axe': 1,  # Initializes player stats
+            'boat': 1,
+        }
 
-    def config_menu(self, config: Config):
+    @staticmethod
+    def config_menu(config: Config):
         config.print_config()
         config.map_Input['size'] = 0  # If user wants new settings, reset inputs
-        config.map_Input['style'] = 0
+        config.map_Input['style'] = 0 # If user wants new settings, reset inputs
         config.map_size()  # Calls function to set new Map Dimensions
         config.map_style()  # Calls function to set new Map Tile quantities
         config.player_stats()  # Calls function to set new Player stats
@@ -66,7 +77,13 @@ class User:
         player.move(direction, game_map)
 
     def store_menu(self):
-        for i in range(self.height):
+        for i in range(self.middle):
+            print()
+        print("boat: ")
+        print(self.store['boat'])
+        print("axe: ")
+        print(self.store['axe'])
+        for i in range(self.middle - 4):
             print()
 
     def game_menu(self, player, game_map):

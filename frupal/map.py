@@ -3,10 +3,9 @@ Nick Grout 1/23/2020
 """
 from random import randint
 import enum
-from .tiles import Tile
+from .tiles import Tile, Water, Mud, Tree
 from .player import Player
 from .config import Config
-
 
 class Map:
     """
@@ -14,6 +13,7 @@ class Map:
     tiles
     """
 
+    '''1
     @staticmethod
     def generate_map(config: Config):
         """
@@ -28,7 +28,7 @@ class Map:
         for col in new_map._array:
             tiles += col
         # BUG: when we have multiple tile types, they could overwrite each other
-        '''
+        
         for i in range(config.boulder_count):
             random_index = randint(0, len(map_arr) - 1)
             tiles[random_index] = BoulderTile()
@@ -46,6 +46,9 @@ class Map:
         self._array = [[] for i in range(config.get_map("height"))]
         for i in range(len(self._array)):
             self._array[i] = [Tile('tile', 1, debug) for i in range(config.get_map("width"))]
+
+        self._array[4][5] = Water(debug)
+        self._array[6][7] = Tree(debug)
 
     def __getitem__(self, row: int):
         """

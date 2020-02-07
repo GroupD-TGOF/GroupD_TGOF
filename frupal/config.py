@@ -183,4 +183,3 @@ class Config:
               self.map['boulder'], "boulders,",
               self.map['water'], "sq. yards of water, and",
               self.map['mud'], "sq. yards of mud....")
-

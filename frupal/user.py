@@ -19,8 +19,9 @@ class User:
         self.height = 30
         self.middle = self.height // 2
         self.store = {  # Creates Store Library
-            'axe': 1,  # Initializes player stats
-            'boat': 1,
+            1: 'saw',  # Initializes player stats
+            2: 'boat',
+            3: 'wood_plank'
         }
 
     @staticmethod
@@ -76,15 +77,24 @@ class User:
             direction = Direction.NULL
         player.move(direction, game_map)
 
-    def store_menu(self):
+    def store_menu(self, player):
         for i in range(self.middle):
             print()
-        print("boat: ")
-        print(self.store['boat'])
-        print("axe: ")
-        print(self.store['axe'])
-        for i in range(self.middle - 4):
+        print("Welcome to the Store.")
+        for key in self.store:
+            print(str(key) + ". " + self.store[key])
+        for i in range(self.middle - len(self.store)):
             print()
+        choice = int(input("What do you want to buy: "))
+        if choice == 1:
+            # player.add_inv(self.store[choice])
+            pass
+        elif choice == 2:
+            # player.add_inv(self.store[choice])
+            pass
+        elif choice == 3:
+            # player.add_inv(self.store[choice])
+            pass
 
     def game_menu(self, player, game_map):
         choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))
@@ -94,7 +104,7 @@ class User:
             return True
         if choice == 2:
             # Access Menu for Store
-            self.store_menu()
+            self.store_menu(player)
             return True
         if choice == 3:
             return False

@@ -12,7 +12,7 @@ class Tile:
 	def get_name(self):
 		return self.title
 
-	def get_energy_req(self, player_inventory):
+	def get_energy_req(self):
 		return self.energy_req
 
 	def get_icon(self):

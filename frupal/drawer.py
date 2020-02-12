@@ -1,15 +1,12 @@
 import crayons
 import os
 import time
-from .player import Direction
 
 
 class Drawer:
-    def __init__(self):
-        # self.width = os.get_terminal_size().columns
-        self.width = 40
-        # self.height = os.get_terminal_size().lines
-        self.height = 30
+    def __init__(self, window):
+        self.width = window[0]
+        self.height = window[1]
         self.middle = self.height // 2
 
     def title_screen(self):
@@ -20,74 +17,82 @@ class Drawer:
             print()
         time.sleep(3)
 
-    def menu_screen(self):
-        for i in range(self.middle - 4):
+    def final_screen(self, playing):
+        for i in range(self.middle):
             print()
-        print(crayons.green("The Game of Frupal!".center(self.width)))
-        print(crayons.yellow("1. Start Game!".center(self.width)))
-        print(crayons.yellow("2. Configuration?".center(self.width)))
-        print(crayons.yellow("3. Exit Game.".center(self.width)))
-        for i in range(self.middle - 5):
+        if playing == 3:
+            print(crayons.green("You Win!".center(self.width)))
+        if playing == 2:
+            print(crayons.green("You Lose!".center(self.width)))
+        for i in range(self.middle):
             print()
-        return int(input("Enter your choice: ".center(self.width)))
+        time.sleep(3)
 
     def print_map(self, player, game_map):
+        border = u"\u25A0"
         b = player.get_position()
-        size = game_map.get_size()
-        spacer = self.height - size[0]
-        spacer = spacer // 2
         map_size = game_map.get_size()
-        for i in range(spacer):
+        spacer_lines = (self.height - map_size[0]) // 2
+        spacer_columns = (self.width - ((map_size[1]) * 2)) // 2
+
+        # Before Spacer
+        for a in range(spacer_lines):
             print()
+
+        # Spacer for centering map
+        for m in range(spacer_columns):
+            print(' ', end='')
+
+        # Border On Line
+        for l in range(map_size[1] + 2):
+            print(crayons.blue(border), end=' ')
+        print()
+
         for j in range(map_size[0]):
+
+            # Spacer for centering map
+            for m in range(spacer_columns):
+                print(' ', end='')
+
+            # Start border for each line
+            print(crayons.blue(border), end=' ')
+
+            # Display Map
             for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
                     print(crayons.red(u"\u25CF"), end=' ')
                 else:
-
                     if game_map[j][k].seen_status():
                         if game_map[j][k].get_name() == 'tile':
-                            print(crayons.green(u"\u25A0"), end=' ')
+                            print(crayons.green(game_map[j][k].get_icon()), end=' ')
+                        if game_map[j][k].get_name() == 'water':
+                            print(crayons.blue(game_map[j][k].get_icon()), end=' ')
+                        if game_map[j][k].get_name() == 'tree':
+                            print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
                     else:
-                        print(' ', end=' ')
+                        print('X', end=' ')
+
+            # End border for each line
+            print(crayons.blue(border), end=' ')
             print()
-        for i in range(spacer):
+
+        # Spacer for centering map
+        for m in range(spacer_columns):
+            print(' ', end='')
+
+        # Border After End Line of Map
+        for l in range(map_size[1] + 2):
+            print(crayons.blue(border), end=' ')
+        # print()
+
+        # After Spacer
+        for a in range(spacer_lines - 1):
             print()
 
     def print_stats(self, player):
-        for i in range(2):
-            print()
-        print(crayons.yellow("Energy: " + str(player.get_energy()) + "          " + "Money: " + str(player.get_money())))
-
-    # To move to user input module
-    def move_menu(self, player, game_map):
-        dir_inp = input("What choice do you want to make (north, east, south, west): ")
-        dir_inp = dir_inp.lower()
-        if dir_inp == "north":
-            direction = Direction.NORTH
-        elif dir_inp == "west":
-            direction = Direction.WEST
-        elif dir_inp == "east":
-            direction = Direction.EAST
-        elif dir_inp == "south":
-            direction = Direction.SOUTH
-        else:
-            direction = Direction.NULL
-        player.move(direction, game_map)
-
-    def store_menu(self):
-        for i in range(self.height):
-            print()
-
-    def game_menu(self, player, game_map):
-        choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))
-        if choice == 1:
-            # Access Menu for Move
-            self.move_menu(player, game_map)
-            return True
-        if choice == 2:
-            # Access Menu for Store
-            self.store_menu()
-            return True
-        if choice == 3:
-            return False
+        s_str = "Energy: "
+        s_str += str(player.get_energy())
+        s_str += "     Money: "
+        s_str += str(player.get_money())
+        s_str += "     Inventory: None"
+        print(crayons.yellow(s_str.center(self.width)))

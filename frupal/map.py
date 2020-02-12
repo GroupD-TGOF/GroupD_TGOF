@@ -3,10 +3,9 @@ Nick Grout 1/23/2020
 """
 from random import randint
 import enum
-from .tiles import Tile
+from .tiles import Tile, Water, Mud, Tree
 from .player import Player
 from .config import Config
-
 
 class Map:
     """
@@ -14,6 +13,7 @@ class Map:
     tiles
     """
 
+    '''1
     @staticmethod
     def generate_map(config: Config):
         """
@@ -28,7 +28,7 @@ class Map:
         for col in new_map._array:
             tiles += col
         # BUG: when we have multiple tile types, they could overwrite each other
-        '''
+        
         for i in range(config.boulder_count):
             random_index = randint(0, len(map_arr) - 1)
             tiles[random_index] = BoulderTile()
@@ -37,15 +37,18 @@ class Map:
             print(i, tile.title + ', ')
         '''
 
-    def __init__(self, rows: int, columns: int, debug: bool):
+    def __init__(self, config: Config, debug: bool):
         """
         :param rows: the x dimension of the map
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
-        self._array = [[] for i in range(rows)]
+        self._array = [[] for i in range(config.get_map("height"))]
         for i in range(len(self._array)):
-            self._array[i] = [Tile('tile', 1, debug) for i in range(columns)]
+            self._array[i] = [Tile('tile', 1, debug) for i in range(config.get_map("width"))]
+
+        self._array[4][5] = Water(debug)
+        self._array[6][7] = Tree(debug)
 
     def __getitem__(self, row: int):
         """
@@ -71,3 +74,8 @@ class Map:
         :returns: the dimensions of the 2D array as a tuple. 
         """
         return len(self._array), len(self._array[0])
+
+    def map_reveal(self):
+        for i in range(len(self._array[0])):
+            for j in range(len(self._array)):
+                self._array[j][i].seen_set(True)

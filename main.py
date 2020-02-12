@@ -1,3 +1,7 @@
+import sys
+import time
+import os
+
 from frupal import (
     Map,
     Config,
@@ -6,13 +10,16 @@ from frupal import (
     User
 )
 
-import sys
-
 if __name__ == "__main__":
 
+    try:
+        window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
+    except OSError:
+        window = (60, 50)
+
     # Draw Game Title Screen
-    drawer = Drawer()
-    user = User()
+    drawer = Drawer(window)
+    user = User(window)
     drawer.title_screen()
 
     # Initializations
@@ -38,5 +45,7 @@ if __name__ == "__main__":
         # Conditions for continuing
         playing = user.control(player, game_map)
         if playing == 2 or playing == 3:
+            drawer.print_map(player, game_map)
+            time.sleep(3)
             drawer.final_screen(playing)
             playing = 0

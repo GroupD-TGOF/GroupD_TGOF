@@ -8,15 +8,11 @@ import readchar
 
 class User:
 
-    def __init__(self):
-        if os.get_terminal_size().columns != 0 and os.get_terminal_size().lines != 0:
-            self.width = os.get_terminal_size().columns
-            self.height = os.get_terminal_size().lines
-        else:
-            self.width = 40
-            self.height = 30
-
+    def __init__(self, window):
+        self.width = window[0]
+        self.height = window[1]
         self.middle = self.height // 2
+
         self.store = {  # Creates Store Library
             1: 'saw',  # Initializes player stats
             2: 'boat',
@@ -27,7 +23,7 @@ class User:
     def config_menu(config: Config):
         config.print_config()
         config.map_Input['size'] = 0  # If user wants new settings, reset inputs
-        config.map_Input['style'] = 0 # If user wants new settings, reset inputs
+        config.map_Input['style'] = 0  # If user wants new settings, reset inputs
         config.map_size()  # Calls function to set new Map Dimensions
         config.map_style()  # Calls function to set new Map Tile quantities
         config.player_stats()  # Calls function to set new Player stats
@@ -47,13 +43,12 @@ class User:
         if key == 's' or key == '\n':
             return 1
         if key == 'c':
-            self.config_menu(config)
+            config.change_config()
             return self.main_menu(config)
         if key == 'q' or key == '\033':
             return 0
         else:
             return self.main_menu(config)
-        
 
     def store_menu(self, player):
         for i in range(self.middle):
@@ -74,8 +69,10 @@ class User:
             # player.add_inv(self.store[choice])
             pass
 
-    def control(self, player, game_map):
+    @staticmethod
+    def control(player, game_map):
         if player.get_energy() == 0:
+            game_map.map_reveal()
             return 2
         # code that returns 3 for game win if game conditions are met
 
@@ -95,10 +92,8 @@ class User:
             return 1
         if key == 'c':
             game_map.map_reveal()
-            return 0
+            return 3
         if key == 'q' or key == '\033':
             return 0
         else:
             return 1
-
-

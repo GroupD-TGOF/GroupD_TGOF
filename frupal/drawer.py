@@ -4,14 +4,9 @@ import time
 
 
 class Drawer:
-    def __init__(self):
-        if os.get_terminal_size().columns != 0 and os.get_terminal_size().lines != 0:
-            self.width = os.get_terminal_size().columns
-            self.height = os.get_terminal_size().lines
-        else:
-            self.width = 60
-            self.height = 50
-
+    def __init__(self, window):
+        self.width = window[0]
+        self.height = window[1]
         self.middle = self.height // 2
 
     def title_screen(self):
@@ -35,13 +30,34 @@ class Drawer:
 
     def print_map(self, player, game_map):
         border = u"\u25A0"
-        b = player.get_position()    
+        b = player.get_position()
         map_size = game_map.get_size()
-        for l in range(map_size[0] + 2):
+        spacer_lines = (self.height - map_size[0]) // 2
+        spacer_columns = (self.width - ((map_size[1]) * 2)) // 2
+
+        # Before Spacer
+        for a in range(spacer_lines):
+            print()
+
+        # Spacer for centering map
+        for m in range(spacer_columns):
+            print(' ', end='')
+
+        # Border On Line
+        for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
         print()
+
         for j in range(map_size[0]):
+
+            # Spacer for centering map
+            for m in range(spacer_columns):
+                print(' ', end='')
+
+            # Start border for each line
             print(crayons.blue(border), end=' ')
+
+            # Display Map
             for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
                     print(crayons.red(u"\u25CF"), end=' ')
@@ -55,14 +71,28 @@ class Drawer:
                             print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
                     else:
                         print('X', end=' ')
+
+            # End border for each line
             print(crayons.blue(border), end=' ')
             print()
-        for l in range(map_size[0] + 2):
+
+        # Spacer for centering map
+        for m in range(spacer_columns):
+            print(' ', end='')
+
+        # Border After End Line of Map
+        for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
-        print()
+        # print()
+
+        # After Spacer
+        for a in range(spacer_lines - 1):
+            print()
 
     def print_stats(self, player):
-        for i in range(2):
-            print()
-        print(
-            crayons.yellow("Energy: " + str(player.get_energy()) + "          " + "Money: " + str(player.get_money())))
+        s_str = "Energy: "
+        s_str += str(player.get_energy())
+        s_str += "     Money: "
+        s_str += str(player.get_money())
+        s_str += "     Inventory: None"
+        print(crayons.yellow(s_str.center(self.width)))

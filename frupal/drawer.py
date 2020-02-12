@@ -69,6 +69,8 @@ class Drawer:
                             print(crayons.blue(game_map[j][k].get_icon()), end=' ')
                         if game_map[j][k].get_name() == 'tree':
                             print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
+                        if game_map[j][k].get_name() == 'mud':
+                            print(crayons.black(game_map[j][k]).get_icon(), end=' ')
                     else:
                         print('X', end=' ')
 
@@ -94,5 +96,6 @@ class Drawer:
         s_str += str(player.get_energy())
         s_str += "     Money: "
         s_str += str(player.get_money())
-        s_str += "     Inventory: None"
+        s_str += "     Inventory: "
+        s_str += player.print_inv()
         print(crayons.yellow(s_str.center(self.width)))

@@ -23,6 +23,8 @@ class Player:
             self.money = 100
             self.position = [config.get_map('width') // 2, config.get_map('height') // 2]
 
+        self.player_inventory = dict()
+
     def player_view(self, view_dist, position, game_map):
         if not game_map[position[1]][position[0]].seen_status():
             game_map[position[1]][position[0]].seen_set(True)
@@ -47,10 +49,30 @@ class Player:
                 self.position[1] += 1
                 if self.position[1] > self.map_size[1] - 1:
                     self.position[1] -= 1
-            self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req())
+            self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.player_inventory))
+            if self.energy < 0:
+                self.energy = 0
+
+    def add_inv(self, new_item):
+        if new_item in self.player_inventory:
+            self.player_inventory[new_item] += 1
+        else:
+            self.player_inventory.update({new_item: 1})
+
+    def print_inv(self):
+        inv = ''
+        for key in self.player_inventory:
+            inv += key + ': ' + str(self.player_inventory[key]) + '   '
+        return inv
 
     def get_energy(self):
         return self.energy
+
+    def add_energy(self, addition):
+        self.energy += addition
+
+    def spend_money(self, cost):
+        self.money -= cost
 
     def get_money(self):
         return self.money

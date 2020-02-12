@@ -86,7 +86,7 @@ class Config:
         print("Set your game map size:")  # Prints size options in ascending order
         print("1. Small (10 x 10)")
         print("2. Medium (20 x 20)")
-        print("3. Large (20 x 40)")
+        print("3. Large (30 x 30)")
         while self.map_Input['size'] == 0:  # User inputs size choice (H X W)
             self.map_Input['size'] = int(input("Enter selection (1-3): "))
             if self.map_Input['size'] == 1:  # Small 10 x 10
@@ -96,8 +96,8 @@ class Config:
                 self.map["height"] = 20
                 self.map["width"] = 20
             elif self.map_Input['size'] == 3:  # Large 20 x 40
-                self.map["height"] = 20
-                self.map["width"] = 40
+                self.map["height"] = 30
+                self.map["width"] = 30
             else:  # Bad input
                 print("Must be 1, 2, or 3")
         self.map['total'] = self.map['height'] * self.map['width']

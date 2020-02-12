@@ -14,9 +14,10 @@ class User:
         self.middle = self.height // 2
 
         self.store = {  # Creates Store Library
-            1: 'saw',  # Initializes player stats
-            2: 'boat',
-            3: 'wood_plank'
+            'saw': 10,  # Initializes player stats
+            'boat': 15,
+            'wood_plank': 5,
+            'energy': 20
         }
 
     @staticmethod
@@ -51,26 +52,31 @@ class User:
             return self.main_menu(config)
 
     def store_menu(self, player):
-        for i in range(self.middle):
+        store_spacer = (self.height - len(self.store)) // 2
+        for i in range(store_spacer):
             print()
-        print("Welcome to the Store.")
+        print("Frupal Store:".center(self.width))
         for key in self.store:
-            print(str(key) + ". " + self.store[key])
-        for i in range(self.middle - len(self.store)):
+            print((key + "  =  " + str(self.store[key])).center(self.width))
+        for i in range(store_spacer):
             print()
-        choice = int(input("What do you want to buy: "))
-        if choice == 1:
-            # player.add_inv(self.store[choice])
-            pass
-        elif choice == 2:
-            # player.add_inv(self.store[choice])
-            pass
-        elif choice == 3:
-            # player.add_inv(self.store[choice])
+        choice = input("What do you want to buy: ".center(self.width))
+        if choice == 'saw':
+            player.add_inv(choice)
+            player.spend_money(self.store[choice])
+        elif choice == 'boat':
+            player.add_inv(choice)
+            player.spend_money(self.store[choice])
+        elif choice == 'wood_plank':
+            player.add_inv(choice)
+            player.spend_money(self.store[choice])
+        elif choice == 'energy':
+            player.spend_money(self.store[choice])
+            player.add_energy(20)
+        else:
             pass
 
-    @staticmethod
-    def control(player, game_map):
+    def control(self, player, game_map):
         if player.get_energy() == 0:
             game_map.map_reveal()
             return 2
@@ -81,19 +87,22 @@ class User:
         if key == 'w':
             player.move(Direction.NORTH, game_map)
             return 1
-        if key == 'a':
+        elif key == 'a':
             player.move(Direction.WEST, game_map)
             return 1
-        if key == 'd':
+        elif key == 'd':
             player.move(Direction.EAST, game_map)
             return 1
-        if key == 's':
+        elif key == 's':
             player.move(Direction.SOUTH, game_map)
             return 1
-        if key == 'c':
+        elif key == 'c':
             game_map.map_reveal()
             return 3
-        if key == 'q' or key == '\033':
+        elif key == 'b':
+            self.store_menu(player)
+            return 1
+        elif key == 'q' or key == '\033':
             return 0
         else:
             return 1

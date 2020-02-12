@@ -49,6 +49,7 @@ class Map:
 
         self._array[4][5] = Water(debug)
         self._array[6][7] = Tree(debug)
+        self._array[4][4] = Mud(debug)
 
     def __getitem__(self, row: int):
         """

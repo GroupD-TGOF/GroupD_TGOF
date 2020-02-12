@@ -74,3 +74,8 @@ class Map:
         :returns: the dimensions of the 2D array as a tuple. 
         """
         return len(self._array), len(self._array[0])
+
+    def map_reveal(self):
+        for i in range(len(self._array[0])):
+            for j in range(len(self._array)):
+                self._array[j][i].seen_set(True)

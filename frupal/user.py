@@ -3,20 +3,19 @@ from .config import Config
 from .drawer import Drawer
 import os
 import crayons
+import readchar
 
 
 class User:
 
     def __init__(self):
-        '''
         if os.get_terminal_size().columns != 0 and os.get_terminal_size().lines != 0:
             self.width = os.get_terminal_size().columns
             self.height = os.get_terminal_size().lines
-
         else:
-        '''
-        self.width = 40
-        self.height = 30
+            self.width = 40
+            self.height = 30
+
         self.middle = self.height // 2
         self.store = {  # Creates Store Library
             1: 'saw',  # Initializes player stats
@@ -36,46 +35,25 @@ class User:
         config.print_config()
 
     def main_menu(self, config: Config):
-        cont = True
-        choice = 1
-        while cont:
-            for i in range(self.middle - 4):
-                print()
-            print(crayons.green("The Game of Frupal!".center(self.width)))
-            print(crayons.yellow("1. Start Game!".center(self.width)))
-            print(crayons.yellow("2. Configuration?".center(self.width)))
-            print(crayons.yellow("3. Exit Game.".center(self.width)))
-            for i in range(self.middle - 5):
-                print()
-
-            choice = int(input("Enter your choice: ".center(self.width)))
-            if choice == 1:
-                cont = False
-            if choice == 2:
-                self.config_menu(config)
-                cont = True
-            if choice == 3:
-                cont = False
-        if choice == 1 or choice == 2:
-            return True
+        for i in range(self.middle - 4):
+            print()
+        print(crayons.green("The Game of Frupal!".center(self.width)))
+        print(crayons.yellow("(S) Start Game!".center(self.width)))
+        print(crayons.yellow("(C) Configuration?".center(self.width)))
+        print(crayons.yellow("(Q) Exit Game.".center(self.width)))
+        for i in range(self.middle - 4):
+            print()
+        key = readchar.readkey()
+        if key == 's' or key == '\n':
+            return 1
+        if key == 'c':
+            self.config_menu(config)
+            return self.main_menu(config)
+        if key == 'q' or key == '\033':
+            return 0
         else:
-            return False
-
-    @staticmethod
-    def move_menu(player, game_map):
-        dir_inp = input("What choice do you want to make (north, east, south, west): ")
-        dir_inp = dir_inp.lower()
-        if dir_inp == "north":
-            direction = Direction.NORTH
-        elif dir_inp == "west":
-            direction = Direction.WEST
-        elif dir_inp == "east":
-            direction = Direction.EAST
-        elif dir_inp == "south":
-            direction = Direction.SOUTH
-        else:
-            direction = Direction.NULL
-        player.move(direction, game_map)
+            return self.main_menu(config)
+        
 
     def store_menu(self, player):
         for i in range(self.middle):
@@ -96,17 +74,31 @@ class User:
             # player.add_inv(self.store[choice])
             pass
 
-    def game_menu(self, player, game_map):
-        choice = int(input("What choice do you want to make (1: Move, 2: Store, or 3: Quit): "))
-        if choice == 1:
-            # Access Menu for Move
-            self.move_menu(player, game_map)
-            return True
-        if choice == 2:
-            # Access Menu for Store
-            self.store_menu(player)
-            return True
-        if choice == 3:
-            return False
+    def control(self, player, game_map):
+        if player.get_energy() == 0:
+            return 2
+        # code that returns 3 for game win if game conditions are met
+
+        # end of game win conditions
+        key = readchar.readkey()
+        if key == 'w':
+            player.move(Direction.NORTH, game_map)
+            return 1
+        if key == 'a':
+            player.move(Direction.WEST, game_map)
+            return 1
+        if key == 'd':
+            player.move(Direction.EAST, game_map)
+            return 1
+        if key == 's':
+            player.move(Direction.SOUTH, game_map)
+            return 1
+        if key == 'c':
+            game_map.map_reveal()
+            return 0
+        if key == 'q' or key == '\033':
+            return 0
+        else:
+            return 1
 
 

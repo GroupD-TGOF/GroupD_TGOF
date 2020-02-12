@@ -30,10 +30,13 @@ if __name__ == "__main__":
     player = Player(config, debug)
 
     # Main Game Loop
-    while playing:
+    while playing != 0:
         # Print Game Screen
         drawer.print_map(player, game_map)
         drawer.print_stats(player)
 
         # Conditions for continuing
-        playing = user.game_menu(player, game_map)
+        playing = user.control(player, game_map)
+        if playing == 2 or playing == 3:
+            drawer.final_screen(playing)
+            playing = 0

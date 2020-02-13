@@ -11,7 +11,6 @@ from frupal import (
 )
 
 if __name__ == "__main__":
-
     try:
         window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
     except OSError:

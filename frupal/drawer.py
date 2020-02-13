@@ -17,7 +17,7 @@ class Drawer:
             print()
         time.sleep(3)
 
-    def final_screen(self, playing):
+    def final_screen(self, playing: int):
         for i in range(self.middle):
             print()
         if playing == 3:
@@ -60,7 +60,7 @@ class Drawer:
             # Display Map
             for k in range(map_size[1]):
                 if k == b[0] and j == b[1]:
-                    print(crayons.red(u"\u25CF"), end=' ')
+                    print(crayons.red("P"), end=' ')
                 else:
                     if game_map[j][k].seen_status():
                         if not game_map[j][k].has_item('jewels'):
@@ -73,7 +73,7 @@ class Drawer:
                             if game_map[j][k].get_name() == 'mud':
                                 print(crayons.black(game_map[j][k]).get_icon(), end=' ')
                         else:
-                            print('J', end=' ')
+                            print(crayons.cyan("J"), end=' ')
                     else:
                         print('X', end=' ')
 

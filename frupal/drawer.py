@@ -63,14 +63,17 @@ class Drawer:
                     print(crayons.red(u"\u25CF"), end=' ')
                 else:
                     if game_map[j][k].seen_status():
-                        if game_map[j][k].get_name() == 'tile':
-                            print(crayons.green(game_map[j][k].get_icon()), end=' ')
-                        if game_map[j][k].get_name() == 'water':
-                            print(crayons.blue(game_map[j][k].get_icon()), end=' ')
-                        if game_map[j][k].get_name() == 'tree':
-                            print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
-                        if game_map[j][k].get_name() == 'mud':
-                            print(crayons.black(game_map[j][k]).get_icon(), end=' ')
+                        if not game_map[j][k].has_item('jewels'):
+                            if game_map[j][k].get_name() == 'tile':
+                                print(crayons.green(game_map[j][k].get_icon()), end=' ')
+                            if game_map[j][k].get_name() == 'water':
+                                print(crayons.blue(game_map[j][k].get_icon()), end=' ')
+                            if game_map[j][k].get_name() == 'tree':
+                                print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
+                            if game_map[j][k].get_name() == 'mud':
+                                print(crayons.black(game_map[j][k]).get_icon(), end=' ')
+                        else:
+                            print('J', end=' ')
                     else:
                         print('X', end=' ')
 
@@ -89,6 +92,8 @@ class Drawer:
 
         # After Spacer
         for a in range(spacer_lines - 1):
+            if a == 3:
+                print(game_map[b[1]][b[0]].print_tile(player.player_inventory).center(self.width))
             print()
 
     def print_stats(self, player):

@@ -8,6 +8,7 @@ class Tile:
 		self.title = title
 		self.energy_req = energy_req
 		self.icon = u"\u25A0"
+		self.inv = dict()
 
 	def get_name(self):
 		return self.title
@@ -18,11 +19,33 @@ class Tile:
 	def get_icon(self):
 		return self.icon
 
+	def add_inv(self, item):
+		if item in self.inv:
+			self.inv[item] += 1
+		else:
+			self.inv.update({item: 1})
+
+	def get_inv(self):
+		return self.inv
+
+	def clear_inv(self):
+		self.inv.clear()
+
+	def has_item(self, item):
+		if item in self.inv:
+			return True
+		else:
+			return False
+
 	def seen_status(self):
 		return self.is_seen
 
 	def seen_set(self, status):
 		self.is_seen = status
+
+	def print_tile(self, player_inventory):
+		r_str = ''
+		return r_str
 
 
 class Water(Tile):
@@ -33,8 +56,16 @@ class Water(Tile):
 		if 'boat' in player_inventory:
 			return self.energy_req
 		else:
-			self.energy_req *= 2  # without a boat the energy requirements is doubles
-			return self.energy_req
+			temp_energy = self.energy_req * 2  # without a boat the energy requirements is doubles
+			return temp_energy
+
+	def print_tile(self, player_inventory):
+		r_str = ''
+		if "boat" in player_inventory:
+			return r_str
+		else:
+			r_str += "Entering this area without a boat will cost double energy!"
+			return r_str
 
 
 class Mud(Tile):
@@ -52,6 +83,17 @@ class Mud(Tile):
 		else:
 			return 1  # if player returns to this tile, wood plank has been place so return 1
 
+	def print_tile(self, player_inventory):
+		r_str = ''
+		if not self.plank:
+			if "wood_plank" in player_inventory:
+				r_str += "Wood plank used!"
+				return r_str
+			else:
+				r_str += "No wood planks available, 5 energy will be spent!"
+				return r_str
+		return r_str
+
 
 class Tree(Tile):
 	def __init__(self, debug):
@@ -68,5 +110,15 @@ class Tree(Tile):
 				return 0
 		else:
 			return 1
+
+	def print_tile(self, player_inventory):
+		r_str = ''
+		if self.tree_status:
+			if "saw" in player_inventory:
+				r_str += "Path is cleared"
+				return r_str
+			else:
+				r_str += "A Tree Blocks Your Path!"
+				return r_str
 
 # hard mode tiles

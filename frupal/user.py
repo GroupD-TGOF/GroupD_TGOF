@@ -81,7 +81,9 @@ class User:
             game_map.map_reveal()
             return 2
         # code that returns 3 for game win if game conditions are met
-
+        if player.has_item('jewels'):
+            game_map.map_reveal()
+            return 3;
         # end of game win conditions
         key = readchar.readkey()
         if key == 'w':

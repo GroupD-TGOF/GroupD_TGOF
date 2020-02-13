@@ -7,6 +7,7 @@ from .tiles import Tile, Water, Mud, Tree
 from .player import Player
 from .config import Config
 
+
 class Map:
     """
     This is the main map class. It constructs and manages the 2d array of
@@ -50,6 +51,7 @@ class Map:
         self._array[4][5] = Water(debug)
         self._array[6][7] = Tree(debug)
         self._array[4][4] = Mud(debug)
+        self._array[3][3].add_inv('jewels')
 
     def __getitem__(self, row: int):
         """

@@ -50,6 +50,7 @@ class Player:
                 if self.position[1] > self.map_size[1] - 1:
                     self.position[1] -= 1
             self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.player_inventory))
+            self.player_inventory.update(game_map[self.position[1]][self.position[0]].get_inv())
             if self.energy < 0:
                 self.energy = 0
 
@@ -58,6 +59,12 @@ class Player:
             self.player_inventory[new_item] += 1
         else:
             self.player_inventory.update({new_item: 1})
+
+    def has_item(self, item):
+        if item in self.player_inventory:
+            return True
+        else:
+            return False
 
     def print_inv(self):
         inv = ''

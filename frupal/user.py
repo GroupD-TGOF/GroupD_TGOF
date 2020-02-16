@@ -42,12 +42,12 @@ class User:
             print()
         key = readchar.readkey()
         if key == 's' or key == '\n':
-            return 1
+            return True
         if key == 'c':
             config.change_config()
             return self.main_menu(config)
         if key == 'q' or key == '\033':
-            return 0
+            return False
         else:
             return self.main_menu(config)
 

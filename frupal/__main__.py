@@ -29,22 +29,26 @@ if __name__ == "__main__":
     config = Config()
 
     # Take user input
-    playing = user.main_menu(config)
+    running = user.main_menu(config)
+    playing = 0
 
-    # Initialize Map When Player Selects Start or Changes Config
-    game_map = Map(config, debug)
-    player = Player(config, debug)
-
-    # Main Game Loop
-    while playing != 0:
-        # Print Game Screen
-        drawer.print_map(player, game_map)
-        drawer.print_stats(player)
-
-        # Conditions for continuing
-        playing = user.control(player, game_map)
-        if playing == 2 or playing == 3:
+    # Main Loop
+    while running != False:
+        # Initialize Map When Player Selects Start
+        game_map = Map(config, debug)
+        player = Player(config, debug)
+        playing = 1;
+        while playing != 0:
+            # Print Game Screen
             drawer.print_map(player, game_map)
-            time.sleep(3)
-            drawer.final_screen(playing)
-            playing = 0
+            drawer.print_stats(player)
+
+            # Conditions for continuing
+            playing = user.control(player, game_map)
+            if playing == 2 or playing == 3:
+                drawer.print_map(player, game_map)
+                time.sleep(3)
+                drawer.final_screen(playing)
+                playing = 0
+        running = user.main_menu(config)
+            

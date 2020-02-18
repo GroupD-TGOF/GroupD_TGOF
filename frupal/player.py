@@ -30,7 +30,7 @@ class Player:
             game_map[position[1]][position[0]].seen_set(True)
 
     # Needs a case for the boundary wall?
-    def move(self, direction, game_map):
+    def move(self, direction: Direction, game_map):
         self.player_view(2, self.position, game_map)
         if self.energy > 0 and direction != Direction.NULL:
             if direction == Direction.NORTH:
@@ -54,13 +54,13 @@ class Player:
             if self.energy < 0:
                 self.energy = 0
 
-    def add_inv(self, new_item):
+    def add_inv(self, new_item: str):
         if new_item in self.player_inventory:
             self.player_inventory[new_item] += 1
         else:
             self.player_inventory.update({new_item: 1})
 
-    def has_item(self, item):
+    def has_item(self, item: str):
         if item in self.player_inventory:
             return True
         else:
@@ -69,16 +69,16 @@ class Player:
     def print_inv(self):
         inv = ''
         for key in self.player_inventory:
-            inv += key + ': ' + str(self.player_inventory[key]) + '   '
+            inv += key.capitalize() + ': ' + str(self.player_inventory[key]) + '   '
         return inv
 
     def get_energy(self):
         return self.energy
 
-    def add_energy(self, addition):
+    def add_energy(self, addition: int):
         self.energy += addition
 
-    def spend_money(self, cost):
+    def spend_money(self, cost: int):
         self.money -= cost
 
     def get_money(self):

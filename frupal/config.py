@@ -5,10 +5,10 @@ import enum
 class Config:
     static = None
 
-    def get_map(self, k):  # Defines get function for Map Library
+    def get_map(self, k: str):  # Defines get function for Map Library
         return self.map[k]
 
-    def get_player(self, k):  # Defines get function for Player Stats Library
+    def get_player(self, k: str):  # Defines get function for Player Stats Library
         return self.player[k]
 
     def __init__(self):

@@ -33,7 +33,7 @@ if __name__ == "__main__":
     playing = 0
 
     # Main Loop
-    while running != False:
+    while running:
         # Initialize Map When Player Selects Start
         game_map = Map(config, debug)
         player = Player(config, debug)
@@ -51,4 +51,3 @@ if __name__ == "__main__":
                 drawer.final_screen(playing)
                 playing = 0
         running = user.main_menu(config)
-            

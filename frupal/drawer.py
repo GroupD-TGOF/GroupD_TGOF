@@ -4,7 +4,7 @@ import time
 
 
 class Drawer:
-    def __init__(self, window):
+    def __init__(self, window: tuple):
         self.width = window[0]
         self.height = window[1]
         self.middle = self.height // 2

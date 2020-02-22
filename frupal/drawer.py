@@ -93,7 +93,7 @@ class Drawer:
         # After Spacer
         for a in range(spacer_lines - 1):
             if a == 3:
-                print(game_map[b[1]][b[0]].print_tile(player.player_inventory).center(self.width))
+                print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
             print()
 
     def print_stats(self, player):
@@ -102,5 +102,5 @@ class Drawer:
         s_str += "     Money: "
         s_str += str(player.get_money())
         s_str += "     Inventory: "
-        s_str += player.print_inv()
+        s_str += ' '.join([str(elem).capitalize() for elem in player.inventory])
         print(crayons.yellow(s_str.center(self.width)))

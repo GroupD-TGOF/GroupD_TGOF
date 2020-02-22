@@ -8,7 +8,7 @@ class Tile:
 		self.title = title
 		self.energy_req = energy_req
 		self.icon = u"\u25A0"
-		self.inv = dict()
+		self.inv = []
 
 	def get_name(self):
 		return self.title
@@ -20,16 +20,13 @@ class Tile:
 		return self.icon
 
 	def add_inv(self, item: str):
-		if item in self.inv:
-			self.inv[item] += 1
-		else:
-			self.inv.update({item: 1})
+		if item not in self.inv:
+			self.inv.append(item)
 
 	def get_inv(self):
-		return self.inv
-
-	def clear_inv(self):
-		self.inv.clear()
+                t_inv = self.inv.copy()
+                self.inv.clear()
+                return t_inv
 
 	def has_item(self, item: str):
 		if item in self.inv:

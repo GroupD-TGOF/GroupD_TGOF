@@ -23,7 +23,7 @@ class Player:
             self.money = 100
             self.position = [config.get_map('width') // 2, config.get_map('height') // 2]
 
-        self.player_inventory = dict()
+        self.inventory = []
 
     def player_view(self, view_dist, position, game_map):
         if not game_map[position[1]][position[0]].seen_status():
@@ -49,40 +49,31 @@ class Player:
                 self.position[1] += 1
                 if self.position[1] > self.map_size[1] - 1:
                     self.position[1] -= 1
-            self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.player_inventory))
-            self.player_inventory.update(game_map[self.position[1]][self.position[0]].get_inv())
+            self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.inventory))
+            if game_map[self.position[1]][self.position[0]].inv:
+                self.inventory.extend(game_map[self.position[1]][self.position[0]].get_inv())
             if self.energy < 0:
                 self.energy = 0
 
-    def add_inv(self, new_item: str):
-        if new_item in self.player_inventory:
-            self.player_inventory[new_item] += 1
-        else:
-            self.player_inventory.update({new_item: 1})
-
-    def has_item(self, item: str):
-        if item in self.player_inventory:
+    def add_inv(self, item: str, cost: int):
+        if self.money >= cost:
+            self.money -= cost
+            if item == "+10 energy":
+                self.energy += 10
+            else:
+                self.inventory.append(item)
             return True
         else:
             return False
 
-    def print_inv(self):
-        inv = ''
-        for key in self.player_inventory:
-            inv += key.capitalize() + ': ' + str(self.player_inventory[key]) + '   '
-        return inv
-
     def get_energy(self):
         return self.energy
-
-    def add_energy(self, addition: int):
-        self.energy += addition
-
-    def spend_money(self, cost: int):
-        self.money -= cost
 
     def get_money(self):
         return self.money
 
     def get_position(self):
         return self.position
+
+    def has_item(self, item: str):
+        return item in self.inventory

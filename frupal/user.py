@@ -1,23 +1,20 @@
 from .player import Direction
 from .config import Config
+from .drawer import Drawer
 
+import os
 import crayons
 import readchar
+import time
 
 
 class User:
 
-    def __init__(self, window: tuple):
+    def __init__(self, window: tuple, config: Config):
         self.width = window[0]
         self.height = window[1]
         self.middle = self.height // 2
-
-        self.store = {  # Creates Store Library
-            'saw': 10,  # Initializes player stats
-            'boat': 15,
-            'wood_plank': 5,
-            'energy': 20
-        }
+        self.store = config.store
 
     @staticmethod
     def config_menu(config: Config):
@@ -51,29 +48,36 @@ class User:
             return self.main_menu(config)
 
     def store_menu(self, player):
-        store_spacer = (self.height - len(self.store)) // 2
-        for i in range(store_spacer):
+        for i in range(self.middle):
             print()
-        print("Frupal Store:".center(self.width))
-        for key in self.store:
-            print((key + "  =  " + str(self.store[key])).center(self.width))
-        for i in range(store_spacer):
+        while True:
+            print("Welcome to the Store. Your money: {}".format(player.get_money()))
+            index = 1
+            keys = []
+            for key in self.store:
+                if not player.has_item(key):
+                    keys.append(key)
+                    print("Enter " + str(index) + " to buy: " + str(key) + " price: " + str(self.store[key]))
+                    index += 1
             print()
-        choice = input("What do you want to buy: ".center(self.width))
-        if choice == 'saw':
-            player.add_inv(choice)
-            player.spend_money(self.store[choice])
-        elif choice == 'boat':
-            player.add_inv(choice)
-            player.spend_money(self.store[choice])
-        elif choice == 'wood_plank':
-            player.add_inv(choice)
-            player.spend_money(self.store[choice])
-        elif choice == 'energy':
-            player.spend_money(self.store[choice])
-            player.add_energy(20)
-        else:
-            pass
+            print("Enter 0 to leave the store")
+            for i in range(self.middle - len(self.store)):
+                print()
+            try:
+                choice = int(input("What do you want to buy: "))
+            except:
+                continue
+            choice -= 1
+            if choice == -1:
+                return
+            if choice < len(keys):
+                if player.add_inv(keys[choice], self.store[keys[choice]]):
+                    print("Added: " + str(keys[choice]) + " to inventory")
+                    time.sleep(1)
+                else:
+                    print("Not enough money to purchase item")
+                    time.sleep(1)
+            print("\n\n\nprevious transactions above this line-------------\n\n\n")
 
     def control(self, player, game_map):
         if player.get_energy() == 0:

@@ -48,10 +48,15 @@ class Map:
         for i in range(len(self._array)):
             self._array[i] = [Tile('tile', 1, debug) for i in range(config.get_map("width"))]
 
-        self._array[4][5] = Water(debug)
-        self._array[6][7] = Tree(debug)
-        self._array[4][4] = Mud(debug)
-        self._array[3][3].add_inv('jewels')
+        for i in range(config.get_map('water')):
+            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Water(debug)
+        for i in range(config.get_map('tree')):
+            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Tree(debug)
+        for i in range(config.get_map('mud')):
+            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Mud(debug)
+            
+        self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)].add_inv('jewels')
+        
 
     def __getitem__(self, row: int):
         """

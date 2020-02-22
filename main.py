@@ -18,7 +18,6 @@ if __name__ == "__main__":
 
     # Draw Game Title Screen
     drawer = Drawer(window)
-    user = User(window)
     drawer.title_screen()
 
     # Initializations
@@ -27,6 +26,7 @@ if __name__ == "__main__":
         if sys.argv[1] == '-d':
             debug = True
     config = Config()
+    user = User(window, config)
 
     # Take user input
     running = user.main_menu(config)

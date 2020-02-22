@@ -54,8 +54,9 @@ class Map:
             self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Tree(debug)
         for i in range(config.get_map('mud')):
             self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Mud(debug)
-            
-        self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)].add_inv('jewels')
+
+        for j in range(len(self._array) // 10):
+            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)].add_inv('jewels')
         
 
     def __getitem__(self, row: int):

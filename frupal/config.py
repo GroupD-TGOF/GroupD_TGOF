@@ -38,8 +38,11 @@ class Config:
 
         self.store = {
             '+10 energy': 10,
-            'saw': 25,
+            "+25 energy": 20,
             'boat': 10,
+            'binoculars': 15,
+            'saw': 25,
+            'shears' : 10,
             'wood_plank': 5
         }
 
@@ -222,5 +225,7 @@ class Config:
         r_str.append("Blackberry Bushes: " + str(self.map['blackberry']) + " SQ. Yards")
         r_str.append("Boulders: " + str(self.map['boulder']) + " SQ. Yards")
         r_str.append("Troll(s): " + str(self.map['troll']) + " SQ. Yards")
+        r_str.append("\n")
+        r_str.append("(Q) Exit Config")
 
         return r_str

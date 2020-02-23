@@ -20,3 +20,4 @@ venv.bak/
 .idea/*
 .vscode/*
 .cache
+*.spec

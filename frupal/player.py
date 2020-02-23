@@ -60,6 +60,8 @@ class Player:
             self.money -= cost
             if item == "+10 energy":
                 self.energy += 10
+            elif item == "+25 energy":
+                self.energy += 25
             else:
                 self.inventory.append(item)
             return True

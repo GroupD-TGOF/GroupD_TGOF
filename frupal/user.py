@@ -68,23 +68,25 @@ class User:
             return self.main_menu(config)
 
     def store_menu(self, player):
-        for i in range(self.middle):
-            print()
+        spacer = (len(self.store) + 4) // 2
         while True:
-            print("Welcome to the Store. Your money: {}".format(player.get_money()))
+            for i in range(self.middle - spacer):
+                print()
+            print("Welcome to the Store.".center(self.width))
+            print("Your Money: {}".format(player.get_money()).center(self.width))
             index = 1
             keys = []
             for key in self.store:
                 if not player.has_item(key):
                     keys.append(key)
-                    print("Enter " + str(index) + " to buy: " + str(key) + " price: " + str(self.store[key]))
+                    print(("Enter " + str(index) + " to buy: " + str(key) + " Price: " + str(self.store[key])).center(self.width))
                     index += 1
             print()
-            print("Enter 0 to leave the store")
-            for i in range(self.middle - len(self.store)):
+            print("Enter 0 to leave the store".center(self.width))
+            for i in range(self.middle - (spacer - 1)):
                 print()
             try:
-                choice = int(input("What do you want to buy: "))
+                choice = int(input("What do you want to buy: ".center(self.width)))
             except:
                 continue
             choice -= 1
@@ -92,12 +94,12 @@ class User:
                 return
             if choice < len(keys):
                 if player.add_inv(keys[choice], self.store[keys[choice]]):
-                    print("Added: " + str(keys[choice]) + " to inventory")
+                    print(("Added: " + str(keys[choice]) + " to inventory").center(self.width))
                     time.sleep(1)
                 else:
-                    print("Not enough money to purchase item")
+                    print("Not enough money to purchase item".center(self.width))
                     time.sleep(1)
-            print("\n\n\nprevious transactions above this line-------------\n\n\n")
+            print("\n\n\nprevious transactions above this line-------------\n\n\n".center(self.width))
 
     def control(self, player, game_map):
         if player.get_energy() == 0:

@@ -44,20 +44,63 @@ class Map:
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
+        base = 'tile'
         self._array = [[] for i in range(config.get_map("height"))]
+        
         for i in range(len(self._array)):
-            self._array[i] = [Tile('tile', 1, debug) for i in range(config.get_map("width"))]
+            self._array[i] = [Tile(base, 1, debug) for i in range(config.get_map("width"))]
+            
+        count = 0
+        while count < config.get_map('water'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Water(debug)
+                count += 1
 
-        for i in range(config.get_map('water')):
-            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Water(debug)
-        for i in range(config.get_map('tree')):
-            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Tree(debug)
-        for i in range(config.get_map('mud')):
-            self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)] = Mud(debug)
+        count = 0
+        while count < config.get_map('tree'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Tree(debug)
+                count += 1
 
+        count = 0
+        while count < config.get_map('mud'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Mud(debug)
+                count += 1
+
+        count = 0
+        while count < config.get_map('troll'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Tile('troll',1,debug)
+                count += 1
+
+        count = 0
+        while count < config.get_map('blackberry'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Tile('blackberry',1,debug)
+                count += 1
+
+        count = 0
+        while count < config.get_map('boulder'):
+            x = randint(0,len(self._array)-1)
+            y = randint(0,len(self._array[0])-1)
+            if self._array[x][y].get_name() == base:
+                self._array[x][y] = Tile('boulder',1,debug)
+                count += 1
+        
         for j in range(len(self._array) // 10):
             self._array[randint(0,len(self._array)-1)][randint(0,len(self._array[0])-1)].add_inv('jewels')
-        
+                        
 
     def __getitem__(self, row: int):
         """

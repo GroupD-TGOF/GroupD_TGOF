@@ -16,16 +16,36 @@ class User:
         self.middle = self.height // 2
         self.store = config.store
 
-    @staticmethod
-    def config_menu(config: Config):
-        config.print_config()
-        config.map_Input['size'] = 0  # If user wants new settings, reset inputs
-        config.map_Input['style'] = 0  # If user wants new settings, reset inputs
-        config.map_size()  # Calls function to set new Map Dimensions
-        config.map_style()  # Calls function to set new Map Tile quantities
-        config.player_stats()  # Calls function to set new Player stats
-        config.create_config()  # Calls function to save to config file
-        config.print_config()
+    def config_menu(self, config: Config):
+        sp = config.print_config()
+        for i in range(self.middle - (len(sp)//2)):
+            print()
+        for i in range(len(sp)):
+            print(sp[i].center(self.width))
+        for i in range(self.middle - ((len(sp) // 2)-1)):
+            print()
+        key = readchar.readkey()
+        if key == 'p':
+            config.player_stats()
+            self.config_menu(config)
+        elif key == 's':
+            config.map_Input['size'] = 0
+            config.map_Input['style'] = 0
+            config.map_size()
+            config.map_style()
+            self.config_menu(config)
+        elif key == 'q':
+            config.create_config()
+            sp = config.print_config()
+            for i in range(self.middle - (len(sp)//2)):
+                print()
+            for i in range(len(sp)):
+                print(sp[i].center(self.width))
+            for i in range(self.middle - ((len(sp) // 2)-1)):
+                print()
+            time.sleep(2)
+        else:
+            self.config_menu(config)
 
     def main_menu(self, config: Config):
         for i in range(self.middle - 4):
@@ -40,7 +60,7 @@ class User:
         if key == 's' or key == '\n':
             return True
         if key == 'c':
-            config.change_config()
+            self.config_menu(config)
             return self.main_menu(config)
         if key == 'q' or key == '\033':
             return False

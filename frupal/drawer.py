@@ -64,14 +64,18 @@ class Drawer:
                 else:
                     if game_map[j][k].seen_status():
                         if not game_map[j][k].has_item('jewels'):
-                            if game_map[j][k].get_name() == 'tile':
-                                print(crayons.green(game_map[j][k].get_icon()), end=' ')
                             if game_map[j][k].get_name() == 'water':
                                 print(crayons.blue(game_map[j][k].get_icon()), end=' ')
-                            if game_map[j][k].get_name() == 'tree':
+                            elif game_map[j][k].get_name() == 'tree':
+                                print(crayons.green(game_map[j][k]).get_icon(), end=' ')
+                            elif game_map[j][k].get_name() == 'mud':
                                 print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
-                            if game_map[j][k].get_name() == 'mud':
-                                print(crayons.black(game_map[j][k]).get_icon(), end=' ')
+                            elif game_map[j][k].get_name() == 'blackberry':
+                                print(crayons.magenta(game_map[j][k]).get_icon(), end=' ')
+                            elif game_map[j][k].get_name() == 'boulder':
+                                print(crayons.white(game_map[j][k]).get_icon(), end=' ')
+                            else:
+                                print(crayons.green(game_map[j][k].get_icon()), end=' ')
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:

@@ -17,12 +17,12 @@ class Config:
             'total': 100,  # Initializes map dimensions
             'height': 10,
             'width': 10,
-            'tree': 4,  # Initializes tile quantities
-            'blackberry': 4,
-            'boulder': 4,
-            'water': 4,
-            'mud': 4,
-            'troll': 4
+            'tree': 1,  # Initializes tile quantities
+            'blackberry': 1,
+            'boulder': 1,
+            'water': 1,
+            'mud': 1,
+            'troll': 1
         }
         self.player = {  # Creates Player Library
             'energy': 15,  # Initializes player stats
@@ -111,7 +111,7 @@ class Config:
             elif self.map_Input['size'] == 2:  # Medium 20 x 20
                 self.map["height"] = 20
                 self.map["width"] = 20
-            elif self.map_Input['size'] == 3:  # Large 20 x 40
+            elif self.map_Input['size'] == 3:  # Large 30 x 30
                 self.map["height"] = 30
                 self.map["width"] = 30
             else:  # Bad input
@@ -130,50 +130,54 @@ class Config:
         while self.map_Input['style'] == 0:  # User inputs difficulty choice
             self.map_Input['style'] = int(input('Enter Selection (1-7): '))
             if self.map_Input['style'] == 1:        # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
-                self.map['tree'] = int(self.map['total'] / 5)
-                self.map['boulder'] = int(self.map['total'] / 20)
-                self.map['waters'] = int(self.map['total'] / 20)
-                self.map['blackberry'] = int(self.map['total'] / 20)
+                self.map['tree'] = int(self.map['total'] * 0.20)
+                self.map['boulder'] = int(self.map['total'] * 0.05)
+                self.map['water'] = int(self.map['total'] * 0.05)
+                self.map['blackberry'] = int(self.map['total'] * 0.05)
+                self.map['mud'] = int(self.map['total'] * 0)
+                self.map['trolls'] = int(self.map['total'] * 0)
             elif self.map_Input['style'] == 2:  # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
-                self.map['tree'] = int(self.map['total'] * (2/5))
-                self.map['boulder'] = int(self.map['total'] / 20)
-                self.map['waters'] = int(self.map['total'] / 20)
-                self.map['blackberry'] = int(self.map['total'] / 10)
-                self.map['trolls'] = int(self.map['total'] /100 )
+                self.map['tree'] = int(self.map['total'] * 0.40)
+                self.map['blackberry'] = int(self.map['total'] * 0.10)
+                self.map['boulder'] = int(self.map['total'] * 0.05)
+                self.map['water'] = int(self.map['total'] * 0.05)
+                self.map['mud'] = int(self.map['total'] * 0)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 3: # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls 1%, mud 0%
-                self.map['tree'] = int(self.map['total'] * (2/5))
-                self.map['boulder'] = int(self.map['total'] / 5)
-                self.map['water'] = int(self.map['total'] / 20)
-                self.map['blackberry'] = int(self.map['total'] / 5)
-                self.map['trolls'] = int(self.map['total'] /100)
-            elif self.map_Input['style'] == 4:   # RainForest: trees 50%, bbush 10%,
-                self.map['tree'] = int(self.map['total'] / 2)          # boulders 5%, water 10%, mud 10%, trolls 1%
-                self.map['boulder'] = int(self.map['total'] / 20)
-                self.map['water'] = int(self.map['total'] / 10)
-                self.map['blackberry'] = int(self.map['total'] / 10)
-                self.map['trolls'] = int(self.map['total'] / 100)
-                self.map['mud'] = int(self.map['total'] / 10)
+                self.map['tree'] = int(self.map['total'] * 0.40)
+                self.map['blackberry'] = int(self.map['total'] * 0.20)
+                self.map['boulder'] = int(self.map['total'] * 0.20)
+                self.map['water'] = int(self.map['total'] * 0.05)
+                self.map['mud'] = int(self.map['total'] * 0)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
+            elif self.map_Input['style'] == 4:   # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%, trolls 1%
+                self.map['tree'] = int(self.map['total'] * 0.50)
+                self.map['blackberry'] = int(self.map['total'] * 0.10)
+                self.map['boulder'] = int(self.map['total'] * 0.05)
+                self.map['water'] = int(self.map['total'] * 0.10)
+                self.map['mud'] = int(self.map['total'] * 0.10)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 5:    # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
-                self.map['tree'] = int(self.map['total'] / 5)
-                self.map['boulder'] = int(self.map['total'] / 20)
-                self.map['water'] = int(self.map['total'] / 6)
-                self.map['blackberry'] = int(self.map['total'] / 20)
-                self.map['trolls'] = int(self.map['total'] / 100)
-                self.map['mud'] = int(self.map['total'] * (2/5))
-            elif self.map_Input['style'] == 6:  # StonySwamp: trees 10%, bbush 2%,
-                self.map['tree'] = int(self.map['total'] / 10)        # boulders 20%, water 20%, mud 40%, trolls 1%
-                self.map['boulder'] = int(self.map['total'] / 6)
-                self.map['water'] = int(self.map['total'] / 6)
-                self.map['blackberry'] = int(self.map['total'] / 50)
-                self.map['trolls'] = int(self.map['total'] / 100)
-                self.map['mud'] = int(self.map['total'] * (2/5))
-            elif self.map_Input['style'] == 7:            # Quarry: trees 5%, bbush 2%
-                self.map['tree'] = int(self.map['total'] / 20)             # boulders 33%, water 10%, mud 5%, trolls 1%
-                self.map['boulder'] = int(self.map['total'] / 6)
-                self.map['water'] = int(self.map['total'] / 20)
-                self.map['blackberry'] = int(self.map['total'] / 50)
-                self.map['trolls'] = int(self.map['total'] / 100)
-                self.map['mud'] = int(self.map['total'] / 20)
+                self.map['tree'] = int(self.map['total'] * 0.20)
+                self.map['blackberry'] = int(self.map['total'] * 0.05)
+                self.map['boulder'] = int(self.map['total'] * 0.05)
+                self.map['water'] = int(self.map['total'] * 0.20)
+                self.map['mud'] = int(self.map['total'] * 0.40)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
+            elif self.map_Input['style'] == 6:  # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%, trolls 1%
+                self.map['tree'] = int(self.map['total'] * 0.10)
+                self.map['blackberry'] = int(self.map['total'] * 0.02)
+                self.map['boulder'] = int(self.map['total'] * 0.20)
+                self.map['water'] = int(self.map['total'] * 0.20)
+                self.map['mud'] = int(self.map['total'] * 0.40)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
+            elif self.map_Input['style'] == 7:            # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
+                self.map['tree'] = int(self.map['total'] * 0.05)
+                self.map['blackberry'] = int(self.map['total'] * 0.02)
+                self.map['boulder'] = int(self.map['total'] * 0.50)
+                self.map['water'] = int(self.map['total'] * 0.10)
+                self.map['mud'] = int(self.map['total'] * 0.05)
+                self.map['trolls'] = int(self.map['total'] * 0.01)
             else:  # default, for bad input
                 print("Must be 1-7")
 
@@ -194,7 +198,7 @@ class Config:
             Medium = 2
             Large = 3
 
-        class Style(enum.Enum):
+        class Type(enum.Enum):
             Park = 1
             Forest = 2
             Rocky_Forest = 3
@@ -203,21 +207,20 @@ class Config:
             Stony_Swamp = 6
             Quarry = 7
 
-        print()
-        print("Loading your player's stats:")  # Prints user starting energy and money
-        print(self.player['energy'], "starting energy and",
-              self.player['money'], "starting Ethereum.")
-        print()
-        print("Loading your map data:")
-        print(Size(self.map_Input['size']).name,
-              Style(self.map_Input['style']).name,
-              '(', self.map['height'], "x", self.map['width'], ' sq. yards) with',
-              self.map['tree'], "trees,",                     # Prints quantity of each tile user can expect to find
-              self.map['blackberry'], "blackberry bushes",
-              self.map['boulder'], "boulders,",
-              self.map['water'], "sq. yards of water,",
-              self.map['mud'], "sq. yards of mud, and")
-        if self.map['troll'] == 1:
-            print(self.map['troll'], "troll...")
-        else:
-            print(self.map['troll'], "trolls...")
+        r_str = []
+        r_str.append("Player's Statistics: ")  # Prints user starting energy and money
+        r_str.append("(P) Starting Energy: " + str(self.player['energy']))
+        r_str.append("(P) Starting Money: " + str(self.player['money']))
+        r_str.append("\n")
+        r_str.append("Map Statistics: ")
+        r_str.append("(S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name)
+        r_str.append("(S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or ' + str(self.map['total']) + " Tiles")
+
+        r_str.append("Water: " + str(self.map['water']) + " SQ. Yards") # Prints quantity of each tile user can expect to find
+        r_str.append("Mud: " + str(self.map['mud']) + " SQ. Yards")      
+        r_str.append("Trees: " + str(self.map['tree']) + " SQ. Yards")              
+        r_str.append("Blackberry Bushes: " + str(self.map['blackberry']) + " SQ. Yards")
+        r_str.append("Boulders: " + str(self.map['boulder']) + " SQ. Yards")
+        r_str.append("Troll(s): " + str(self.map['troll']) + " SQ. Yards")
+
+        return r_str

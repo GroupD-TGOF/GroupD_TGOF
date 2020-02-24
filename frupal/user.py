@@ -18,11 +18,11 @@ class User:
 
     def config_menu(self, config: Config):
         sp = config.print_config()
-        for i in range(self.middle - (len(sp)//2)):
+        for i in range(self.middle - (len(sp) // 2)):
             print()
         for i in range(len(sp)):
             print(sp[i].center(self.width))
-        for i in range(self.middle - ((len(sp) // 2)-1)):
+        for i in range(self.middle - ((len(sp) // 2) - 1)):
             print()
         key = readchar.readkey()
         if key == 'p':
@@ -37,11 +37,11 @@ class User:
         elif key == 'q':
             config.create_config()
             sp = config.print_config()
-            for i in range(self.middle - (len(sp)//2)):
+            for i in range(self.middle - (len(sp) // 2)):
                 print()
             for i in range(len(sp)):
                 print(sp[i].center(self.width))
-            for i in range(self.middle - ((len(sp) // 2)-1)):
+            for i in range(self.middle - ((len(sp) // 2) - 1)):
                 print()
             time.sleep(2)
         else:
@@ -79,7 +79,8 @@ class User:
             for key in self.store:
                 if not player.has_item(key):
                     keys.append(key)
-                    print(("Enter " + str(index) + " to buy: " + str(key) + " Price: " + str(self.store[key])).center(self.width))
+                    print(("Enter " + str(index) + " to buy: " + str(key) + " Price: " + str(self.store[key])).center(
+                        self.width))
                     index += 1
             print()
             print("Enter 0 to leave the store".center(self.width))

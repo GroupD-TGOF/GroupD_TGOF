@@ -3,7 +3,7 @@ Nick Grout 1/23/2020
 """
 from random import randint
 import enum
-from .tiles import Tile, Water, Mud, Tree
+from .tiles import Tile, Water, Mud, Tree, Troll, Blackberry
 from .player import Player
 from .config import Config
 
@@ -54,9 +54,9 @@ class Map:
         elif tile == 'mud':
             self._array[x][y] = Mud(debug)
         elif tile == 'troll':
-            self._array[x][y] = Tile('troll', 1, debug)
+            self._array[x][y] = Troll(debug)
         elif tile == 'blackberry':
-            self._array[x][y] = Tile('blackberry', 1, debug)
+            self._array[x][y] = Blackberry(debug)
         elif tile == 'boulder':
             self._array[x][y] = Tile('boulder', 1, debug)
 

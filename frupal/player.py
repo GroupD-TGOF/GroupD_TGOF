@@ -58,6 +58,8 @@ class Player:
 
             # Adjust energy
             self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.inventory))
+            if game_map[self.position[1]][self.position[0]].get_name() == 'troll':
+                self.money = self.money // 2
 
             # Add inventory of Tile to inventory of Player
             if game_map[self.position[1]][self.position[0]].inv:

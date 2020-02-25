@@ -19,6 +19,7 @@ class User:
 
     def config_menu(self, config: Config):
         sp = config.print_config()
+        print(len(sp))
         for i in range(self.middle - (len(sp) // 2)):
             if self.debug:
                 print("+ " + str(i))
@@ -61,7 +62,7 @@ class User:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        for i in range(self.middle - 2):
+        for i in range(self.middle - 4):
             if self.debug:
                 print("+ " + str(i))
             else:
@@ -69,8 +70,8 @@ class User:
         print(crayons.green("The Game of Frupal!".center(self.width)))
         print(crayons.yellow("(S) Start Game!".center(self.width)))
         print(crayons.yellow("(C) Configuration?".center(self.width)))
-        print(crayons.yellow("(Q) Exit Game.".center(self.width)))
-        for i in range(self.middle - 2):
+        print(crayons.yellow("(Q) Exit Game.".center(self.width)), end='')
+        for i in range(self.middle - 4):
             if self.debug:
                 print("+ " + str(i))
             else:

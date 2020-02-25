@@ -27,8 +27,8 @@ class Config:
         self.player = {  # Creates Player Library
             'energy': 15,  # Initializes player stats
             'money': 15,
-            'p_x': 0,
-            'p_y': 0
+            'p_r': 0,
+            'p_c': 0
 
         }
         self.map_Input = {  # Creates Input Library

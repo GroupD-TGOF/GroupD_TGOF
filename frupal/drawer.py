@@ -11,12 +11,12 @@ class Drawer:
         self.debug = debug
 
     def title_screen(self):
-        for i in range(self.middle):
+        for i in range(self.middle - 1):
             if self.debug:
                 print("+ " + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!".center(self.width)), end='')
         for i in range(self.middle):
             if self.debug:
                 print("+ " + str(i))

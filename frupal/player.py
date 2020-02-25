@@ -16,7 +16,7 @@ class Player:
         if not debug:
             self.energy = config.get_player('energy')
             self.money = config.get_player('money')
-            self.position = [0, 0]
+            self.position = [config.get_player('p_c'), config.get_player('p_r')]
 
         else:
             self.energy = 100

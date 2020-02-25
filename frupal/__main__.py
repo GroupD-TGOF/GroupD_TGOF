@@ -38,6 +38,7 @@ if __name__ == "__main__":
         game_map = Map(config, debug)
         player = Player(config, debug)
         playing = 1
+        player.player_view(2, game_map)
         while playing != 0:
             # Print Game Screen
             drawer.print_game(player, game_map)

@@ -138,14 +138,14 @@ class Config:
                 self.map['water'] = int(self.map['total'] * 0.05)
                 self.map['blackberry'] = int(self.map['total'] * 0.05)
                 self.map['mud'] = int(self.map['total'] * 0)
-                self.map['trolls'] = int(self.map['total'] * 0)
+                self.map['troll'] = int(self.map['total'] * 0)
             elif self.map_Input['style'] == 2:  # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
                 self.map['tree'] = int(self.map['total'] * 0.40)
                 self.map['blackberry'] = int(self.map['total'] * 0.10)
                 self.map['boulder'] = int(self.map['total'] * 0.05)
                 self.map['water'] = int(self.map['total'] * 0.05)
                 self.map['mud'] = int(self.map['total'] * 0)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 3:  # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls
                 # 1%, mud 0%
                 self.map['tree'] = int(self.map['total'] * 0.40)
@@ -153,7 +153,7 @@ class Config:
                 self.map['boulder'] = int(self.map['total'] * 0.20)
                 self.map['water'] = int(self.map['total'] * 0.05)
                 self.map['mud'] = int(self.map['total'] * 0)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 4:  # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%,
                 # trolls 1%
                 self.map['tree'] = int(self.map['total'] * 0.50)
@@ -161,14 +161,14 @@ class Config:
                 self.map['boulder'] = int(self.map['total'] * 0.05)
                 self.map['water'] = int(self.map['total'] * 0.10)
                 self.map['mud'] = int(self.map['total'] * 0.10)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 5:  # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
                 self.map['tree'] = int(self.map['total'] * 0.20)
                 self.map['blackberry'] = int(self.map['total'] * 0.05)
                 self.map['boulder'] = int(self.map['total'] * 0.05)
                 self.map['water'] = int(self.map['total'] * 0.20)
                 self.map['mud'] = int(self.map['total'] * 0.40)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 6:  # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%,
                 # trolls 1%
                 self.map['tree'] = int(self.map['total'] * 0.10)
@@ -176,14 +176,14 @@ class Config:
                 self.map['boulder'] = int(self.map['total'] * 0.20)
                 self.map['water'] = int(self.map['total'] * 0.20)
                 self.map['mud'] = int(self.map['total'] * 0.40)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             elif self.map_Input['style'] == 7:  # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
                 self.map['tree'] = int(self.map['total'] * 0.05)
                 self.map['blackberry'] = int(self.map['total'] * 0.02)
                 self.map['boulder'] = int(self.map['total'] * 0.50)
                 self.map['water'] = int(self.map['total'] * 0.10)
                 self.map['mud'] = int(self.map['total'] * 0.05)
-                self.map['trolls'] = int(self.map['total'] * 0.01)
+                self.map['troll'] = int(self.map['total'] * 0.01)
             else:  # default, for bad input
                 print("Must be 1-7")
 

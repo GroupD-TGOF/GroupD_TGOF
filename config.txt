@@ -1,1 +1,1 @@
-{"player": {"energy": 15, "money": 15, "p_r": 0, "p_c": 0}, "map": {"total": 100, "height": 10, "width": 10, "tree": 20, "blackberry": 5, "boulder": 5, "water": 20, "mud": 40, "troll": 1}, "map_Input": {"style": 5, "size": 1}}
+{"player": {"energy": 15, "money": 15, "p_r": 0, "p_c": 0}, "map": {"total": 900, "height": 30, "width": 30, "tree": 180, "blackberry": 45, "boulder": 45, "water": 180, "mud": 360, "troll": 9}, "map_Input": {"style": 5, "size": 3}}

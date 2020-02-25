@@ -20,6 +20,7 @@ class Map:
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
+        self.tryn = 0
         base = 'tile'
         tiles = ['water', 'tree', 'mud', 'troll', 'blackberry', 'boulder']
         self._array = [[] for i in range(config.get_map("height"))]
@@ -27,30 +28,37 @@ class Map:
         for i in range(len(self._array)):
             self._array[i] = [Tile(base, 1, debug) for i in range(config.get_map("width"))]
 
+        self.random_gen(base, tiles, config, debug)
+        # self.biome_gen(base, tiles, config, debug)
+
+        for j in range(config.get_map('total') // 90):
+            self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
+
+        self._array[0][0].seen_set(True)
+
+    def random_gen(self, base, tiles, config, debug):
         for tile in tiles:
             count = 0
             while count < config.get_map(tile):
                 x = randint(0, len(self._array) - 1)
                 y = randint(0, len(self._array[0]) - 1)
                 if self._array[x][y].get_name() == base:
-                    if tile == 'water':
-                        self._array[x][y] = Water(debug)
-                    elif tile == 'tree':
-                        self._array[x][y] = Tree(debug)
-                    elif tile == 'mud':
-                        self._array[x][y] = Mud(debug)
-                    elif tile == 'troll':
-                        self._array[x][y] = Tile('troll', 1, debug)
-                    elif tile == 'blackberry':
-                        self._array[x][y] = Tile('blackberry', 1, debug)
-                    elif tile == 'boulder':
-                        self._array[x][y] = Tile('boulder', 1, debug)
+                    self.set_tile(tile, x, y, debug)
                     count += 1
 
-        for j in range(config.get_map('total') // 90):
-            self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
-
-        self._array[0][0].seen_set(True)
+    def set_tile(self, tile, x, y, debug):
+        if tile == 'water':
+            self._array[x][y] = Water(debug)
+        elif tile == 'tree':
+            self._array[x][y] = Tree(debug)
+        elif tile == 'mud':
+            self._array[x][y] = Mud(debug)
+        elif tile == 'troll':
+            self._array[x][y] = Tile('troll', 1, debug)
+        elif tile == 'blackberry':
+            self._array[x][y] = Tile('blackberry', 1, debug)
+        elif tile == 'boulder':
+            self._array[x][y] = Tile('boulder', 1, debug)
 
     def __getitem__(self, row: int):
         """

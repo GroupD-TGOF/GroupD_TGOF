@@ -80,18 +80,22 @@ class Drawer:
                 else:
                     if game_map[j][k].seen_status():
                         if not game_map[j][k].has_item('jewels'):
-                            if game_map[j][k].get_name() == 'water':
+                            if game_map[j][k].get_color() == 'red':
                                 print(crayons.blue(game_map[j][k].get_icon()), end=' ')
-                            elif game_map[j][k].get_name() == 'tree':
+                            elif game_map[j][k].get_color() == 'green':
                                 print(crayons.green(game_map[j][k]).get_icon(), end=' ')
-                            elif game_map[j][k].get_name() == 'mud':
+                            elif game_map[j][k].get_color() == 'yellow':
                                 print(crayons.yellow(game_map[j][k]).get_icon(), end=' ')
-                            elif game_map[j][k].get_name() == 'blackberry':
+                            elif game_map[j][k].get_color() == 'blue':
                                 print(crayons.magenta(game_map[j][k]).get_icon(), end=' ')
-                            elif game_map[j][k].get_name() == 'boulder':
+                            elif game_map[j][k].get_color() == 'black':
                                 print(crayons.white(game_map[j][k]).get_icon(), end=' ')
-                            else:
-                                print(crayons.green(game_map[j][k].get_icon()), end=' ')
+                            elif game_map[j][k].get_color() == 'magenta':
+                                print(crayons.magenta(game_map[j][k]).get_icon(), end=' ')
+                            elif game_map[j][k].get_color() == 'cyan':
+                                print(crayons.cyan(game_map[j][k]).get_icon(), end=' ')
+                            elif game_map[j][k].get_color() == 'white':
+                                print(crayons.white(game_map[j][k]).get_icon(), end=' ')
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:

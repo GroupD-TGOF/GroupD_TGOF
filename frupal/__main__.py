@@ -16,17 +16,17 @@ if __name__ == "__main__":
     except OSError:
         window = (60, 50)
 
-    # Draw Game Title Screen
-    drawer = Drawer(window)
-    drawer.title_screen()
-
     # Initializations
     debug = False
     if len(sys.argv) > 1:
         if sys.argv[1] == '-d':
             debug = True
     config = Config()
-    user = User(window, config)
+    user = User(window, config, debug)
+
+    # Draw Game Title Screen
+    drawer = Drawer(window, debug)
+    drawer.title_screen()
 
     # Take user input
     running = user.main_menu(config)
@@ -37,16 +37,16 @@ if __name__ == "__main__":
         # Initialize Map When Player Selects Start
         game_map = Map(config, debug)
         player = Player(config, debug)
-        playing = 1;
+        playing = 1
         while playing != 0:
             # Print Game Screen
-            drawer.print_map(player, game_map)
+            drawer.print_game(player, game_map)
             drawer.print_stats(player)
 
             # Conditions for continuing
             playing = user.control(player, game_map)
             if playing == 2 or playing == 3:
-                drawer.print_map(player, game_map)
+                drawer.print_game(player, game_map)
                 time.sleep(3)
                 drawer.final_screen(playing)
                 playing = 0

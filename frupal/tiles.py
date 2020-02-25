@@ -104,7 +104,7 @@ class Tree(Tile):
                 self.tree_status = False
                 return self.energy_req
             else:
-                return 0
+                return 2
         else:
             return 1
 

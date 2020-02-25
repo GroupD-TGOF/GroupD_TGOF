@@ -25,13 +25,19 @@ class Player:
 
         self.inventory = []
 
-    def player_view(self, view_dist, position, game_map):
-        if not game_map[position[1]][position[0]].seen_status():
-            game_map[position[1]][position[0]].seen_set(True)
+    #               row                        column
+    # game_map[self.position[1] + 1][self.position[0] + 1].seen_set(True)
+    def player_view(self, view_dist, game_map):
+        if not game_map[self.position[1]][self.position[0]].seen_status():
+            game_map[self.position[1]][self.position[0]].seen_set(True)
+        for i in range(-view_dist, view_dist + 1):
+            for j in range(-view_dist, view_dist + 1):
+                if (self.position[1] + i > -1 and self.position[0] + j > -1) and \
+                        (self.position[1] + i < self.map_size[1] and self.position[0] + j < self.map_size[0]):
+                    game_map[self.position[1] + i][self.position[0] + j].seen_set(True)
 
     # Needs a case for the boundary wall?
     def move(self, direction: Direction, game_map):
-        self.player_view(2, self.position, game_map)
         if self.energy > 0 and direction != Direction.NULL:
             if direction == Direction.NORTH:
                 self.position[1] += -1
@@ -49,11 +55,20 @@ class Player:
                 self.position[1] += 1
                 if self.position[1] > self.map_size[1] - 1:
                     self.position[1] -= 1
+
+            # Adjust energy
             self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.inventory))
+
+            # Add inventory of Tile to inventory of Player
             if game_map[self.position[1]][self.position[0]].inv:
                 self.inventory.extend(game_map[self.position[1]][self.position[0]].get_inv())
             if self.energy < 0:
                 self.energy = 0
+
+            view_dist = 2
+            if 'binoculars' in self.inventory:
+                view_dist = 4
+            self.player_view(view_dist, game_map)
 
     def add_inv(self, item: str, cost: int):
         if self.money >= cost:

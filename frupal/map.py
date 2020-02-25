@@ -50,6 +50,8 @@ class Map:
         for j in range(config.get_map('total') // 90):
             self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
 
+        self._array[0][0].seen_set(True)
+
     def __getitem__(self, row: int):
         """
         Access an item in the 2d array

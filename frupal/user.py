@@ -10,20 +10,27 @@ import time
 
 class User:
 
-    def __init__(self, window: tuple, config: Config):
+    def __init__(self, window: tuple, config: Config, debug: bool):
         self.width = window[0]
         self.height = window[1]
         self.middle = self.height // 2
         self.store = config.store
+        self.debug = debug
 
     def config_menu(self, config: Config):
         sp = config.print_config()
         for i in range(self.middle - (len(sp) // 2)):
-            print()
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         for i in range(len(sp)):
             print(sp[i].center(self.width))
-        for i in range(self.middle - ((len(sp) // 2) - 1)):
-            print()
+        for i in range(self.middle - (len(sp) // 2)):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         key = readchar.readkey()
         if key == 'p':
             config.player_stats()
@@ -38,24 +45,36 @@ class User:
             config.create_config()
             sp = config.print_config()
             for i in range(self.middle - (len(sp) // 2)):
-                print()
+                if self.debug:
+                    print("+ " + str(i))
+                else:
+                    print()
             for i in range(len(sp)):
                 print(sp[i].center(self.width))
-            for i in range(self.middle - ((len(sp) // 2) - 1)):
-                print()
+            for i in range(self.middle - (len(sp) // 2)):
+                if self.debug:
+                    print("+ " + str(i))
+                else:
+                    print()
             time.sleep(2)
         else:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        for i in range(self.middle - 4):
-            print()
+        for i in range(self.middle - 2):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         print(crayons.green("The Game of Frupal!".center(self.width)))
         print(crayons.yellow("(S) Start Game!".center(self.width)))
         print(crayons.yellow("(C) Configuration?".center(self.width)))
         print(crayons.yellow("(Q) Exit Game.".center(self.width)))
-        for i in range(self.middle - 4):
-            print()
+        for i in range(self.middle - 2):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         key = readchar.readkey()
         if key == 's' or key == '\n':
             return True
@@ -71,7 +90,10 @@ class User:
         spacer = (len(self.store) + 4) // 2
         while True:
             for i in range(self.middle - spacer):
-                print()
+                if self.debug:
+                    print("+ " + str(i))
+                else:
+                    print()
             print("Welcome to the Store.".center(self.width))
             print("Your Money: {}".format(player.get_money()).center(self.width))
             index = 1
@@ -84,8 +106,11 @@ class User:
                     index += 1
             print()
             print("Enter 0 to leave the store".center(self.width))
-            for i in range(self.middle - (spacer - 1)):
-                print()
+            for i in range(self.middle - (spacer + 1)):
+                if self.debug:
+                    print("+ " + str(i))
+                else:
+                    print()
             try:
                 choice = int(input("What do you want to buy: ".center(self.width)))
             except:
@@ -109,7 +134,7 @@ class User:
         # code that returns 3 for game win if game conditions are met
         if player.has_item('jewels'):
             game_map.map_reveal()
-            return 3;
+            return 3
         # end of game win conditions
         key = readchar.readkey()
         if key == 'w':

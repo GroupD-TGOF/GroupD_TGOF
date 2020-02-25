@@ -4,31 +4,44 @@ import time
 
 
 class Drawer:
-    def __init__(self, window: tuple):
+    def __init__(self, window: tuple, debug: bool):
         self.width = window[0]
         self.height = window[1]
         self.middle = self.height // 2
+        self.debug = debug
 
     def title_screen(self):
         for i in range(self.middle):
-            print()
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         print(crayons.green("The Game of Frupal!".center(self.width)))
         for i in range(self.middle):
-            print()
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         time.sleep(3)
 
     def final_screen(self, playing: int):
         for i in range(self.middle):
-            print()
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         if playing == 3:
             print(crayons.green("You Win!".center(self.width)))
         if playing == 2:
             print(crayons.green("You Lose!".center(self.width)))
         for i in range(self.middle):
-            print()
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
         time.sleep(3)
 
-    def print_map(self, player, game_map):
+    def print_game(self, player, game_map):
         border = u"\u25A0"
         b = player.get_position()
         map_size = game_map.get_size()
@@ -37,9 +50,12 @@ class Drawer:
 
         # Before Spacer
         for a in range(spacer_lines):
-            print()
+            if self.debug:
+                print("+ " + str(a))
+            else:
+                print()
 
-        # Spacer for centering map
+        # Spacer for centering map border top
         for m in range(spacer_columns):
             print(' ', end='')
 
@@ -82,23 +98,25 @@ class Drawer:
                         print('X', end=' ')
 
             # End border for each line
-            print(crayons.blue(border), end=' ')
-            print()
+            print(crayons.blue(border), end='\n')
 
-        # Spacer for centering map
+        # Spacer for centering map border bottom
         for m in range(spacer_columns):
             print(' ', end='')
 
         # Border After End Line of Map
         for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
-        # print()
+        print()
 
         # After Spacer
         for a in range(spacer_lines - 1):
-            if a == 3:
+            if self.debug:
+                print("+ " + str(a))
+            else:
+                print()
+            if a == 2:
                 print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
-            print()
 
     def print_stats(self, player):
         s_str = "Energy: "

@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 *.pickle
 build/
-main.spec
+*.spec
 
 # Environments
 .env
@@ -21,3 +21,4 @@ venv.bak/
 .vscode/*
 .cache
 *.spec
+dist/config.txt

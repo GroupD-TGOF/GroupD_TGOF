@@ -23,10 +23,10 @@ class Config:
 
         self.tiles = {
             'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green'},
-            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25B2", 'color': 'magenta'},
-            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'white'},
-            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue'},
-            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A0", 'color': 'yellow'},
+            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta'},
+            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white'},
+            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue'},
+            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow'},
             'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green'}
         }
 

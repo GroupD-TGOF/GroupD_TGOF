@@ -1,5 +1,6 @@
 from random import randint
-import sys
+import platform
+
 
 class Tile:
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
@@ -7,7 +8,6 @@ class Tile:
             self.is_seen = True
         else:
             self.is_seen = False
-
         self.title = title
         self.energy_req = energy_req
         self.icon = icon
@@ -54,6 +54,8 @@ class Tile:
 
 class Water(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = u"\u25A0"
         Tile.__init__(self, title, energy_req, icon, color, debug)  # the water_type also represent the energy
         # requirements
 
@@ -69,12 +71,15 @@ class Water(Tile):
         if "boat" in player_inventory:
             return r_str
         else:
-            r_str += "You entered this area without a boat, doing so made you spend " + str(self.energy_req * 2) + " energy!"
+            r_str += "You entered this area without a boat, doing so made you spend " + str(
+                self.energy_req * 2) + " energy!"
             return r_str
 
 
 class Mud(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = u"\u25A0"
         Tile.__init__(self, title, energy_req, icon, color, debug)
         self.plank = False
 
@@ -102,6 +107,8 @@ class Mud(Tile):
 
 class Tree(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = "T"
         Tile.__init__(self, title, energy_req, icon, color, debug)
         self.tree_status = True  # the tree is chopper down for False, and standing for True
 
@@ -129,6 +136,8 @@ class Tree(Tile):
 
 class Blackberry(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = "B"
         Tile.__init__(self, title, energy_req, icon, color, debug)
         self.bush_status = True  # the bush is cleared if false,
         b_color = ["red", "magenta"]
@@ -158,6 +167,8 @@ class Blackberry(Tile):
 
 class Troll(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = u"\u25A0"
         Tile.__init__(self, title, energy_req, icon, color, debug)
 
     def get_energy_req(self, player_inventory: dict):
@@ -170,4 +181,6 @@ class Troll(Tile):
 
 class Boulder(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        if platform.system() == "Windows":
+            icon = u"\u25A0"
         Tile.__init__(self, title, energy_req, icon, color, debug)

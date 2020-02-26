@@ -1,7 +1,8 @@
 from random import randint
+import sys
 
 class Tile:
-    def __init__(self, title: str, energy_req: int, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
         if debug:
             self.is_seen = True
         else:
@@ -9,8 +10,8 @@ class Tile:
 
         self.title = title
         self.energy_req = energy_req
-        self.icon = u"\u25A0"
-        self.color = "green"
+        self.icon = icon
+        self.color = color
         self.inv = []
 
     def get_color(self):
@@ -52,9 +53,9 @@ class Tile:
 
 
 class Water(Tile):
-    def __init__(self, debug: bool):
-        Tile.__init__(self, "water", 2, debug)  # the water_type also represent the energy requirements
-        self.color = 'blue'
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)  # the water_type also represent the energy
+        # requirements
 
     def get_energy_req(self, player_inventory: dict):  # if the tile is water, calling get_energy will call this method
         if 'boat' in player_inventory:
@@ -68,15 +69,14 @@ class Water(Tile):
         if "boat" in player_inventory:
             return r_str
         else:
-            r_str += "Entering this area without a boat will cost double energy!"
+            r_str += "You entered this area without a boat, doing so made you spend " + str(self.energy_req * 2) + " energy!"
             return r_str
 
 
 class Mud(Tile):
-    def __init__(self, debug: bool):
-        Tile.__init__(self, "mud", 5, debug)
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)
         self.plank = False
-        self.color = 'yellow'
 
     def get_energy_req(self, player_inventory: dict):
         if not self.plank:  # check self whether a wood plank has been place here or not
@@ -92,26 +92,53 @@ class Mud(Tile):
         r_str = ''
         if not self.plank:
             if "wood_plank" in player_inventory:
-                r_str += "Wood plank used!"
+                r_str += "Wood plank used!, 1 energy was spent!"
                 return r_str
             else:
-                r_str += "No wood planks available, 5 energy will be spent!"
+                r_str += "No wood plank available, " + str(self.energy_req) + " energy was spent!"
                 return r_str
         return r_str
 
 
 class Tree(Tile):
-    def __init__(self, debug: bool):
-        Tile.__init__(self, "tree", 1, debug)
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)
         self.tree_status = True  # the tree is chopper down for False, and standing for True
-        self.icon = u"\u25B2"
-        self.color = 'green'
 
     def get_energy_req(self, player_inventory: dict):
         if self.tree_status:
             if 'saw' in player_inventory:
                 self.tree_status = False
+                return 1
+            else:
                 return self.energy_req
+        else:
+            return 1
+
+    def print_tile(self, player_inventory: dict):
+        r_str = ''
+        if self.tree_status:
+            if "saw" in player_inventory:
+                r_str += "Path is cleared, 1 energy was spent!"
+                return r_str
+            else:
+                r_str += "A Tree Blocks Your Path!, " + str(self.energy_req) + " energy was spent!"
+                return r_str
+        return r_str
+
+
+class Blackberry(Tile):
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)
+        self.bush_status = True  # the bush is cleared if false,
+        b_color = ["red", "magenta"]
+        self.color = b_color[randint(0, 1)]
+
+    def get_energy_req(self, player_inventory: dict):
+        if self.bush_status:
+            if 'shears' in player_inventory:
+                self.bush_status = False
+                return 1
             else:
                 return 2
         else:
@@ -119,48 +146,19 @@ class Tree(Tile):
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
-        if self.tree_status:
-            if "saw" in player_inventory:
-                r_str += "Path is cleared"
-                return r_str
-            else:
-                r_str += "A Tree Blocks Your Path!"
-                return r_str
-
-
-class Blackberry(Tile):
-    def __init__(self, debug: bool):
-        Tile.__init__(self, "blackberry", 1, debug)
-        self.bush_status = True  # the bush is cleared if false,
-        b_color = ["red", "magenta"]
-        self.icon = u"\u25B2"
-        self.color = b_color[randint(0, 1)]
-
-    def get_energy_req(self, player_inventory: dict):
         if self.bush_status:
-            if 'mow' in player_inventory:
-                self.bush_status = False
-                return self.energy_req
-            else:
-                return 0
-        else:
-            return 1
-
-    def print_tile(self, player_inventory: dict):
-        r_str = ''
-        if self.bush_status:
-            if "saw" in player_inventory:
-                r_str += "Path is cleared"
+            if "shears" in player_inventory:
+                r_str += "Path is cleared, 1 Energy was spent"
                 return r_str
             else:
-                r_str += "black berry bush covered the road"
+                r_str += "A Black Berry Bush Blocks Your Path!, " + str(self.energy_req) + " energy was spent!"
             return r_str
         return r_str
 
 
 class Troll(Tile):
-    def __init__(self, debug: bool):
-        Tile.__init__(self, "troll", 1, debug)
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)
 
     def get_energy_req(self, player_inventory: dict):
         return 1
@@ -168,3 +166,8 @@ class Troll(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = "HAHAHAHA ALL YOUR MONEY IS MINE NOW< MUAHAHAHAHAHAH"
         return r_str
+
+
+class Boulder(Tile):
+    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, debug)

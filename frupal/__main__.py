@@ -16,6 +16,7 @@ if __name__ == "__main__":
     except OSError:
         window = (60, 50)
 
+    print(sys.platform)
     # Initializations
     debug = False
     if len(sys.argv) > 1:

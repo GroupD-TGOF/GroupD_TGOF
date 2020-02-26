@@ -1,1 +1,55 @@
-{"player": {"energy": 15, "money": 15, "p_r": 0, "p_c": 0}, "map": {"total": 100, "height": 10, "width": 10, "tree": 1, "blackberry": 1, "boulder": 1, "water": 1, "mud": 1, "troll": 1}, "map_Input": {"style": 1, "size": 1}}
+{
+  "player": {
+    "energy": 25,
+    "money": 25,
+    "p_r": 0,
+    "p_c": 0
+  },
+  "map": {
+    "total": 100,
+    "height": 10,
+    "width": 10
+  },
+  "tiles": {
+    "tree": {
+      "energy_req": 2,
+      "count": 20,
+      "icon": "\u25b2",
+      "color": "green"
+    },
+    "blackberry": {
+      "energy_req": 2,
+      "count": 5,
+      "icon": "\u25b2",
+      "color": "magenta"
+    },
+    "boulder": {
+      "energy_req": 2,
+      "count": 5,
+      "icon": "\u25a0",
+      "color": "white"
+    },
+    "water": {
+      "energy_req": 2,
+      "count": 5,
+      "icon": "\u25a0",
+      "color": "blue"
+    },
+    "mud": {
+      "energy_req": 5,
+      "count": 0,
+      "icon": "\u25a0",
+      "color": "yellow"
+    },
+    "troll": {
+      "energy_req": 1,
+      "count": 0,
+      "icon": "\u25a0",
+      "color": "green"
+    }
+  },
+  "map_Input": {
+    "style": 1,
+    "size": 1
+  }
+}

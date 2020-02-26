@@ -37,6 +37,7 @@ pip3 install -r requirements.txt
 ```bash
 python3 -m venv venv
 pip install pyinstaller
-pyinstaller --onefile pythonScriptName.py
+pyinstaller src/main.py -n Frupal -F --icon=src/frupal.ico
 ```
-pythonScriptName is the name of the main file of the python program being created. Pyinstaller should be able to detect the current operating system and create an executable accordingly.
+
+src/main.py is the script, "-n" names the resulting file(s) and -F sets it to package it in one exe, if you want the program in parts in a directory do -D

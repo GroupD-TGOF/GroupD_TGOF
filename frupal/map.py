@@ -4,6 +4,7 @@ Nick Grout 1/23/2020
 from .tiles import Tile, Water, Mud, Tree, Troll, Blackberry, Boulder
 from .config import Config
 from random import randint
+import platform
 
 
 class Map:
@@ -18,8 +19,10 @@ class Map:
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
-        base = 'tile'
         base_icon = u"\u25A0"
+        base = 'tile'
+        if platform.system() == "Windows":
+            base_icon = "L"
         base_color = 'green'
 
         tiles = config.get_tiles()
@@ -81,7 +84,7 @@ class Map:
     def get_size(self):
         """
         Returns (ROWS, COLUMNS)
-        :returns: the dimensions of the 2D array as a tuple. 
+        :returns: the dimensions of the 2D array as a tuple.
         """
         return len(self._array), len(self._array[0])
 

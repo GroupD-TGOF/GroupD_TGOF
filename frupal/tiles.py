@@ -55,7 +55,7 @@ class Tile:
 class Water(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
         if platform.system() == "Windows":
-            icon = u"\u25A0"
+            icon = "W"
         Tile.__init__(self, title, energy_req, icon, color, debug)  # the water_type also represent the energy
         # requirements
 
@@ -79,7 +79,7 @@ class Water(Tile):
 class Mud(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
         if platform.system() == "Windows":
-            icon = u"\u25A0"
+            icon = "M"
         Tile.__init__(self, title, energy_req, icon, color, debug)
         self.plank = False
 
@@ -168,7 +168,7 @@ class Blackberry(Tile):
 class Troll(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
         if platform.system() == "Windows":
-            icon = u"\u25A0"
+            icon = "O"
         Tile.__init__(self, title, energy_req, icon, color, debug)
 
     def get_energy_req(self, player_inventory: dict):
@@ -182,5 +182,5 @@ class Troll(Tile):
 class Boulder(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
         if platform.system() == "Windows":
-            icon = u"\u25A0"
+            icon = "R"
         Tile.__init__(self, title, energy_req, icon, color, debug)

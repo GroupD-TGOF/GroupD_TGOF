@@ -1,6 +1,7 @@
 import crayons
 import os
 import time
+import platform
 
 
 class Drawer:
@@ -99,7 +100,10 @@ class Drawer:
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:
-                        print('X', end=' ')
+                        if platform.system() == "Windows":
+                            print('X', end=' ')
+                        else:
+                            print(u"\u25A0", end=' ')
 
             # End border for each line
             print(crayons.blue(border), end='\n')

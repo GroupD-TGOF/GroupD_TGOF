@@ -97,6 +97,8 @@ class Drawer:
                                 print(crayons.cyan(game_map[j][k]).get_icon(), end=' ')
                             elif game_map[j][k].get_color() == 'white':
                                 print(crayons.white(game_map[j][k]).get_icon(), end=' ')
+                            else:
+                                print(crayons.green(game_map[j][k]).get_icon(), end=' ')
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:
@@ -132,5 +134,5 @@ class Drawer:
         s_str += "     Money: "
         s_str += str(player.get_money())
         s_str += "     Inventory: "
-        s_str += ' '.join([str(elem).capitalize() for elem in player.inventory])
+        s_str += ' '.join([str(elem).replace('_', ' ').capitalize() for elem in player.inventory])
         print(crayons.yellow(s_str.center(self.width)))

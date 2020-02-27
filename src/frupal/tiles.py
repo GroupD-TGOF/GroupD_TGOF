@@ -3,7 +3,7 @@ import platform
 
 
 class Tile:
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if debug:
             self.is_seen = True
         else:
@@ -13,6 +13,7 @@ class Tile:
         self.icon = icon
         self.color = color
         self.inv = []
+        self.tool = tool
 
     def get_color(self):
         return self.color
@@ -53,14 +54,14 @@ class Tile:
 
 
 class Water(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "W"
-        Tile.__init__(self, title, energy_req, icon, color, debug)  # the water_type also represent the energy
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)  # the water_type also represent the energy
         # requirements
 
     def get_energy_req(self, player_inventory: dict):  # if the tile is water, calling get_energy will call this method
-        if 'boat' in player_inventory:
+        if self.tool in player_inventory:
             return self.energy_req
         else:
             temp_energy = self.energy_req * 2  # without a boat the energy requirements is doubles
@@ -68,7 +69,7 @@ class Water(Tile):
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
-        if "boat" in player_inventory:
+        if self.tool in player_inventory:
             return r_str
         else:
             r_str += "You entered this area without a boat, doing so made you spend " + str(
@@ -77,15 +78,15 @@ class Water(Tile):
 
 
 class Mud(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "M"
-        Tile.__init__(self, title, energy_req, icon, color, debug)
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)
         self.plank = False
 
     def get_energy_req(self, player_inventory: dict):
         if not self.plank:  # check self whether a wood plank has been place here or not
-            if 'wood_plank' in player_inventory:  # no plank has been place, check player bag for the planks
+            if self.tool in player_inventory:  # no plank has been place, check player bag for the planks
                 self.plank = True  # available plank will be placed
                 return 1
             else:
@@ -96,7 +97,7 @@ class Mud(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if not self.plank:
-            if "wood_plank" in player_inventory:
+            if self.tool in player_inventory:
                 r_str += "Wood plank used!, 1 energy was spent!"
                 return r_str
             else:
@@ -106,15 +107,15 @@ class Mud(Tile):
 
 
 class Tree(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "T"
-        Tile.__init__(self, title, energy_req, icon, color, debug)
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)
         self.tree_status = True  # the tree is chopper down for False, and standing for True
 
     def get_energy_req(self, player_inventory: dict):
         if self.tree_status:
-            if 'saw' in player_inventory:
+            if self.tool in player_inventory:
                 self.tree_status = False
                 return 1
             else:
@@ -125,7 +126,7 @@ class Tree(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tree_status:
-            if "saw" in player_inventory:
+            if self.tool in player_inventory:
                 r_str += "Path is cleared, 1 energy was spent!"
                 return r_str
             else:
@@ -135,17 +136,17 @@ class Tree(Tile):
 
 
 class Blackberry(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "B"
-        Tile.__init__(self, title, energy_req, icon, color, debug)
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)
         self.bush_status = True  # the bush is cleared if false,
         b_color = ["red", "magenta"]
         self.color = b_color[randint(0, 1)]
 
     def get_energy_req(self, player_inventory: dict):
         if self.bush_status:
-            if 'shears' in player_inventory:
+            if self.tool in player_inventory:
                 self.bush_status = False
                 return 1
             else:
@@ -156,7 +157,7 @@ class Blackberry(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.bush_status:
-            if "shears" in player_inventory:
+            if self.tool in player_inventory:
                 r_str += "Path is cleared, 1 Energy was spent"
                 return r_str
             else:
@@ -166,10 +167,10 @@ class Blackberry(Tile):
 
 
 class Troll(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "O"
-        Tile.__init__(self, title, energy_req, icon, color, debug)
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def get_energy_req(self, player_inventory: dict):
         return 1
@@ -180,7 +181,7 @@ class Troll(Tile):
 
 
 class Boulder(Tile):
-    def __init__(self, title: str, energy_req: int, icon, color: str, debug: bool):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
             icon = "R"
-        Tile.__init__(self, title, energy_req, icon, color, debug)
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)

@@ -24,12 +24,13 @@ class Map:
         if platform.system() == "Windows":
             base_icon = "L"
         base_color = 'green'
+        base_tool = 'feet'
 
         tiles = config.get_tiles()
         self._array = [[] for i in range(config.get_map("height"))]
 
         for i in range(len(self._array)):
-            self._array[i] = [Tile(base, 1, base_icon, base_color, debug) for i in range(config.get_map("width"))]
+            self._array[i] = [Tile(base, 1, base_icon, base_color, base_tool, debug) for i in range(config.get_map("width"))]
 
         self.random_gen(base, tiles, config, debug)
 
@@ -51,17 +52,17 @@ class Map:
 
     def set_tile(self, tile, info, x, y, debug):
         if tile == 'water':
-            self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'tree':
-            self._array[x][y] = Tree(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Tree(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'mud':
-            self._array[x][y] = Mud(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Mud(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'troll':
-            self._array[x][y] = Troll(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Troll(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'blackberry':
-            self._array[x][y] = Blackberry(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Blackberry(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'boulder':
-            self._array[x][y] = Boulder(tile, info['energy_req'], info['icon'], info['color'], debug)
+            self._array[x][y] = Boulder(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
 
     def __getitem__(self, row: int):
         """

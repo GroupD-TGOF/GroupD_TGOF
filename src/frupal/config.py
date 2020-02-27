@@ -22,12 +22,12 @@ class Config:
         }
 
         self.tiles = {
-            'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green'},
-            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta'},
-            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white'},
-            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue'},
-            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow'},
-            'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green'}
+            'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green', 'tool': {'name': 'saw', 'price': 25}},
+            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta', 'tool': {'name': 'shears', 'price': 10}},
+            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white', 'tool': {'name': 'pickaxe', 'price': 25}},
+            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue', 'tool': {'name': 'boat', 'price': 10}},
+            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow', 'tool': {'name': 'wood_plank', 'price': 5}},
+            'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
         }
 
         self.map_Input = {  # Creates Input Library
@@ -38,16 +38,16 @@ class Config:
         self.store = {
             '+10 energy': 10,
             "+25 energy": 20,
-            'boat': 10,
             'binoculars': 15,
-            'saw': 25,
-            'shears': 10,
-            'wood_plank': 5
         }
+
+        for tile in self.tiles:
+            if not tile == 'troll':
+                self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
         self.conf = "config.txt"
         count = 0
-        for root, dir, files in os.walk("."):
+        for root, direct, files in os.walk("."):
             if self.conf in files:
                 if count < 1:
                     self.conf = os.path.join(root, self.conf)
@@ -67,7 +67,6 @@ class Config:
     def get_tiles(self):
         tiles = []
         for key in self.tiles:
-            print(key)
             tiles.append(key)
         return tiles
 
@@ -80,7 +79,7 @@ class Config:
 
         }
         f = open(self.conf, "w")
-        f.write(json.dumps(total, indent=2))
+        f.write(json.dumps(total, indent=4))
         f.close()
 
     def load_config(self):  # Function loads previous settings from file
@@ -98,13 +97,12 @@ class Config:
             return False  # If file does not exist yet return false
 
     def map_size(self):  # Function sets Map size
-        print("Frupal Settings:")
-        print("Set your game map size:")  # Prints size options in ascending order
-        print("1. Small (10 x 10)")
-        print("2. Medium (20 x 20)")
-        print("3. Large (30 x 30)")
+        # Prints size options in ascending order
+        print("Frupal Settings:\n" + "Set your game map size:\n" + "1. Small (10 x 10)\n" + "2. Medium (20 x 20)\n"
+              + "3. Large (30 x 30)\n" + "4. Custom (N x N)\n")
+
         while self.map_Input['size'] == 0:  # User inputs size choice (H X W)
-            self.map_Input['size'] = int(input("Enter selection (1-3): "))
+            self.map_Input['size'] = int(input("Enter selection (1-4): "))
             if self.map_Input['size'] == 1:  # Small 10 x 10
                 self.map["height"] = 10
                 self.map["width"] = 10
@@ -114,75 +112,78 @@ class Config:
             elif self.map_Input['size'] == 3:  # Large 30 x 30
                 self.map["height"] = 30
                 self.map["width"] = 30
+            elif self.map_Input['size'] == 4:
+                self.map["height"] = int(input("Enter Height: "))
+                self.map["width"] = int(input("Enter Width: "))
             else:  # Bad input
-                print("Must be 1, 2, or 3")
+                print("Must be 1, 2, 3, or 4!")
+                self.map_Input['size'] = 0
         self.map['total'] = self.map['height'] * self.map['width']
 
+    def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
+        self.tiles['blackberry']['count'] = int(self.map['total'] * blackberry_count)
+        self.tiles['boulder']['count'] = int(self.map['total'] * boulder_count)
+        self.tiles['mud']['count'] = int(self.map['total'] * mud_count)
+        self.tiles['tree']['count'] = int(self.map['total'] * tree_count)
+        self.tiles['troll']['count'] = int(self.map['total'] * troll_count)
+        self.tiles['water']['count'] = int(self.map['total'] * water_count)
+
+    def change_tile(self):
+        tile_f = input("Please enter a tile name: ")
+        if tile_f in self.tiles:
+            self.tiles[tile_f]['energy_req'] = input("Please Enter the Energy Requirement: ")
+            self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
+            self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
+
     def map_style(self):  # Function sets Map style
-        print('Select your game style (Ranked by difficulty)')  # Prints map style options ranked by difficulty
-        print('1. Park')
-        print('2. Forest')
-        print('3. Rocky Forest')
-        print('4. Rain Forest')
-        print('5. Bog')
-        print('6. Stony Swamp')
-        print('7. Quarry')
+        # Prints map style options ranked by difficulty
+        print('Select your game style (Ranked by difficulty)\n' + '1. Park\n' + '2. Forest\n' + '3. Rocky Forest\n'
+              + '4. Rain Forest\n' + '5. Bog\n' + '6. Stony Swamp\n' + '7. Quarry\n' + "8. Custom\n")
+
         while self.map_Input['style'] == 0:  # User inputs difficulty choice
-            self.map_Input['style'] = int(input('Enter Selection (1-7): '))
-            if self.map_Input['style'] == 1:  # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0)
-            elif self.map_Input['style'] == 2:  # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.40)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
-            elif self.map_Input['style'] == 3:  # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls
-                # 1%, mud 0%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.40)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
-            elif self.map_Input['style'] == 4:  # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%,
-                # trolls 1%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.50)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
-            elif self.map_Input['style'] == 5:  # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0.40)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
-            elif self.map_Input['style'] == 6:  # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%,
-                # trolls 1%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.02)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.20)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0.40)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
-            elif self.map_Input['style'] == 7:  # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
-                self.tiles['tree']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['blackberry']['count'] = int(self.map['total'] * 0.02)
-                self.tiles['boulder']['count'] = int(self.map['total'] * 0.50)
-                self.tiles['water']['count'] = int(self.map['total'] * 0.10)
-                self.tiles['mud']['count'] = int(self.map['total'] * 0.05)
-                self.tiles['troll']['count'] = int(self.map['total'] * 0.01)
+            self.map_Input['style'] = int(input('Enter Selection (1-8): '))
+            if self.map_Input['style'] == 1:
+                # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
+                self.__tile_counts(0.05, 0.05, 0, 0.20, 0, 0.05)
+            elif self.map_Input['style'] == 2:
+                # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
+                self.__tile_counts(0.10, 0.05, 0, 0.40, 0.01, 0.05)
+            elif self.map_Input['style'] == 3:
+                # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls 1%, mud 0%
+                self.__tile_counts(0.20, 0.20, 0, 0.40, 0.01, 0.05)
+            elif self.map_Input['style'] == 4:
+                # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%, trolls 1%
+                self.__tile_counts(0.10, 0.05, 0.10, 0.50, 0.01, 0.10)
+            elif self.map_Input['style'] == 5:
+                # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
+                self.__tile_counts(0.05, 0.05, 0.40, 0.20, 0.01, 0.20)
+            elif self.map_Input['style'] == 6:
+                # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%, trolls 1%
+                self.__tile_counts(0.02, 0.20, 0.40, 0.10, 0.01, 0.20)
+            elif self.map_Input['style'] == 7:
+                # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
+                self.__tile_counts(0.02, 0.50, 0.05, 0.05, 0.01, 0.10)
+            elif self.map_Input['style'] == 8:
+                # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
+                blackberry_count = int(input("Enter Blackberry Count: "))
+                boulder_count = int(input("Enter Boulder Count: "))
+                mud_count = int(input("Enter Mud Count: "))
+                tree_count = int(input("Enter Tree Count: "))
+                troll_count = int(input("Enter Troll Count: "))
+                water_count = int(input("Enter Water Count: "))
+                if (blackberry_count + boulder_count + mud_count + tree_count + troll_count + water_count) < self.map['total']:
+                    self.tiles['blackberry']['count'] = int(blackberry_count)
+                    self.tiles['boulder']['count'] = int(boulder_count)
+                    self.tiles['mud']['count'] = int(mud_count)
+                    self.tiles['tree']['count'] = int(tree_count)
+                    self.tiles['troll']['count'] = int(troll_count)
+                    self.tiles['water']['count'] = int(water_count)
+                else:
+                    print("Your entries for tile counts exceeds maximum allowed tiles!")
+                    self.map_Input['style'] = 0
             else:  # default, for bad input
-                print("Must be 1-7")
+                print("Must be 1-8!")
+                self.map_Input['style'] = 0
 
     def player_stats(self):  # Function sets player stats
         self.player['energy'] = int(input("Input your player's starting energy(1-100): "))  # User inputs Energy
@@ -200,6 +201,7 @@ class Config:
             Small = 1
             Medium = 2
             Large = 3
+            Custom = 4
 
         class Type(enum.Enum):
             Park = 1
@@ -209,6 +211,7 @@ class Config:
             Bog = 5
             Stony_Swamp = 6
             Quarry = 7
+            Custom = 8
 
         r_str = ["Player's Statistics: ", "(P) Starting Energy: " + str(self.player['energy']),
                  "(P) Starting Money: " + str(self.player['money']), "\n", "Map Statistics: ",
@@ -216,8 +219,8 @@ class Config:
                  "(S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or '
                  + str(self.map['total']) + " Tiles"]
         for key in self.tiles:
-            r_str.append(str(key).capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, " + "Energy Req: "
-                         + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
+            r_str.append("(T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
+                         + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                          + ", Color: " + str(self.tiles[key]['color']).capitalize())
         r_str.append("\n")
         r_str.append("(Q) Exit Config")

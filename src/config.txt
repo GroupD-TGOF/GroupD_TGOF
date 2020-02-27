@@ -1,55 +1,79 @@
 {
-  "player": {
-    "energy": 25,
-    "money": 25,
-    "p_r": 0,
-    "p_c": 0
-  },
-  "map": {
-    "total": 100,
-    "height": 10,
-    "width": 10
-  },
-  "tiles": {
-    "tree": {
-      "energy_req": 2,
-      "count": 20,
-      "icon": "\u25b2",
-      "color": "green"
+    "player": {
+        "energy": 100,
+        "money": 100,
+        "p_r": 0,
+        "p_c": 0
     },
-    "blackberry": {
-      "energy_req": 2,
-      "count": 5,
-      "icon": "\u25c9",
-      "color": "magenta"
+    "map": {
+        "total": 100,
+        "height": 10,
+        "width": 10
     },
-    "boulder": {
-      "energy_req": 2,
-      "count": 5,
-      "icon": "\u25cf",
-      "color": "white"
+    "tiles": {
+        "tree": {
+            "energy_req": 2,
+            "count": 20,
+            "icon": "\u25b2",
+            "color": "green",
+            "tool": {
+                "name": "saw",
+                "price": 25
+            }
+        },
+        "blackberry": {
+            "energy_req": 2,
+            "count": 5,
+            "icon": "\u25c9",
+            "color": "magenta",
+            "tool": {
+                "name": "shears",
+                "price": 10
+            }
+        },
+        "boulder": {
+            "energy_req": 2,
+            "count": 5,
+            "icon": "\u25cf",
+            "color": "white",
+            "tool": {
+                "name": "pickaxe",
+                "price": 25
+            }
+        },
+        "water": {
+            "energy_req": 2,
+            "count": 20,
+            "icon": "\u25a5",
+            "color": "blue",
+            "tool": {
+                "name": "boat",
+                "price": 10
+            }
+        },
+        "mud": {
+            "energy_req": 5,
+            "count": 40,
+            "icon": "\u25a7",
+            "color": "yellow",
+            "tool": {
+                "name": "wood_plank",
+                "price": 5
+            }
+        },
+        "troll": {
+            "energy_req": 1,
+            "count": 1,
+            "icon": "\u25a0",
+            "color": "green",
+            "tool": {
+                "name": "",
+                "price": 0
+            }
+        }
     },
-    "water": {
-      "energy_req": 2,
-      "count": 5,
-      "icon": "\u25a5",
-      "color": "blue"
-    },
-    "mud": {
-      "energy_req": 5,
-      "count": 0,
-      "icon": "\u25a7",
-      "color": "yellow"
-    },
-    "troll": {
-      "energy_req": 1,
-      "count": 0,
-      "icon": "\u25a0",
-      "color": "green"
+    "map_Input": {
+        "style": 5,
+        "size": 1
     }
-  },
-  "map_Input": {
-    "style": 1,
-    "size": 1
-  }
 }

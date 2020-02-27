@@ -17,7 +17,10 @@ class User:
         self.store = config.store
         self.debug = debug
 
-    def config_menu(self, config: Config):
+    def update_store(self, config):
+        self.store = config.store
+
+    def __print_config_menu(self, config: Config):
         sp = config.print_config()
         for i in range(self.middle - (len(sp) // 2)):
             if self.debug:
@@ -31,6 +34,9 @@ class User:
                 print("+ " + str(i))
             else:
                 print()
+
+    def config_menu(self, config: Config):
+        self.__print_config_menu(config)
         key = readchar.readkey()
         if key == 'p':
             config.player_stats()
@@ -43,20 +49,11 @@ class User:
             self.config_menu(config)
         elif key == 'q':
             config.create_config()
-            sp = config.print_config()
-            for i in range(self.middle - (len(sp) // 2)):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
-            for i in range(len(sp)):
-                print(sp[i].center(self.width))
-            for i in range(self.middle - (len(sp) // 2)):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
+            self.__print_config_menu(config)
             time.sleep(2)
+        elif key == 't':
+            config.change_tile()
+            self.config_menu(config)
         else:
             self.config_menu(config)
 

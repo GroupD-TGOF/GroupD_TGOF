@@ -37,6 +37,7 @@ if __name__ == "__main__":
         # Initialize Map When Player Selects Start
         game_map = Map(config, debug)
         player = Player(config, debug)
+        user.update_store(config)
         playing = 1
         player.player_view(2, game_map)
         while playing != 0:

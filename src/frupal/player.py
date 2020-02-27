@@ -12,12 +12,18 @@ class Direction(enum.Enum):
 
 class Player:
     def __init__(self, config: Config, debug):
+        self.map_size = [0, 0]
+        self.energy = 0
+        self.money = 0
+        self.position = [0, 0]
+        self.inventory = []
+
+    def update_player(self, config: Config, debug):
         self.map_size = [config.get_map('width'), config.get_map('height')]
         if not debug:
             self.energy = config.get_player('energy')
             self.money = config.get_player('money')
             self.position = [config.get_player('p_c'), config.get_player('p_r')]
-
         else:
             self.energy = 100
             self.money = 100

@@ -21,6 +21,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1] == '-d':
             debug = True
+
+    # Load Config and Pass Values
     config = Config()
     user = User(window, config, debug)
 
@@ -30,14 +32,17 @@ if __name__ == "__main__":
 
     # Take user input
     running = user.main_menu(config)
-    playing = 0
+
+    # Initialize Game Map and Player
+    game_map = Map(config, debug)
+    player = Player(config, debug)
 
     # Main Loop
     while running:
         # Initialize Map When Player Selects Start
-        game_map = Map(config, debug)
-        player = Player(config, debug)
-        user.update_store(config)
+        game_map.update_map(config, debug)
+        player.update_player(config, debug)
+        user.update_store(config, debug)
         playing = 1
         player.player_view(2, game_map)
         while playing != 0:

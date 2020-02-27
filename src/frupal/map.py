@@ -19,6 +19,9 @@ class Map:
         :param columns: the y dimension of the map
         :returns: a new map object with a basic (all normal Tiles) 2d array
         """
+        self._array = []
+
+    def update_map(self, config: Config, debug: bool):
         base_icon = u"\u25A0"
         base = 'tile'
         if platform.system() == "Windows":
@@ -30,16 +33,17 @@ class Map:
         self._array = [[] for i in range(config.get_map("height"))]
 
         for i in range(len(self._array)):
-            self._array[i] = [Tile(base, 1, base_icon, base_color, base_tool, debug) for i in range(config.get_map("width"))]
+            self._array[i] = [Tile(base, 1, base_icon, base_color, base_tool, debug) for i in
+                              range(config.get_map("width"))]
 
-        self.random_gen(base, tiles, config, debug)
+        self.__random_gen(base, tiles, config, debug)
 
         for j in range(config.get_map('total') // 90):
             self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
 
         self._array[0][0].seen_set(True)
 
-    def random_gen(self, base, tiles, config, debug):
+    def __random_gen(self, base, tiles, config, debug):
         for tile in tiles:
             count = 0
             info = config.get_tile(tile)
@@ -47,10 +51,10 @@ class Map:
                 x = randint(0, len(self._array) - 1)
                 y = randint(0, len(self._array[0]) - 1)
                 if self._array[x][y].get_name() == base:
-                    self.set_tile(tile, info, x, y, debug)
+                    self.__set_tile(tile, info, x, y, debug)
                     count += 1
 
-    def set_tile(self, tile, info, x, y, debug):
+    def __set_tile(self, tile, info, x, y, debug):
         if tile == 'water':
             self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'tree':

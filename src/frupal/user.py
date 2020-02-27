@@ -17,8 +17,9 @@ class User:
         self.store = config.store
         self.debug = debug
 
-    def update_store(self, config):
+    def update_store(self, config, debug):
         self.store = config.store
+        self.debug = debug
 
     def __print_config_menu(self, config: Config):
         sp = config.print_config()

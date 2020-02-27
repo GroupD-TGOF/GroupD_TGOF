@@ -1,19 +1,19 @@
 {
     "player": {
-        "energy": 100,
-        "money": 100,
+        "energy": 75,
+        "money": 75,
         "p_r": 0,
         "p_c": 0
     },
     "map": {
-        "total": 100,
-        "height": 10,
+        "total": 400,
+        "height": 40,
         "width": 10
     },
     "tiles": {
         "tree": {
             "energy_req": 2,
-            "count": 20,
+            "count": 1,
             "icon": "\u25b2",
             "color": "green",
             "tool": {
@@ -23,7 +23,7 @@
         },
         "blackberry": {
             "energy_req": 2,
-            "count": 5,
+            "count": 1,
             "icon": "\u25c9",
             "color": "magenta",
             "tool": {
@@ -33,7 +33,7 @@
         },
         "boulder": {
             "energy_req": 2,
-            "count": 5,
+            "count": 1,
             "icon": "\u25cf",
             "color": "white",
             "tool": {
@@ -43,7 +43,7 @@
         },
         "water": {
             "energy_req": 2,
-            "count": 20,
+            "count": 1,
             "icon": "\u25a5",
             "color": "blue",
             "tool": {
@@ -53,7 +53,7 @@
         },
         "mud": {
             "energy_req": 5,
-            "count": 40,
+            "count": 1,
             "icon": "\u25a7",
             "color": "yellow",
             "tool": {
@@ -73,7 +73,7 @@
         }
     },
     "map_Input": {
-        "style": 5,
-        "size": 1
+        "style": 8,
+        "size": 4
     }
 }

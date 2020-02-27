@@ -131,7 +131,7 @@ class Config:
     def change_tile(self):
         tile_f = input("Please enter a tile name: ")
         if tile_f in self.tiles:
-            self.tiles[tile_f]['energy_req'] = input("Please Enter the Energy Requirement: ")
+            self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
             self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
             self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
 

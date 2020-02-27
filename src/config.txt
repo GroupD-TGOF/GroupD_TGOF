@@ -12,10 +12,10 @@
     },
     "tiles": {
         "tree": {
-            "energy_req": "5",
+            "energy_req": 10,
             "count": 20,
             "icon": "T",
-            "color": "red",
+            "color": "blue",
             "tool": {
                 "name": "saw",
                 "price": 25

@@ -185,3 +185,7 @@ class Boulder(Tile):
         if platform.system() == "Windows":
             icon = "R"
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
+
+    def print_tile(self, player_inventory: dict):
+        r_str = "You spend more energy in tranversing the rockyroad, " + str(self.energy_req) + " energy was spent"
+        return r_str

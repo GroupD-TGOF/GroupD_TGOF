@@ -48,7 +48,6 @@ if __name__ == "__main__":
         while playing != 0:
             # Print Game Screen
             drawer.print_game(player, game_map)
-            drawer.print_stats(player)
 
             # Conditions for continuing
             playing = user.control(player, game_map)

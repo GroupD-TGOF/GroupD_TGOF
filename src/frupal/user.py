@@ -29,7 +29,7 @@ class User:
             else:
                 print()
         for i in range(len(sp)):
-            print(sp[i].center(self.width))
+            print(sp[i].center(self.width).rstrip('\n'))
         for i in range(self.middle - (len(sp) // 2)):
             if self.debug:
                 print("+ " + str(i))
@@ -59,16 +59,19 @@ class User:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        for i in range(self.middle - 2):
+        for i in range(self.middle - 4):
             if self.debug:
-                print("+ " + str(i))
+                print("+ ".rstrip("\n") + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".center(self.width)))
-        print(crayons.yellow("(S) Start Game!".center(self.width)))
-        print(crayons.yellow("(C) Configuration?".center(self.width)))
-        print(crayons.yellow("(Q) Exit Game.".center(self.width)), end='')
-        for i in range(self.middle - 2):
+        print(crayons.green("The Game of Frupal!".rstrip("\n").center(self.width)), end='')
+        print("\n\n", end='')
+        print(crayons.yellow("(S) Start Game!".rstrip("\n").center(self.width)), end='')
+        print("\n", end='')
+        print(crayons.yellow("(C) Configuration?".rstrip("\n").center(self.width)), end='')
+        print("\n", end='')
+        print(crayons.yellow("(Q) Exit Game.".rstrip("\n").center(self.width)), end='')
+        for i in range(self.middle - 4):
             if self.debug:
                 print("+ " + str(i))
             else:

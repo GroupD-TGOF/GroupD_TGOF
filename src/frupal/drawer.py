@@ -7,35 +7,50 @@ import platform
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
         self.width = window[0]
+        print(window[0], window[1])
         self.height = window[1]
-        self.middle = self.height // 2
         self.debug = debug
 
     def title_screen(self):
-        for i in range(self.middle - 1):
+        title = list()
+        title.append("  █████▒██▀███   █    ██  ██▓███   ▄▄▄       ██▓    ".rstrip("\n"))
+        title.append("▓██   ▒▓██ ▒ ██▒ ██  ▓██▒▓██░  ██▒▒████▄    ▓██▒    ".rstrip("\n"))
+        title.append("▒████ ░▓██ ░▄█ ▒▓██  ▒██░▓██░ ██▓▒▒██  ▀█▄  ▒██░    ".rstrip("\n"))
+        title.append("░▓█▒  ░▒██▀▀█▄  ▓▓█  ░██░▒██▄█▓▒ ▒░██▄▄▄▄██ ▒██░    ".rstrip("\n"))
+        title.append("░▒█░   ░██▓ ▒██▒▒▒█████▓ ▒██▒ ░  ░ ▓█   ▓██▒░██████▒".rstrip("\n"))
+        title.append(" ▒ ░   ░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░ ▒▒   ▓▒█░░ ▒░▓  ░".rstrip("\n"))
+        title.append(" ░       ░▒ ░ ▒░░░▒░ ░ ░ ░▒ ░       ▒   ▒▒ ░░ ░ ▒  ░".rstrip("\n"))
+        title.append(" ░ ░     ░░   ░  ░░░ ░ ░ ░░         ░   ▒     ░ ░   ".rstrip("\n"))
+        title.append("          ░        ░                    ░  ░    ░  ░".rstrip("\n"))
+        spacer = (self.height - len(title)) // 2
+        for i in range(spacer):
             if self.debug:
                 print("+ " + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".center(self.width)), end='')
-        for i in range(self.middle):
-            if self.debug:
+        for line in title:
+            print(crayons.green(line.center(self.width)), end='')
+        for i in range(spacer):
+            if i == spacer // 2:
+                print(crayons.green("A Text Based Island Adventure Game!".rstrip("\n")).center(self.width), end='')
+            elif self.debug:
                 print("+ " + str(i))
             else:
                 print()
         time.sleep(3)
 
     def final_screen(self, playing: int):
-        for i in range(self.middle):
+        spacer = self.height // 2
+        for i in range(spacer):
             if self.debug:
                 print("+ " + str(i))
             else:
                 print()
         if playing == 3:
-            print(crayons.green("You Win!".center(self.width)))
+            print(crayons.green("You Win!".rstrip("\n").center(self.width)), end='')
         if playing == 2:
-            print(crayons.green("You Lose!".center(self.width)))
-        for i in range(self.middle):
+            print(crayons.green("You Lose!".rstrip("\n").center(self.width)), end='')
+        for i in range(spacer - 1):
             if self.debug:
                 print("+ " + str(i))
             else:
@@ -46,8 +61,8 @@ class Drawer:
         border = u"\u25A0"
         b = player.get_position()
         map_size = game_map.get_size()
-        spacer_lines = (self.height - map_size[0]) // 2
-        spacer_columns = (self.width - ((map_size[1]) * 2)) // 2
+        spacer_lines = (self.height - (map_size[0] + 2)) // 2
+        spacer_columns = (self.width - ((map_size[1] + 2) * 2)) // 2
 
         # Before Spacer
         for a in range(spacer_lines):
@@ -108,7 +123,7 @@ class Drawer:
                             print(u"\u25A0", end=' ')
 
             # End border for each line
-            print(crayons.blue(border), end='\n')
+            print(crayons.blue(border))
 
         # Spacer for centering map border bottom
         for m in range(spacer_columns):
@@ -120,13 +135,15 @@ class Drawer:
         print()
 
         # After Spacer
-        for a in range(spacer_lines - 1):
-            if self.debug:
+        for a in range(spacer_lines):
+            if a == spacer_lines // 2:
+                print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width), end='')
+            elif a == (spacer_lines // 3) * 2:
+                self.print_stats(player)
+            elif self.debug:
                 print("+ " + str(a))
             else:
                 print()
-            if a == 2:
-                print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
 
     def print_stats(self, player):
         s_str = "Energy: "
@@ -135,4 +152,4 @@ class Drawer:
         s_str += str(player.get_money())
         s_str += "     Inventory: "
         s_str += ' '.join([str(elem).replace('_', ' ').capitalize() for elem in player.inventory])
-        print(crayons.yellow(s_str.center(self.width)))
+        print(crayons.yellow(s_str.center(self.width)), end='')

@@ -1,5 +1,4 @@
 import crayons
-import os
 import time
 import platform
 
@@ -58,7 +57,7 @@ class Drawer:
                 print()
         time.sleep(3)
 
-    def print_game(self, player, game_map):
+    def print_game(self, player: class, game_map):
         border = u"\u25A0"
         b = player.get_position()
         map_size = game_map.get_size()
@@ -133,6 +132,7 @@ class Drawer:
         # Border After End Line of Map
         for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
+        print()
         print()
         print("(Press K) Keybindings!".center(self.width - 1))
         for a in range(spacer_lines):

@@ -126,7 +126,9 @@ class Config:
                 self.map_Input['size'] = 0
         self.map['total'] = self.map['height'] * self.map['width']
 
-    def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
+    def __tile_counts(self, blackberry_count: int, boulder_count, mud_count, tree_count, troll_count, water_count):
+        for tile in self.tiles:
+            self.tiles[tile]['count'] = 0
         self.tiles['blackberry']['count'] = int(self.map['total'] * blackberry_count)
         self.tiles['boulder']['count'] = int(self.map['total'] * boulder_count)
         self.tiles['mud']['count'] = int(self.map['total'] * mud_count)
@@ -139,7 +141,6 @@ class Config:
         if tile_f not in self.tiles:
             self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
         self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
-        self.tiles[tile_f]['count'] = int(input("Please Enter the Tile Count: "))
         self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
         self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
         inp = input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): ')
@@ -177,26 +178,14 @@ class Config:
                 self.__tile_counts(0.02, 0.50, 0.05, 0.05, 0.01, 0.10)
             elif self.map_Input['style'] == 8:
                 # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
-                blackberry_count = int(input("Enter Blackberry Count: "))
-                boulder_count = int(input("Enter Boulder Count: "))
-                mud_count = int(input("Enter Mud Count: "))
-                tree_count = int(input("Enter Tree Count: "))
-                troll_count = int(input("Enter Troll Count: "))
-                water_count = int(input("Enter Water Count: "))
-                if (blackberry_count + boulder_count + mud_count + tree_count + troll_count + water_count) < self.map[
-                    'total']:
-                    self.tiles['blackberry']['count'] = int(blackberry_count)
-                    self.tiles['boulder']['count'] = int(boulder_count)
-                    self.tiles['mud']['count'] = int(mud_count)
-                    self.tiles['tree']['count'] = int(tree_count)
-                    self.tiles['troll']['count'] = int(troll_count)
-                    self.tiles['water']['count'] = int(water_count)
-                    tile_list = ["blackberry", "boulder", "mud", "tree", "troll", "water"]
-                    for tile in self.tiles:
-                        print(tile != tile_list)
-                        if tile != tile_list:
-                            custom_count = int(input("Enter " + tile.capitalize() + " Count: "))
-                            self.tiles[tile]['count'] = int(custom_count)
+                counts = [0] * len(self.tiles)
+                sum_t = 0
+                for i, tile in enumerate(self.tiles):
+                    counts[i] = int(input("Enter " + tile.capitalize() + " Count: "))
+                    sum_t += counts[i]
+                if sum_t < self.map['total']:
+                    for i, tile in enumerate(self.tiles):
+                        self.tiles[tile]['count'] = counts[i]
                 else:
                     print("Your entries for tile counts exceeds maximum allowed tiles!")
                     self.map_Input['style'] = 0
@@ -204,15 +193,9 @@ class Config:
                 print("Must be 1-8!")
                 self.map_Input['style'] = 0
 
-    def player_stats(self):  # Function sets player stats
-        self.player['energy'] = int(input("Input your player's starting energy(1-100): "))  # User inputs Energy
-        while self.player['energy'] < 1 or self.player['energy'] > 100:
-            print("Must be 1-100")
-            self.player['energy'] = int(input("Input your player's starting energy(1-100): "))
-        self.player['money'] = int(input("Input your player's starting money(1-100): "))  # User inputs Money
-        while self.player['money'] < 1 or self.player['money'] > 100:
-            print("Must be 1-100")
-            self.player['money'] = int(input("Input your player's starting money(1-100): "))
+    def change_stats(self, energy: int, money: int):  # Function sets player stats
+        self.player['energy'] = energy
+        self.player['money'] = money
 
     def print_config(self):
 

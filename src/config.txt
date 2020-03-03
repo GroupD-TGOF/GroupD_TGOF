@@ -1,7 +1,7 @@
 {
     "player": {
-        "energy": 25,
-        "money": 25,
+        "energy": 200,
+        "money": 200,
         "p_r": 0,
         "p_c": 0
     },
@@ -66,6 +66,16 @@
             "count": 1,
             "icon": "\u25a0",
             "color": "green",
+            "tool": {
+                "name": " ",
+                "price": 0
+            }
+        },
+        "sand": {
+            "energy_req": 2,
+            "count": 0,
+            "icon": "S",
+            "color": "yellow",
             "tool": {
                 "name": " ",
                 "price": 0

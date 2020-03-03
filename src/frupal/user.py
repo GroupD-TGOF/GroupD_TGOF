@@ -1,8 +1,6 @@
 from .player import Direction
 from .config import Config
-from .drawer import Drawer
 
-import os
 import crayons
 import readchar
 import time
@@ -36,11 +34,26 @@ class User:
             else:
                 print()
 
+    def config_stats(self, config: Config):
+        for i in range(self.middle - 1):
+            if self.debug:
+                print("+ ".rstrip("\n") + str(i))
+            else:
+                print()
+        energy = int(input("Input your player's starting energy(1-100): ".center(self.width)))  # User inputs Energy
+        money = int(input("Input your player's starting money(1-100): ".center(self.width)))  # User inputs Money
+        for i in range(self.middle - 1):
+            if self.debug:
+                print("+ ".rstrip("\n") + str(i))
+            else:
+                print()
+        config.change_stats(energy, money)
+
     def config_menu(self, config: Config):
         self.__print_config_menu(config)
         key = readchar.readkey()
         if key == 'p':
-            config.player_stats()
+            self.config_stats(config)
             self.config_menu(config)
         elif key == 's':
             config.map_Input['size'] = 0

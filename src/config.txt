@@ -6,9 +6,9 @@
         "p_c": 0
     },
     "map": {
-        "total": 100,
-        "height": 10,
-        "width": 10
+        "total": 172,
+        "height": 4,
+        "width": 43
     },
     "tiles": {
         "tree": {
@@ -23,7 +23,7 @@
         },
         "blackberry": {
             "energy_req": 2,
-            "count": 5,
+            "count": 20,
             "icon": "\u25c9",
             "color": "magenta",
             "tool": {
@@ -33,7 +33,7 @@
         },
         "boulder": {
             "energy_req": 2,
-            "count": 5,
+            "count": 20,
             "icon": "\u25cf",
             "color": "white",
             "tool": {
@@ -43,7 +43,7 @@
         },
         "water": {
             "energy_req": 2,
-            "count": 5,
+            "count": 20,
             "icon": "\u25a5",
             "color": "blue",
             "tool": {
@@ -53,7 +53,7 @@
         },
         "mud": {
             "energy_req": 5,
-            "count": 0,
+            "count": 20,
             "icon": "\u25a7",
             "color": "yellow",
             "tool": {
@@ -63,9 +63,29 @@
         },
         "troll": {
             "energy_req": 1,
-            "count": 0,
+            "count": 20,
             "icon": "\u25a0",
             "color": "green",
+            "tool": {
+                "name": " ",
+                "price": 0
+            }
+        },
+        "Frogger": {
+            "energy_req": 3,
+            "count": 20,
+            "icon": "F",
+            "color": "green",
+            "tool": {
+                "name": " ",
+                "price": 0
+            }
+        },
+        "": {
+            "energy_req": 2,
+            "count": 20,
+            "icon": " ",
+            "color": "white",
             "tool": {
                 "name": " ",
                 "price": 0
@@ -73,7 +93,7 @@
         }
     },
     "map_Input": {
-        "style": 1,
-        "size": 1
+        "style": 8,
+        "size": 4
     }
 }

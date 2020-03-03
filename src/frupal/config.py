@@ -22,12 +22,18 @@ class Config:
         }
 
         self.tiles = {
-            'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green', 'tool': {'name': 'saw', 'price': 25}},
-            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta', 'tool': {'name': 'shears', 'price': 10}},
-            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white', 'tool': {'name': 'pickaxe', 'price': 25}},
-            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue', 'tool': {'name': 'boat', 'price': 10}},
-            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow', 'tool': {'name': 'wood_plank', 'price': 5}},
-            'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
+            'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
+                     'tool': {'name': 'saw', 'price': 25}},
+            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
+                           'tool': {'name': 'shears', 'price': 10}},
+            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
+                        'tool': {'name': 'pickaxe', 'price': 25}},
+            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue',
+                      'tool': {'name': 'boat', 'price': 10}},
+            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
+                    'tool': {'name': 'wood_plank', 'price': 5}},
+            'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
+                      'tool': {'name': ' ', 'price': 0}}
         }
 
         self.map_Input = {  # Creates Input Library
@@ -130,10 +136,16 @@ class Config:
 
     def change_tile(self):
         tile_f = input("Please enter a tile name: ")
-        if tile_f in self.tiles:
-            self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
-            self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
-            self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
+        if tile_f not in self.tiles:
+            self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
+        self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
+        self.tiles[tile_f]['count'] = int(input("Please Enter the Tile Count: "))
+        self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
+        self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
+        inp = input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): ')
+        if inp == 1:
+            self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ")
+            self.tiles[tile_f]['tool']['price'] = input("Please Enter the Tool Price: ")
 
     def map_style(self):  # Function sets Map style
         # Prints map style options ranked by difficulty
@@ -171,13 +183,20 @@ class Config:
                 tree_count = int(input("Enter Tree Count: "))
                 troll_count = int(input("Enter Troll Count: "))
                 water_count = int(input("Enter Water Count: "))
-                if (blackberry_count + boulder_count + mud_count + tree_count + troll_count + water_count) < self.map['total']:
+                if (blackberry_count + boulder_count + mud_count + tree_count + troll_count + water_count) < self.map[
+                    'total']:
                     self.tiles['blackberry']['count'] = int(blackberry_count)
                     self.tiles['boulder']['count'] = int(boulder_count)
                     self.tiles['mud']['count'] = int(mud_count)
                     self.tiles['tree']['count'] = int(tree_count)
                     self.tiles['troll']['count'] = int(troll_count)
                     self.tiles['water']['count'] = int(water_count)
+                    tile_list = ["blackberry", "boulder", "mud", "tree", "troll", "water"]
+                    for tile in self.tiles:
+                        print(tile != tile_list)
+                        if tile != tile_list:
+                            custom_count = int(input("Enter " + tile.capitalize() + " Count: "))
+                            self.tiles[tile]['count'] = int(custom_count)
                 else:
                     print("Your entries for tile counts exceeds maximum allowed tiles!")
                     self.map_Input['style'] = 0
@@ -219,9 +238,10 @@ class Config:
                  "(S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or '
                  + str(self.map['total']) + " Tiles"]
         for key in self.tiles:
-            r_str.append("(T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
-                         + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
-                         + ", Color: " + str(self.tiles[key]['color']).capitalize())
+            r_str.append(
+                "(T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
+                + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
+                + ", Color: " + str(self.tiles[key]['color']).capitalize())
         r_str.append("\n")
         r_str.append("(Q) Exit Config")
 

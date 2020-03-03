@@ -1,7 +1,7 @@
 """
 Nick Grout 1/23/2020
 """
-from .tiles import Tile, Water, Mud, Tree, Troll, Blackberry, Boulder
+from .tiles import Tile, Water, Mud, Tree, Troll, Blackberry, Boulder, Custom
 from .config import Config
 from random import randint
 import platform
@@ -68,6 +68,8 @@ class Map:
             self._array[x][y] = Blackberry(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
         elif tile == 'boulder':
             self._array[x][y] = Boulder(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+        else:
+            self._array[x][y] = Custom(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
 
     def __getitem__(self, row: int):
         """

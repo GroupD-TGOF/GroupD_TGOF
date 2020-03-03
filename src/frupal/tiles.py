@@ -169,7 +169,7 @@ class Blackberry(Tile):
 class Troll(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
         if platform.system() == "Windows":
-            icon = "O"
+            icon = "T"
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def get_energy_req(self, player_inventory: dict):
@@ -187,5 +187,15 @@ class Boulder(Tile):
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def print_tile(self, player_inventory: dict):
-        r_str = "You spend more energy in tranversing the rockyroad, " + str(self.energy_req) + " energy was spent"
+        r_str = "A Boulder Blocks Your PAth!, " + str(self.energy_req) + " energy was spent climbing over!"
+        return r_str
+
+
+class Custom(Tile):
+    def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, debug: bool):
+        Tile.__init__(self, title, energy_req, icon, color, tool, debug)
+
+    def print_tile(self, player_inventory: dict):
+        r_str = "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + " energy was " \
+            "spent to go around it!"
         return r_str

@@ -50,7 +50,7 @@ if __name__ == "__main__":
         playing = 1
 
         # Starts of Map Reveal
-        player.player_view(2, game_map)
+        player.player_view(1, game_map)
         while playing != 0:
             # Print Game Screen
             drawer.print_game(player, game_map)

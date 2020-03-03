@@ -73,7 +73,7 @@ class Player:
             if self.energy < 0:
                 self.energy = 0
 
-            view_dist = 2
+            view_dist = 1
             if 'binoculars' in self.inventory:
                 view_dist = 4
             self.player_view(view_dist, game_map)

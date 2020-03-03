@@ -141,16 +141,16 @@ class Config:
         self.tiles['water']['count'] = int(self.map['total'] * water_count)
 
     def change_tile(self):
-        tile_f = input("Please enter a tile name: ")
+        tile_f = input("Please enter a tile name: ").lower()
         if tile_f not in self.tiles:
             self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
         self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
         self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
-        self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ")
-        inp = input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): ')
+        self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ").lower()
+        inp = int(input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): '))
         if inp == 1:
-            self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ")
-            self.tiles[tile_f]['tool']['price'] = input("Please Enter the Tool Price: ")
+            self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ").lower()
+            self.tiles[tile_f]['tool']['price'] = int(input("Please Enter the Tool Price: "))
 
         self.store.clear()
 
@@ -163,7 +163,6 @@ class Config:
         for tile in self.tiles:
             if not tile == 'troll':
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
-
 
     def map_style(self):  # Function sets Map style
         # Prints map style options ranked by difficulty

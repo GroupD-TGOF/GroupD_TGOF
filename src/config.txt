@@ -1,7 +1,7 @@
 {
     "player": {
-        "energy": 200,
-        "money": 200,
+        "energy": 25,
+        "money": 25,
         "p_r": 0,
         "p_c": 0
     },
@@ -43,7 +43,7 @@
         },
         "water": {
             "energy_req": 2,
-            "count": 20,
+            "count": 5,
             "icon": "\u25a5",
             "color": "blue",
             "tool": {
@@ -53,7 +53,7 @@
         },
         "mud": {
             "energy_req": 5,
-            "count": 40,
+            "count": 0,
             "icon": "\u25a7",
             "color": "yellow",
             "tool": {
@@ -63,7 +63,7 @@
         },
         "troll": {
             "energy_req": 1,
-            "count": 1,
+            "count": 0,
             "icon": "\u25a0",
             "color": "green",
             "tool": {
@@ -83,7 +83,7 @@
         }
     },
     "map_Input": {
-        "style": 5,
+        "style": 1,
         "size": 1
     }
 }

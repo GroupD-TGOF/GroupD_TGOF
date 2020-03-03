@@ -57,7 +57,7 @@ class Drawer:
                 print()
         time.sleep(3)
 
-    def print_game(self, player: class, game_map):
+    def print_game(self, player, game_map):
         border = u"\u25A0"
         b = player.get_position()
         map_size = game_map.get_size()

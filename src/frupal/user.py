@@ -66,11 +66,11 @@ class User:
                 print()
         print(crayons.green("The Game of Frupal!".rstrip("\n").center(self.width)), end='')
         print("\n\n", end='')
-        print(crayons.yellow("(S) Start Game!".rstrip("\n").center(self.width)), end='')
+        print(crayons.yellow("(Press S) Start Game!".rstrip("\n").center(self.width)), end='')
         print("\n", end='')
-        print(crayons.yellow("(C) Configuration?".rstrip("\n").center(self.width)), end='')
+        print(crayons.yellow("(Press C) Configuration?".rstrip("\n").center(self.width)), end='')
         print("\n", end='')
-        print(crayons.yellow("(Q) Exit Game.".rstrip("\n").center(self.width)), end='')
+        print(crayons.yellow("(Press Q) Exit Game.".rstrip("\n").center(self.width)), end='')
         for i in range(self.middle - 4):
             if self.debug:
                 print("+ " + str(i))
@@ -128,6 +128,29 @@ class User:
                     time.sleep(1)
             print("\n\n\nprevious transactions above this line-------------\n\n\n".center(self.width))
 
+    def key_menu(self):
+        key_binds = ["Use keys on the keyboard to navigate and control the game and its menus!", "Movements: ",
+                     "(W) Move North!", "(A) Move West!               (D) Move East!", "(S) Move South!", "Utilities: ",
+                     "(B) Store!", "(C) Cheat!", "(K) Keybindings!", "(Q) Quit!"]
+        for i in range(self.middle - (len(key_binds) // 2)):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
+        for i in range(len(key_binds)):
+            print(key_binds[i].center(self.width))
+        for i in range(self.middle - (len(key_binds) // 2)):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
+        print("(Press Q) Exit!".center(self.width))
+        key = readchar.readkey()
+        if key != 'q':
+            self.key_menu()
+        else:
+            return
+
     def control(self, player, game_map):
         if player.get_energy() == 0:
             game_map.map_reveal()
@@ -153,6 +176,8 @@ class User:
         elif key == 'c':
             game_map.map_reveal()
             return 3
+        elif key == 'k':
+            self.key_menu()
         elif key == 'b':
             self.store_menu(player)
             return 1

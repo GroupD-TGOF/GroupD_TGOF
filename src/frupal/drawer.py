@@ -7,7 +7,8 @@ import platform
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
         self.width = window[0]
-        print(window[0], window[1])
+        if debug:
+            print(window[0], window[1])
         self.height = window[1]
         self.debug = debug
 
@@ -133,17 +134,15 @@ class Drawer:
         for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
         print()
-
-        # After Spacer
+        print("(Press K) Keybindings!".center(self.width - 1))
         for a in range(spacer_lines):
             if a == spacer_lines // 2:
                 print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width), end='')
-            elif a == (spacer_lines // 3) * 2:
-                self.print_stats(player)
             elif self.debug:
                 print("+ " + str(a))
             else:
                 print()
+        self.print_stats(player)
 
     def print_stats(self, player):
         s_str = "Energy: "

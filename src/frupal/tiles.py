@@ -22,7 +22,10 @@ class Tile:
         return self.title
 
     def get_energy_req(self, player_inventory: dict):
-        return self.energy_req
+        if self.tool in player_inventory:
+            return 1
+        else:
+            return self.energy_req
 
     def get_icon(self):
         return self.icon
@@ -64,17 +67,16 @@ class Water(Tile):
         if self.tool in player_inventory:
             return self.energy_req
         else:
-            temp_energy = self.energy_req * 2  # without a boat the energy requirements is doubles
-            return temp_energy
+            return self.energy_req * 2
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            return r_str
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
         else:
             r_str += "You entered this area without a boat, doing so made you spend " + str(
-                self.energy_req * 2) + " energy!"
-            return r_str
+                self.energy_req * 2) + " energy to swim!"
+        return r_str
 
 
 class Mud(Tile):
@@ -82,27 +84,13 @@ class Mud(Tile):
         if platform.system() == "Windows":
             icon = "M"
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
-        self.plank = False
-
-    def get_energy_req(self, player_inventory: dict):
-        if not self.plank:  # check self whether a wood plank has been place here or not
-            if self.tool in player_inventory:  # no plank has been place, check player bag for the planks
-                self.plank = True  # available plank will be placed
-                return 1
-            else:
-                return self.energy_req
-        else:
-            return 1  # if player returns to this tile, wood plank has been place so return 1
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
-        if not self.plank:
-            if self.tool in player_inventory:
-                r_str += "Wood plank used!, 1 energy was spent!"
-                return r_str
-            else:
-                r_str += "No wood plank available, " + str(self.energy_req) + " energy was spent!"
-                return r_str
+        if self.tool in player_inventory:
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+        else:
+            r_str += "No wood plank available, " + str(self.energy_req) + " energy was spent to wallow through the mud!"
         return r_str
 
 
@@ -111,27 +99,13 @@ class Tree(Tile):
         if platform.system() == "Windows":
             icon = "T"
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
-        self.tree_status = True  # the tree is chopper down for False, and standing for True
-
-    def get_energy_req(self, player_inventory: dict):
-        if self.tree_status:
-            if self.tool in player_inventory:
-                self.tree_status = False
-                return 1
-            else:
-                return self.energy_req
-        else:
-            return 1
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
-        if self.tree_status:
-            if self.tool in player_inventory:
-                r_str += "Path is cleared, 1 energy was spent!"
-                return r_str
-            else:
-                r_str += "A Tree Blocks Your Path!, " + str(self.energy_req) + " energy was spent!"
-                return r_str
+        if self.tool in player_inventory:
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+        else:
+            r_str += "A Tree Blocks Your Path!, " + str(self.energy_req) + " energy was spent to chop down the tree!"
         return r_str
 
 
@@ -140,29 +114,15 @@ class Blackberry(Tile):
         if platform.system() == "Windows":
             icon = "B"
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
-        self.bush_status = True  # the bush is cleared if false,
-        b_color = ["red", "magenta"]
+        b_color = [self.color, "magenta"]
         self.color = b_color[randint(0, 1)]
-
-    def get_energy_req(self, player_inventory: dict):
-        if self.bush_status:
-            if self.tool in player_inventory:
-                self.bush_status = False
-                return 1
-            else:
-                return 2
-        else:
-            return 1
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
-        if self.bush_status:
-            if self.tool in player_inventory:
-                r_str += "Path is cleared, 1 Energy was spent"
-                return r_str
-            else:
-                r_str += "A Black Berry Bush Blocks Your Path!, " + str(self.energy_req) + " energy was spent!"
-            return r_str
+        if self.tool in player_inventory:
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+        else:
+            r_str += "A Black Berry Bush Blocks Your Path!, " + str(self.energy_req) + " energy was spent to cut down the bush!"
         return r_str
 
 
@@ -173,7 +133,7 @@ class Troll(Tile):
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def get_energy_req(self, player_inventory: dict):
-        return 1
+        return self.energy_req
 
     def print_tile(self, player_inventory: dict):
         r_str = "HAHAHAHA ALL YOUR MONEY IS MINE NOW< MUAHAHAHAHAHAH"
@@ -187,7 +147,12 @@ class Boulder(Tile):
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def print_tile(self, player_inventory: dict):
-        r_str = "A Boulder Blocks Your PAth!, " + str(self.energy_req) + " energy was spent climbing over!"
+        r_str = ''
+        if self.tool in player_inventory:
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+        else:
+            r_str += "A Boulder Blocks Your Path!, " + str(
+                self.energy_req) + " energy was spent climbing over the rock!"
         return r_str
 
 
@@ -196,6 +161,10 @@ class Custom(Tile):
         Tile.__init__(self, title, energy_req, icon, color, tool, debug)
 
     def print_tile(self, player_inventory: dict):
-        r_str = "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + " energy was " \
-            "spent to go around it!"
+        r_str = ''
+        if self.tool in player_inventory:
+            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+        else:
+            r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + " energy was " \
+                                                                                                      "spent to go around it!"
         return r_str

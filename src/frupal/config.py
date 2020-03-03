@@ -232,17 +232,17 @@ class Config:
             Quarry = 7
             Custom = 8
 
-        r_str = ["Player's Statistics: ", "(P) Starting Energy: " + str(self.player['energy']),
-                 "(P) Starting Money: " + str(self.player['money']), "\n", "Map Statistics: ",
-                 "(S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name,
-                 "(S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or '
+        r_str = ["Player's Statistics: ", "(Press P) Starting Energy: " + str(self.player['energy']),
+                 "(Press P) Starting Money: " + str(self.player['money']), "\n", "Map Statistics: ",
+                 "(Press S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name,
+                 "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or '
                  + str(self.map['total']) + " Tiles"]
         for key in self.tiles:
             r_str.append(
-                "(T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
+                "(Press T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
                 + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                 + ", Color: " + str(self.tiles[key]['color']).capitalize())
         r_str.append("\n")
-        r_str.append("(Q) Exit Config")
+        r_str.append("(Press Q) Exit Config")
 
         return r_str

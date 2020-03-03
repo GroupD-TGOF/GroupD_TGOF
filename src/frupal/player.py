@@ -75,7 +75,7 @@ class Player:
 
             view_dist = 1
             if 'binoculars' in self.inventory:
-                view_dist = 4
+                view_dist = 2
             self.player_view(view_dist, game_map)
 
     def add_inv(self, item: str, cost: int):

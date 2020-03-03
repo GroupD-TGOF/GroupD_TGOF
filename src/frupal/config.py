@@ -28,7 +28,7 @@ class Config:
                            'tool': {'name': 'shears', 'price': 10}},
             'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
                         'tool': {'name': 'pickaxe', 'price': 25}},
-            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A5", 'color': 'blue',
+            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
                       'tool': {'name': 'boat', 'price': 10}},
             'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
                     'tool': {'name': 'wood_plank', 'price': 5}},

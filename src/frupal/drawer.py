@@ -135,13 +135,12 @@ class Drawer:
         print()
         print()
         print("(Press K) Keybindings!".center(self.width - 1))
-        for a in range(spacer_lines):
-            if a == spacer_lines // 2:
-                print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width), end='')
-            elif self.debug:
+        for a in range(spacer_lines - 2):
+            if self.debug:
                 print("+ " + str(a))
             else:
                 print()
+        print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width), end='')
         self.print_stats(player)
 
     def print_stats(self, player):

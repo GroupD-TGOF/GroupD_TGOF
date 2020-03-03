@@ -63,6 +63,6 @@ if __name__ == "__main__":
                 # Print Map one more time and Print Final Screen
                 drawer.print_game(player, game_map)
                 time.sleep(3)
-                drawer.final_screen(playing)
+                # drawer.final_screen(playing)
                 playing = 0
         running = user.main_menu(config)

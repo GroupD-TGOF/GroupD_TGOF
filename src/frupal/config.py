@@ -8,19 +8,19 @@ class Config:
 
     def __init__(self):
         self.player = {  # Creates Player Library
-            'energy': 25,  # Initializes player stats
-            'money': 25,
-            'p_r': 0,
-            'p_c': 0
-
+            'energy': 25,   # Initializes player stats
+            'money': 25,    # Initializes player energy
+            'p_r': 0,       # Initializes player position rows
+            'p_c': 0        # Initializes player position columns
         }
 
         self.map = {  # Creates Map Library
-            'total': 100,  # Initializes map dimensions
-            'height': 10,
-            'width': 10
+            'total': 100,   # Initializes map dimensions
+            'height': 10,   # Initializes map height
+            'width': 10     # Initializes map width
         }
 
+        # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
         self.tiles = {
             'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
                      'tool': {'name': 'saw', 'price': 25}},
@@ -37,20 +37,23 @@ class Config:
         }
 
         self.map_Input = {  # Creates Input Library
-            'style': 1,  # Initializes Input variables
-            'size': 1
+            'style': 1,     # Initializes Input variables
+            'size': 1       # Initializes Input variables
         }
 
+        # Initialize Store
         self.store = {
             '+10 energy': 10,
             "+25 energy": 20,
             'binoculars': 15,
         }
 
+        # Visit each tile in the tile list and add their tool's name and price to the store
         for tile in self.tiles:
             if not tile == 'troll':
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
+        # Search for a config file in the file structure
         self.conf = "config.txt"
         count = 0
         for root, direct, files in os.walk("."):
@@ -58,19 +61,20 @@ class Config:
                 if count < 1:
                     self.conf = os.path.join(root, self.conf)
 
+        # If no config create one from defaults above
         if not self.load_config():
             self.create_config()
 
-    def get_map(self, k: str):  # Defines get function for Map Library
+    def get_map(self, k):  # Defines get function for Map Library
         return self.map[k]
 
-    def get_player(self, k: str):  # Defines get function for Player Stats Library
+    def get_player(self, k):  # Defines get function for Player Stats Library
         return self.player[k]
 
-    def get_tile(self, k: str):
+    def get_tile(self, k):  # Defines get function for Tiles Library
         return self.tiles[k]
 
-    def get_tiles(self):
+    def get_tiles(self):  # Defines get function for TIles Library to get list of tiles
         tiles = []
         for key in self.tiles:
             tiles.append(key)
@@ -93,7 +97,7 @@ class Config:
             with open(self.conf) as file:  # Open file
                 total = file.read()  # Import data to string
                 total = json.loads(total)  # Parse string to "total" library
-                self.player = total["player"]  # Transfer total library to indiv libraries
+                self.player = total["player"]  # Transfer total library to individual libraries
                 self.map = total["map"]
                 self.map['total'] = self.map['height'] * self.map['width']
                 self.tiles = total["tiles"]
@@ -126,7 +130,7 @@ class Config:
                 self.map_Input['size'] = 0
         self.map['total'] = self.map['height'] * self.map['width']
 
-    def __tile_counts(self, blackberry_count: int, boulder_count, mud_count, tree_count, troll_count, water_count):
+    def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
             self.tiles[tile]['count'] = 0
         self.tiles['blackberry']['count'] = int(self.map['total'] * blackberry_count)
@@ -147,6 +151,19 @@ class Config:
         if inp == 1:
             self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ")
             self.tiles[tile_f]['tool']['price'] = input("Please Enter the Tool Price: ")
+
+        self.store.clear()
+
+        self.store = {
+            '+10 energy': 10,
+            "+25 energy": 20,
+            'binoculars': 15,
+        }
+
+        for tile in self.tiles:
+            if not tile == 'troll':
+                self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
+
 
     def map_style(self):  # Function sets Map style
         # Prints map style options ranked by difficulty
@@ -193,7 +210,7 @@ class Config:
                 print("Must be 1-8!")
                 self.map_Input['style'] = 0
 
-    def change_stats(self, energy: int, money: int):  # Function sets player stats
+    def change_stats(self, energy, money):  # Function sets player stats
         self.player['energy'] = energy
         self.player['money'] = money
 

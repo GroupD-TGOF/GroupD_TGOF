@@ -1,6 +1,7 @@
 import sys
 import time
 import os
+import platform
 
 from frupal import (
     Map,
@@ -13,7 +14,11 @@ from frupal import (
 if __name__ == "__main__":
     # Try to get size of window if OS error then set default size.
     try:
-        window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
+        if platform.system() == "Windows":
+            window = (os.get_terminal_size().columns - 1, os.get_terminal_size().lines)
+        else:
+            window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
+
     except OSError:
         window = (60, 50)
 

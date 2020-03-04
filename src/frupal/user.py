@@ -72,19 +72,16 @@ class User:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        for i in range(self.middle - 4):
+        for i in range(self.middle - 2):
             if self.debug:
                 print("+ ".rstrip("\n") + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".rstrip("\n").center(self.width)), end='')
-        print("\n\n", end='')
-        print(crayons.yellow("(Press S) Start Game!".rstrip("\n").center(self.width)), end='')
-        print("\n", end='')
-        print(crayons.yellow("(Press C) Configuration?".rstrip("\n").center(self.width)), end='')
-        print("\n", end='')
-        print(crayons.yellow("(Press Q) Exit Game.".rstrip("\n").center(self.width)), end='')
-        for i in range(self.middle - 4):
+        print(crayons.green("The Game of Frupal!".center(self.width)))
+        print(crayons.yellow("(Press S) Start Game!".center(self.width)))
+        print(crayons.yellow("(Press C) Configuration?".center(self.width)))
+        print(crayons.yellow("(Press Q) Exit Game.".center(self.width)))
+        for i in range(self.middle - 2):
             if self.debug:
                 print("+ " + str(i))
             else:

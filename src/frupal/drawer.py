@@ -13,15 +13,15 @@ class Drawer:
 
     def title_screen(self):
         title = list()
-        title.append("  █████▒██▀███   █    ██  ██▓███   ▄▄▄       ██▓    ".rstrip("\n"))
-        title.append("▓██   ▒▓██ ▒ ██▒ ██  ▓██▒▓██░  ██▒▒████▄    ▓██▒    ".rstrip("\n"))
-        title.append("▒████ ░▓██ ░▄█ ▒▓██  ▒██░▓██░ ██▓▒▒██  ▀█▄  ▒██░    ".rstrip("\n"))
-        title.append("░▓█▒  ░▒██▀▀█▄  ▓▓█  ░██░▒██▄█▓▒ ▒░██▄▄▄▄██ ▒██░    ".rstrip("\n"))
-        title.append("░▒█░   ░██▓ ▒██▒▒▒█████▓ ▒██▒ ░  ░ ▓█   ▓██▒░██████▒".rstrip("\n"))
-        title.append(" ▒ ░   ░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░ ▒▒   ▓▒█░░ ▒░▓  ░".rstrip("\n"))
-        title.append(" ░       ░▒ ░ ▒░░░▒░ ░ ░ ░▒ ░       ▒   ▒▒ ░░ ░ ▒  ░".rstrip("\n"))
-        title.append(" ░ ░     ░░   ░  ░░░ ░ ░ ░░         ░   ▒     ░ ░   ".rstrip("\n"))
-        title.append("          ░        ░                    ░  ░    ░  ░".rstrip("\n"))
+        title.append("  █████▒██▀███   █    ██  ██▓███   ▄▄▄       ██▓    ")
+        title.append("▓██   ▒▓██ ▒ ██▒ ██  ▓██▒▓██░  ██▒▒████▄    ▓██▒    ")
+        title.append("▒████ ░▓██ ░▄█ ▒▓██  ▒██░▓██░ ██▓▒▒██  ▀█▄  ▒██░    ")
+        title.append("░▓█▒  ░▒██▀▀█▄  ▓▓█  ░██░▒██▄█▓▒ ▒░██▄▄▄▄██ ▒██░    ")
+        title.append("░▒█░   ░██▓ ▒██▒▒▒█████▓ ▒██▒ ░  ░ ▓█   ▓██▒░██████▒")
+        title.append(" ▒ ░   ░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░ ▒▒   ▓▒█░░ ▒░▓  ░")
+        title.append(" ░       ░▒ ░ ▒░░░▒░ ░ ░ ░▒ ░       ▒   ▒▒ ░░ ░ ▒  ░")
+        title.append(" ░ ░     ░░   ░  ░░░ ░ ░ ░░         ░   ▒     ░ ░   ")
+        title.append("          ░        ░                    ░  ░    ░  ░")
         spacer = (self.height - len(title)) // 2
         for i in range(spacer):
             if self.debug:
@@ -29,10 +29,10 @@ class Drawer:
             else:
                 print()
         for line in title:
-            print(crayons.green(line.center(self.width)), end='')
+            print(crayons.green(line.center(self.width)))
         for i in range(spacer):
             if i == spacer // 2:
-                print(crayons.green("A Text Based Island Adventure Game!".rstrip("\n")).center(self.width), end='')
+                print(crayons.green("A Text Based Island Adventure Game!".rstrip("\n")).center(self.width))
             elif self.debug:
                 print("+ " + str(i))
             else:
@@ -47,9 +47,9 @@ class Drawer:
             else:
                 print()
         if playing == 3:
-            print(crayons.green("You Win!".rstrip("\n").center(self.width)), end='')
+            print(crayons.green("You Win!".center(self.width)))
         if playing == 2:
-            print(crayons.green("You Lose!".rstrip("\n").center(self.width)), end='')
+            print(crayons.green("You Lose!".center(self.width)))
         for i in range(spacer - 1):
             if self.debug:
                 print("+ " + str(i))
@@ -140,7 +140,7 @@ class Drawer:
                 print("+ " + str(a))
             else:
                 print()
-        print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width), end='')
+        print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
         self.print_stats(player)
 
     def print_stats(self, player):
@@ -150,4 +150,4 @@ class Drawer:
         s_str += str(player.get_money())
         s_str += "     Inventory: "
         s_str += ' '.join([str(elem).replace('_', ' ').capitalize() for elem in player.inventory])
-        print(crayons.yellow(s_str.center(self.width)), end='')
+        print(crayons.yellow(s_str.center(self.width)))

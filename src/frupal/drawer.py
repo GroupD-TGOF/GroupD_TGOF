@@ -29,7 +29,7 @@ class Drawer:
             else:
                 print()
         for line in title:
-            print(crayons.green(line.center(self.width)))
+            print(crayons.green(line.center(self.width - 1)))
         for i in range(spacer):
             if i == spacer // 2:
                 print(crayons.green("A Text Based Island Adventure Game!".rstrip("\n")).center(self.width))

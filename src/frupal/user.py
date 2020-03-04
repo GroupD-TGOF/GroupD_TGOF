@@ -77,7 +77,7 @@ class User:
                 print("+ ".rstrip("\n") + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".center(self.width)))
+        print(crayons.green("The Game of Frupal!\n".center(self.width)))
         print(crayons.yellow("(Press S) Start Game!".center(self.width)))
         print(crayons.yellow("(Press C) Configuration?".center(self.width)))
         print(crayons.yellow("(Press Q) Exit Game.".center(self.width)))

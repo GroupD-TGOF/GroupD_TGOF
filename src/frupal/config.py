@@ -86,11 +86,15 @@ class Config:
             "map": self.map,
             "tiles": self.tiles,
             "map_Input": self.map_Input
-
         }
         f = open(self.conf, "w")
         f.write(json.dumps(total, indent=4))
         f.close()
+
+    def reset_config(self):
+        print(self.conf)
+        os.remove(self.conf)
+        self.create_config()
 
     def load_config(self):  # Function loads previous settings from file
         try:
@@ -242,6 +246,8 @@ class Config:
                 + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                 + ", Color: " + str(self.tiles[key]['color']).capitalize())
         r_str.append("\n")
+        r_str.append("(Press C) Clear the ConFig File and Recreate File!\n")
         r_str.append("(Press Q) Exit Config")
+
 
         return r_str

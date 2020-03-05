@@ -73,6 +73,12 @@ class Player:
             if self.energy < 0:
                 self.energy = 0
 
+            # Visit tile, only works for tiles that give money when visited
+            game_map[self.position[1]][self.position[0]].visit_tile(self.inventory)
+
+            if game_map[self.position[1]][self.position[0]].has_visited() == 1:
+                self.money += 5
+
             view_dist = 1
             if 'binoculars' in self.inventory:
                 view_dist = 2

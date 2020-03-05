@@ -14,6 +14,7 @@ class Tile:
         self.color = color
         self.inv = []
         self.tool = tool
+        self.visited = 0
 
     def get_color(self):
         return self.color
@@ -40,10 +41,7 @@ class Tile:
         return t_inv
 
     def has_item(self, item: str):
-        if item in self.inv:
-            return True
-        else:
-            return False
+        return item in self.inv
 
     def seen_status(self):
         return self.is_seen
@@ -54,6 +52,16 @@ class Tile:
     def print_tile(self, player_inventory: dict):
         r_str = ''
         return r_str
+
+    def has_visited(self):
+        return self.visited
+
+    def visit_tile(self, player_inventory):
+        if self.tool in player_inventory:
+            self.visited += 0
+
+    def has_tool(self, tool):
+        return tool in self.tool
 
 
 class Water(Tile):
@@ -88,7 +96,7 @@ class Mud(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+            r_str += self.tool.capitalize() + " used!, " + "1 energy was spent!"
         else:
             r_str += "No wood plank available, " + str(self.energy_req) + " energy was spent to wallow through the mud!"
         return r_str
@@ -103,10 +111,14 @@ class Tree(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+            r_str += self.tool.capitalize() + " used!, " + "1 energy was spent!"
         else:
-            r_str += "A Tree Blocks Your Path!, " + str(self.energy_req) + " energy was spent to chop down the tree!"
+            r_str += "A Tree Blocks Your Path!, " + str(self.energy_req) + " energy was spent to go around the tree!"
         return r_str
+
+    def visit_tile(self, player_inventory):
+        if self.tool in player_inventory:
+            self.visited += 1
 
 
 class Blackberry(Tile):
@@ -120,7 +132,7 @@ class Blackberry(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+            r_str += self.tool.capitalize() + " used!, " + "1 energy was spent!"
         else:
             r_str += "A Black Berry Bush Blocks Your Path!, " + str(self.energy_req) + " energy was spent to cut down the bush!"
         return r_str
@@ -149,7 +161,7 @@ class Boulder(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+            r_str += self.tool.capitalize() + " used!, " + "1 energy was spent!"
         else:
             r_str += "A Boulder Blocks Your Path!, " + str(
                 self.energy_req) + " energy was spent climbing over the rock!"
@@ -163,7 +175,7 @@ class Custom(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.energy_req) + " energy was spent!"
+            r_str += self.tool.capitalize() + " used!, " + "1 energy was spent!"
         else:
             r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + " energy was " \
                                                                                                       "spent to go around it!"

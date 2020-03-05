@@ -27,7 +27,7 @@ class User:
             else:
                 print()
         for i in range(len(sp)):
-            print(sp[i].center(self.width).rstrip('\n'))
+            print(sp[i].center(self.width))
         for i in range(self.middle - (len(sp) // 2)):
             if self.debug:
                 print("+ " + str(i))
@@ -51,7 +51,7 @@ class User:
 
     def config_menu(self, config: Config):
         self.__print_config_menu(config)
-        key = readchar.readkey()
+        key = readchar.readkey().lower()
         if key == 'p':
             self.config_stats(config)
             self.config_menu(config)
@@ -61,13 +61,16 @@ class User:
             config.map_size()
             config.map_style()
             self.config_menu(config)
+        elif key == 't':
+            config.change_tile()
+            self.config_menu(config)
+        elif key == 'c':
+            config.reset_config()
+            self.config_menu(config)
         elif key == 'q':
             config.create_config()
             self.__print_config_menu(config)
             time.sleep(2)
-        elif key == 't':
-            config.change_tile()
-            self.config_menu(config)
         else:
             self.config_menu(config)
 
@@ -116,14 +119,14 @@ class User:
                         self.width))
                     index += 1
             print()
-            print("Enter 0 to leave the store".center(self.width))
+            print("Enter 0 to leave the store".center(self.width + 1))
             for i in range(self.middle - (spacer + 1)):
                 if self.debug:
                     print("+ " + str(i))
                 else:
                     print()
             try:
-                choice = int(input("What do you want to buy: ".center(self.width)))
+                choice = int(input("What do you want to buy: ".center(self.width + 1)))
             except:
                 continue
             choice -= 1

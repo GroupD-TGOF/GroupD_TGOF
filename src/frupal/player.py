@@ -1,5 +1,7 @@
 import enum
 from .config import Config
+from .tiles import Tile
+import platform
 
 
 class Direction(enum.Enum):
@@ -44,26 +46,40 @@ class Player:
 
     # Needs a case for the boundary wall?
     def move(self, direction: Direction, game_map):
+        prev = 0
+        if game_map[self.position[1]][self.position[0]].has_used():
+            base_icon = u"\u25A0"
+            if platform.system() == "Windows":
+                base_icon = "L"
+            game_map[self.position[1]][self.position[0]] = Tile('grass', 1, base_icon, 'green', '', 1, True)
+        prev = [self.position[0], self.position[1]]
         if self.energy > 0 and direction != Direction.NULL:
             if direction == Direction.NORTH:
+                prev[1] = self.position[1]
                 self.position[1] += -1
                 if self.position[1] < 0:
                     self.position[1] -= -1
             elif direction == Direction.WEST:
+                prev[0] = self.position[0]
                 self.position[0] += -1
                 if self.position[0] < 0:
                     self.position[0] -= -1
             elif direction == Direction.EAST:
+                prev[0] = self.position[0]
                 self.position[0] += 1
                 if self.position[0] > self.map_size[0] - 1:
                     self.position[0] -= 1
             elif direction == Direction.SOUTH:
+                prev[1] = self.position[1]
                 self.position[1] += 1
                 if self.position[1] > self.map_size[1] - 1:
                     self.position[1] -= 1
-
             # Adjust energy
             self.energy += -(game_map[self.position[1]][self.position[0]].get_energy_req(self.inventory))
+
+            if game_map[self.position[1]][self.position[0]].get_name() == 'water' and \
+                    game_map[self.position[1]][self.position[0]].get_tool() not in self.inventory:
+                self.position = [prev[0], prev[1]]
             if game_map[self.position[1]][self.position[0]].get_name() == 'troll':
                 self.money = self.money // 2
 
@@ -74,10 +90,11 @@ class Player:
                 self.energy = 0
 
             # Visit tile, only works for tiles that give money when visited
-            game_map[self.position[1]][self.position[0]].visit_tile(self.inventory)
+            game_map[self.position[1]][self.position[0]].used_tile()
 
-            if game_map[self.position[1]][self.position[0]].has_visited() == 1:
-                self.money += 5
+            if game_map[self.position[1]][self.position[0]].has_used():
+                if game_map[self.position[1]][self.position[0]].get_name() == 'tree':
+                    self.money += 5
 
             view_dist = 1
             if 'binoculars' in self.inventory:

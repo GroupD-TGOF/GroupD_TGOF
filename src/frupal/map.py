@@ -1,7 +1,7 @@
 """
 Nick Grout 1/23/2020
 """
-from .tiles import Tile, Water, Mud, Tree, Troll, Blackberry, Boulder, Custom
+from .tiles import Tile, Water, Mud, Obstacle, Troll, Custom
 from .config import Config
 from random import randint
 import platform
@@ -23,7 +23,7 @@ class Map:
 
     def update_map(self, config: Config, debug: bool):
         base_icon = u"\u25A0"
-        base = 'tile'
+        base = 'grass'
         if platform.system() == "Windows":
             base_icon = "L"
         base_color = 'green'
@@ -33,7 +33,7 @@ class Map:
         self._array = [[] for i in range(config.get_map("height"))]
 
         for i in range(len(self._array)):
-            self._array[i] = [Tile(base, 1, base_icon, base_color, base_tool, debug) for i in
+            self._array[i] = [Tile(base, 1, base_icon, base_color, base_tool, 1, debug) for i in
                               range(config.get_map("width"))]
 
         self.__random_gen(base, tiles, config, debug)
@@ -57,19 +57,30 @@ class Map:
 
     def __set_tile(self, tile, info, x, y, debug):
         if tile == 'water':
-            self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                      info['tool']['energy'], debug)
         elif tile == 'tree':
-            self._array[x][y] = Tree(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                         info['tool']['energy'], debug)
         elif tile == 'mud':
-            self._array[x][y] = Mud(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Mud(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                    info['tool']['energy'], debug)
         elif tile == 'troll':
-            self._array[x][y] = Troll(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Troll(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                      info['tool']['energy'], debug)
         elif tile == 'blackberry':
-            self._array[x][y] = Blackberry(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                         info['tool']['energy'], debug)
         elif tile == 'boulder':
-            self._array[x][y] = Boulder(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                         info['tool']['energy'], debug)
         else:
-            self._array[x][y] = Custom(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'], debug)
+            if info['type'] == 'tile':
+                self._array[x][y] = Custom(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                       info['tool']['energy'], debug)
+            elif info['type'] == "obs":
+                self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
+                                           info['tool']['energy'], debug)
 
     def __getitem__(self, row: int):
         """

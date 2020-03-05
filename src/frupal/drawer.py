@@ -40,7 +40,14 @@ class Drawer:
         time.sleep(3)
 
     def final_screen(self, playing: int):
-        spacer = self.height // 2
+        lose = list()
+
+        win = list()
+        spacer = 0
+        if playing == 2:
+            spacer = (self.height - len(lose)) // 2
+        if playing == 3:
+            spacer = (self.height - len(win)) // 2
         for i in range(spacer):
             if self.debug:
                 print("+ " + str(i))

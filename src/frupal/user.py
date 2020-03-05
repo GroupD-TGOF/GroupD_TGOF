@@ -55,21 +55,26 @@ class User:
         if key == 'p':
             self.config_stats(config)
             self.config_menu(config)
+            config.system_finder()
         elif key == 's':
             config.map_Input['size'] = 0
             config.map_Input['style'] = 0
             config.map_size()
             config.map_style()
+            config.system_finder()
             self.config_menu(config)
         elif key == 't':
             config.change_tile()
+            config.system_finder()
             self.config_menu(config)
         elif key == 'c':
             config.reset_config()
             self.config_menu(config)
+        elif key == 'b':
+            config.change_price()
+            self.config_menu(config)
         elif key == 'q':
             config.create_config()
-            self.__print_config_menu(config)
             time.sleep(2)
         else:
             self.config_menu(config)
@@ -157,9 +162,9 @@ class User:
                 print("+ " + str(i))
             else:
                 print()
-        print("(Press Q) Exit!".center(self.width))
+        print("(Press R) Return!".center(self.width))
         key = readchar.readkey()
-        if key != 'q':
+        if key != 'r':
             self.key_menu()
         else:
             return

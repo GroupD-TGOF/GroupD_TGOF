@@ -1,89 +1,91 @@
 {
     "player": {
-        "energy": 200,
-        "money": 200,
+        "energy": 100,
+        "money": 100,
         "p_r": 0,
         "p_c": 0
     },
     "map": {
-        "total": 900,
-        "height": 30,
-        "width": 30
+        "total": 400,
+        "height": 20,
+        "width": 20
     },
     "tiles": {
         "tree": {
+            "type": "obs",
             "energy_req": 2,
-            "count": 180,
-            "icon": "\u25b2",
+            "count": 80,
+            "icon": "T",
             "color": "green",
             "tool": {
-                "name": "saw",
+                "name": "axe",
+                "energy": 1,
                 "price": 25
             }
         },
         "blackberry": {
+            "type": "tile",
             "energy_req": 2,
-            "count": 45,
-            "icon": "\u25c9",
+            "count": 20,
+            "icon": "B",
             "color": "magenta",
             "tool": {
                 "name": "shears",
+                "energy": 1,
                 "price": 10
             }
         },
         "boulder": {
+            "type": "obs",
             "energy_req": 2,
-            "count": 45,
-            "icon": "\u25cf",
+            "count": 20,
+            "icon": "R",
             "color": "white",
             "tool": {
                 "name": "pickaxe",
+                "energy": 1,
                 "price": 25
             }
         },
         "water": {
+            "type": "tile",
             "energy_req": 2,
-            "count": 180,
-            "icon": "\u25a5",
+            "count": 80,
+            "icon": "W",
             "color": "blue",
             "tool": {
                 "name": "boat",
+                "energy": 0,
                 "price": 10
             }
         },
         "mud": {
+            "type": "tile",
             "energy_req": 5,
-            "count": 360,
-            "icon": "\u25a7",
+            "count": 160,
+            "icon": "M",
             "color": "yellow",
             "tool": {
-                "name": "wood_plank",
+                "name": "wood_planks",
+                "energy": 1,
                 "price": 5
             }
         },
         "troll": {
+            "type": "tile",
             "energy_req": 1,
-            "count": 9,
-            "icon": "\u25a0",
+            "count": 4,
+            "icon": "L",
             "color": "green",
             "tool": {
                 "name": " ",
-                "price": 0
-            }
-        },
-        "sand": {
-            "energy_req": 1,
-            "count": 0,
-            "icon": "S",
-            "color": "green",
-            "tool": {
-                "name": " ",
+                "energy": 1,
                 "price": 0
             }
         }
     },
     "map_Input": {
         "style": 5,
-        "size": 3
+        "size": 2
     }
 }

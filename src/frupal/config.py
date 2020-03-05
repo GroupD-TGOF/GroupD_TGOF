@@ -1,6 +1,7 @@
 import json
 import os
 import enum
+import platform
 
 
 class Config:
@@ -8,37 +9,37 @@ class Config:
 
     def __init__(self):
         self.player = {  # Creates Player Library
-            'energy': 25,   # Initializes player stats
-            'money': 25,    # Initializes player energy
-            'p_r': 0,       # Initializes player position rows
-            'p_c': 0        # Initializes player position columns
+            'energy': 25,  # Initializes player stats
+            'money': 25,  # Initializes player energy
+            'p_r': 0,  # Initializes player position rows
+            'p_c': 0  # Initializes player position columns
         }
 
         self.map = {  # Creates Map Library
-            'total': 100,   # Initializes map dimensions
-            'height': 10,   # Initializes map height
-            'width': 10     # Initializes map width
+            'total': 100,  # Initializes map dimensions
+            'height': 10,  # Initializes map height
+            'width': 10  # Initializes map width
         }
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
         self.tiles = {
-            'tree': {'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
-                     'tool': {'name': 'saw', 'price': 25}},
-            'blackberry': {'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
-                           'tool': {'name': 'shears', 'price': 10}},
-            'boulder': {'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
-                        'tool': {'name': 'pickaxe', 'price': 25}},
-            'water': {'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
-                      'tool': {'name': 'boat', 'price': 10}},
-            'mud': {'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
-                    'tool': {'name': 'wood_plank', 'price': 5}},
-            'troll': {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
-                      'tool': {'name': ' ', 'price': 0}}
+            'tree': {'type': 'obs', 'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
+                     'tool': {'name': 'axe', 'energy': 1, 'price': 25}},
+            'blackberry': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
+                           'tool': {'name': 'shears', 'energy': 1, 'price': 10}},
+            'boulder': {'type': 'obs', 'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
+                        'tool': {'name': 'pickaxe', 'energy': 1, 'price': 25}},
+            'water': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
+                      'tool': {'name': 'boat', 'energy': 0, 'price': 10}},
+            'mud': {'type': 'tile', 'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
+                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 5}},
+            'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
+                      'tool': {'name': ' ', 'energy': 1, 'price': 0}}
         }
 
         self.map_Input = {  # Creates Input Library
-            'style': 1,     # Initializes Input variables
-            'size': 1       # Initializes Input variables
+            'style': 1,  # Initializes Input variables
+            'size': 1  # Initializes Input variables
         }
 
         # Initialize Store
@@ -64,6 +65,16 @@ class Config:
         # If no config create one from defaults above
         if not self.load_config():
             self.create_config()
+        self.system_finder()
+
+    def system_finder(self):
+        if platform.system() == "Windows":
+            self.tiles['tree']['icon'] = 'T'
+            self.tiles['blackberry']['icon'] = 'B'
+            self.tiles['boulder']['icon'] = 'R'
+            self.tiles['water']['icon'] = 'W'
+            self.tiles['mud']['icon'] = 'M'
+            self.tiles['troll']['icon'] = 'L'
 
     def get_map(self, k):  # Defines get function for Map Library
         return self.map[k]
@@ -81,6 +92,7 @@ class Config:
         return tiles
 
     def create_config(self):  # Function saves settings to config file
+        self.system_finder()
         total = {
             "player": self.player,
             "map": self.map,
@@ -92,7 +104,7 @@ class Config:
         f.close()
 
     def reset_config(self):
-        print(self.conf)
+        self.system_finder()
         os.remove(self.conf)
         self.create_config()
 
@@ -147,13 +159,19 @@ class Config:
     def change_tile(self):
         tile_f = input("Please enter a tile name: ").lower()
         if tile_f not in self.tiles:
-            self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
+            self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
+                                  'tool': {'name': ' ', 'price': 0}}
+
+        choice = int(input("Please Enter the Tile Type (1 for Obstacle, 0 for Tile): "))
+        if choice == 1:
+            self.tiles[tile_f]['type'] = 'obs'
         self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
-        self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ")
+        self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ").capitalize()
         self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ").lower()
         inp = int(input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): '))
         if inp == 1:
             self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ").lower()
+            self.tiles[tile_f]['tool']['energy'] = int(input("Please Enter the Tool Energy Requirement: "))
             self.tiles[tile_f]['tool']['price'] = int(input("Please Enter the Tool Price: "))
 
         self.store.clear()
@@ -217,6 +235,9 @@ class Config:
         self.player['energy'] = energy
         self.player['money'] = money
 
+    def change_price(self):
+        self.store['binoculars'] = int(input("Please Enter A New Price: "))
+
     def print_config(self):
 
         class Size(enum.Enum):  # Creates enum classes for print_settings
@@ -238,16 +259,21 @@ class Config:
         r_str = ["Player's Statistics: ", "(Press P) Starting Energy: " + str(self.player['energy']),
                  "(Press P) Starting Money: " + str(self.player['money']), "\n", "Map Statistics: ",
                  "(Press S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name,
-                 "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) + ' SQ. Yards) or '
+                 "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(
+                     self.map['width']) + ' SQ. Yards) or '
                  + str(self.map['total']) + " Tiles"]
         for key in self.tiles:
             r_str.append(
-                "(Press T) " + str(key).replace('_', ' ').capitalize() + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
+                "(Press T) " + str(key).replace('_', ' ').capitalize() + ": " + str(
+                    self.tiles[key]['count']) + " SQ. Yards, "
                 + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                 + ", Color: " + str(self.tiles[key]['color']).capitalize())
+            r_str.append("Tool Name: " + self.tiles[key]['tool']['name'].capitalize() + ", Energy Requirement: " +
+                         str(self.tiles[key]['tool']['energy']) + ", Tool Price: " +
+                         str(self.tiles[key]['tool']['price']))
         r_str.append("\n")
+        r_str.append("(Press B) Change Binocular Price!")
         r_str.append("(Press C) Clear the ConFig File and Recreate File!\n")
         r_str.append("(Press Q) Exit Config")
-
 
         return r_str

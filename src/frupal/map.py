@@ -22,6 +22,7 @@ class Map:
         self._array = []
 
     def update_map(self, config: Config, debug: bool):
+        jewel_variance = 200
         base_icon = u"\u25A0"
         base = 'grass'
         if platform.system() == "Windows":
@@ -37,9 +38,9 @@ class Map:
                               range(config.get_map("width"))]
 
         self.__random_gen(base, tiles, config, debug)
-
-        self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
-        for j in range(config.get_map('total') // 90):
+        if config.get_map('total') < jewel_variance:
+            self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
+        for j in range(config.get_map('total') // jewel_variance):
             self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
 
         self._array[0][0].seen_set(True)

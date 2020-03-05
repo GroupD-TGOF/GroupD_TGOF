@@ -23,16 +23,16 @@ class Config:
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
         self.tiles = {
-            'tree': {'type': 'obs', 'energy_req': 2, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
-                     'tool': {'name': 'axe', 'energy': 1, 'price': 25}},
+            'tree': {'type': 'obs', 'energy_req': 3, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
+                     'tool': {'name': 'axe', 'energy': 1, 'price': 15}},
             'blackberry': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
                            'tool': {'name': 'shears', 'energy': 1, 'price': 10}},
-            'boulder': {'type': 'obs', 'energy_req': 2, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
-                        'tool': {'name': 'pickaxe', 'energy': 1, 'price': 25}},
+            'boulder': {'type': 'obs', 'energy_req': 5, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
+                        'tool': {'name': 'pickaxe', 'energy': 1, 'price': 15}},
             'water': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
-                      'tool': {'name': 'boat', 'energy': 0, 'price': 10}},
-            'mud': {'type': 'tile', 'energy_req': 5, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
-                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 5}},
+                      'tool': {'name': 'boat', 'energy': 0, 'price': 20}},
+            'mud': {'type': 'tile', 'energy_req': 2, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
+                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 1}},
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
                       'tool': {'name': ' ', 'energy': 1, 'price': 0}}
         }

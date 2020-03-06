@@ -146,7 +146,6 @@ class Config:
                 print("Must be 1, 2, 3, or 4!")
                 self.map_Input['size'] = 0
         self.map['total'] = self.map['height'] * self.map['width']
-        self.map['jewel_var'] = int(input("(Jewel Gen) Please enter a number for X in 1/X: "))
 
     def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
@@ -232,6 +231,7 @@ class Config:
             else:  # default, for bad input
                 print("Must be 1-8!")
                 self.map_Input['style'] = 0
+        self.map['jewel_var'] = int(input("(Jewel Gen) Please enter a number for X in 1/X: "))
 
     def change_stats(self, energy, money):  # Function sets player stats
         self.player['energy'] = energy
@@ -263,8 +263,8 @@ class Config:
                  "(Press S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name,
                  "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(
                      self.map['width']) + ' SQ. Yards) or '
-                 + str(self.map['total']) + " Tiles"]
-        r_str.append("Jewels: 1 per " + str(self.map['jewel_var']) + " Tiles!")
+                 + str(self.map['total']) + " Tiles", "(Press S) Jewels: 1 per " + str(self.map['jewel_var']) +
+                 " Tiles!"]
         for key in self.tiles:
             r_str.append(
                 "(Press T) " + str(key).replace('_', ' ').capitalize() + ": " + str(

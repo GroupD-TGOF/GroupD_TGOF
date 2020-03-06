@@ -1,7 +1,7 @@
 {
     "player": {
-        "energy": 25,
-        "money": 25,
+        "energy": 100,
+        "money": 100,
         "p_r": 0,
         "p_c": 0
     },
@@ -9,7 +9,7 @@
         "total": 100,
         "height": 10,
         "width": 10,
-        "jewel_var": 200
+        "jewel_var": 50
     },
     "tiles": {
         "tree": {
@@ -51,7 +51,7 @@
         "water": {
             "type": "tile",
             "energy_req": 2,
-            "count": 5,
+            "count": 20,
             "icon": "W",
             "color": "blue",
             "tool": {
@@ -63,7 +63,7 @@
         "mud": {
             "type": "tile",
             "energy_req": 2,
-            "count": 0,
+            "count": 40,
             "icon": "M",
             "color": "yellow",
             "tool": {
@@ -75,7 +75,7 @@
         "troll": {
             "type": "tile",
             "energy_req": 1,
-            "count": 0,
+            "count": 1,
             "icon": "L",
             "color": "green",
             "tool": {
@@ -86,7 +86,7 @@
         }
     },
     "map_Input": {
-        "style": 1,
+        "style": 5,
         "size": 1
     }
 }

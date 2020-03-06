@@ -1,32 +1,33 @@
 {
     "player": {
-        "energy": 100,
-        "money": 100,
+        "energy": 25,
+        "money": 25,
         "p_r": 0,
         "p_c": 0
     },
     "map": {
-        "total": 400,
-        "height": 20,
-        "width": 20
+        "total": 100,
+        "height": 10,
+        "width": 10,
+        "jewel_var": 200
     },
     "tiles": {
         "tree": {
             "type": "obs",
-            "energy_req": 2,
-            "count": 80,
+            "energy_req": 3,
+            "count": 20,
             "icon": "T",
             "color": "green",
             "tool": {
                 "name": "axe",
                 "energy": 1,
-                "price": 25
+                "price": 15
             }
         },
         "blackberry": {
             "type": "tile",
             "energy_req": 2,
-            "count": 20,
+            "count": 5,
             "icon": "B",
             "color": "magenta",
             "tool": {
@@ -37,44 +38,44 @@
         },
         "boulder": {
             "type": "obs",
-            "energy_req": 2,
-            "count": 20,
+            "energy_req": 5,
+            "count": 5,
             "icon": "R",
             "color": "white",
             "tool": {
                 "name": "pickaxe",
                 "energy": 1,
-                "price": 25
+                "price": 15
             }
         },
         "water": {
             "type": "tile",
             "energy_req": 2,
-            "count": 80,
+            "count": 5,
             "icon": "W",
             "color": "blue",
             "tool": {
                 "name": "boat",
                 "energy": 0,
-                "price": 10
+                "price": 20
             }
         },
         "mud": {
             "type": "tile",
-            "energy_req": 5,
-            "count": 160,
+            "energy_req": 2,
+            "count": 0,
             "icon": "M",
             "color": "yellow",
             "tool": {
                 "name": "wood_planks",
                 "energy": 1,
-                "price": 5
+                "price": 1
             }
         },
         "troll": {
             "type": "tile",
             "energy_req": 1,
-            "count": 4,
+            "count": 0,
             "icon": "L",
             "color": "green",
             "tool": {
@@ -85,7 +86,7 @@
         }
     },
     "map_Input": {
-        "style": 5,
-        "size": 2
+        "style": 1,
+        "size": 1
     }
 }

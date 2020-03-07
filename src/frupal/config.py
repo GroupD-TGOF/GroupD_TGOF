@@ -143,7 +143,7 @@ class Config:
                 self.map["width"] = 30
             elif self.map_Input['size'] == 4:
                 height = 0
-                while height < 2 or height > 40:
+                while height < 2 or height > 35:
                     try:
                         height = int(input("Enter Height(2-35): "))
                     except ValueError:
@@ -363,7 +363,7 @@ class Config:
                 counts = [0] * len(self.tiles)
                 sum_t = self.map['total'] + 1
                 count = -1
-                print("Total tiles cannot exceed maximum allowed tiles:", self.map['total'])
+                print("(Reminder: When entering individual tile quantities, total tiles cannot exceed maximum allowed:", self.map['total'], ")")
                 while sum_t > self.map['total']:
                     sum_t = 0
                     for i, tile in enumerate(self.tiles):

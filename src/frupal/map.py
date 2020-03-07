@@ -22,7 +22,7 @@ class Map:
         self._array = []
 
     def update_map(self, config: Config, debug: bool):
-        jewel_variance = 200
+        jewel_variance = config.get_map('jewel_var')
         base_icon = u"\u25A0"
         base = 'grass'
         if platform.system() == "Windows":

@@ -40,8 +40,22 @@ class User:
                 print("+ ".rstrip("\n") + str(i))
             else:
                 print()
-        energy = int(input("Input your player's starting energy(1-100): ".center(self.width)))  # User inputs Energy
-        money = int(input("Input your player's starting money(1-100): ".center(self.width)))  # User inputs Money
+        energy = 0
+        while energy < 1 or energy > 100:
+            try:
+                energy = int(input("Input your player's starting energy(1-100): ".center(self.width)))  # User inputs Energy
+            except ValueError:
+                pass
+            if isinstance(energy, int) and (energy < 1 or energy > 100):
+                print("Input Error: Must be 1-100")
+        money = 0
+        while money < 1 or money > 100:
+            try:
+                money = int(input("Input your player's starting money(1-100): ".center(self.width)))  # User inputs Money
+            except ValueError:
+                pass
+            if isinstance(money, int) and (money < 1 or money > 100):
+                print("Input Error: Must be 1-100")
         for i in range(self.middle - 1):
             if self.debug:
                 print("+ ".rstrip("\n") + str(i))

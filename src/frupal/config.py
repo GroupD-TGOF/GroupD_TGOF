@@ -32,7 +32,7 @@ class Config:
             'water': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
                       'tool': {'name': 'boat', 'energy': 0, 'price': 20}},
             'mud': {'type': 'tile', 'energy_req': 2, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
-                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 1}},
+                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 10}},
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
                       'tool': {'name': ' ', 'energy': 1, 'price': 0}}
         }
@@ -85,7 +85,7 @@ class Config:
     def get_tile(self, k):  # Defines get function for Tiles Library
         return self.tiles[k]
 
-    def get_tiles(self):  # Defines get function for TIles Library to get list of tiles
+    def get_tiles(self):  # Defines get function for Tiles Library to get list of tiles
         tiles = []
         for key in self.tiles:
             tiles.append(key)
@@ -128,7 +128,10 @@ class Config:
               + "3. Large (30 x 30)\n" + "4. Custom (N x N)\n")
 
         while self.map_Input['size'] == 0:  # User inputs size choice (H X W)
-            self.map_Input['size'] = int(input("Enter selection (1-4): "))
+            try:
+                self.map_Input['size'] = int(input("Enter selection (1-4): "))
+            except ValueError:
+                print("Input Error: ")
             if self.map_Input['size'] == 1:  # Small 10 x 10
                 self.map["height"] = 10
                 self.map["width"] = 10
@@ -139,12 +142,30 @@ class Config:
                 self.map["height"] = 30
                 self.map["width"] = 30
             elif self.map_Input['size'] == 4:
-                self.map["height"] = int(input("Enter Height: "))
-                self.map["width"] = int(input("Enter Width: "))
+                height = 0
+                while height < 2 or height > 40:
+                    try:
+                        height = int(input("Enter Height(2-35): "))
+                    except ValueError:
+                        pass
+                    if height > 1 or height < 36:
+                        self.map["height"] = height
+                    else:
+                        print("Must be 2-35")
+                width = 0
+                while width < 2 or width > 50:
+                    try:
+                        width = int(input("Enter Width(2-50): "))
+                    except ValueError:
+                        pass
+                    if width > 1 or width < 51:
+                        self.map["width"] = width
+                    else:
+                        print("Must be 2-50")
             else:  # Bad input
-                print("Must be 1, 2, 3, or 4!")
+                print("Must be 1-4")
                 self.map_Input['size'] = 0
-        self.map['total'] = self.map['height'] * self.map['width']
+            self.map['total'] = self.map['height'] * self.map['width']
 
     def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
@@ -157,24 +178,144 @@ class Config:
         self.tiles['water']['count'] = int(self.map['total'] * water_count)
 
     def change_tile(self):
-        tile_f = input("Please enter a tile name: ").lower()
-        if tile_f not in self.tiles:
-            self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
-                                  'tool': {'name': ' ', 'price': 0}}
+        name = False
+        existing = True
+        tile_f = ''
+        while name == False:
+            tile_f = input("Please enter a tile name: ").lower()
+            while len(tile_f) > 20 and len(tile_f) < 1:
+                print("Tile name must be 1-20 characters.")
+                input("Please enter a tile name: ")
+            if tile_f not in self.tiles:
+                yn = ""
+                while yn != 'y' and yn != 'n':
+                    yn = input("Tile not in library. Create new? (y or n): ").lower()
+                    if yn == 'y':
+                        name = True
+                        existing = False
+                        self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
+                        print("Creating a new Tile...")
+            else:
+                name = True
 
-        choice = int(input("Please Enter the Tile Type (1 for Obstacle, 0 for Tile): "))
-        if choice == 1:
-            self.tiles[tile_f]['type'] = 'obs'
-        self.tiles[tile_f]['energy_req'] = int(input("Please Enter the Energy Requirement: "))
-        self.tiles[tile_f]['icon'] = input("Please Enter the Tile Icon: ").capitalize()
-        self.tiles[tile_f]['color'] = input("Please Enter the Tile Color: ").lower()
-        inp = int(input('Do You Want to Change the Tool Properties? (1 - Y, 0 - N): '))
-        if inp == 1:
-            self.tiles[tile_f]['tool']['name'] = input("Please Enter the Tool Name: ").lower()
-            self.tiles[tile_f]['tool']['energy'] = int(input("Please Enter the Tool Energy Requirement: "))
-            self.tiles[tile_f]['tool']['price'] = int(input("Please Enter the Tool Price: "))
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Tile Icon on the Map? (y or n): ").lower()
+            if yn == 'n':
+                change = False
+        if change == True:
+            icon = ''
+            while len(icon) != 1:
+                icon = input("Please Enter the Tile Icon(Single Character, ie: T,&,*,8,etc...): ").capitalize()
+            self.tiles[tile_f]['icon'] = icon
 
-        self.store.clear()
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Color of the Icon on the Map? (y or n): ").lower()
+            if yn == 'n':
+                change = False
+        if change == True:
+            color = ""
+            while color != 'red' and color != 'green' and color != 'yellow' and color != 'blue' and color != 'black' and color != 'magenta' and color != 'cyan' and color != 'white':
+                color = input("Please Enter the Tile Color(red, green, yellow, blue, black, magenta, cyan, or white): ").lower()
+            self.tiles[tile_f]['color'] = color
+
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Energy Requirements? (y or n): ").lower()
+            if yn == 'n':
+                change = False
+        if change == True:
+            energy = 0
+            while energy < 1 or energy > 10:
+                try:
+                    energy = int(input("Please Enter the Energy Requirement(1-10): "))
+                except ValueError:
+                    pass
+                if energy < 1 or energy > 10:
+                    print("Input Error: Must be 1-10")
+            self.tiles[tile_f]['energy_req'] = energy
+
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Tile Type? (y or n): ").lower()
+            if yn == 'n':
+                change = False
+        if change == True:
+            choice = 0
+            while choice < 1 and choice > 2:
+                try:
+                    choice = int(input("Please Enter the Tile Type (1 for Removable Obstacle, 2 for Immovable Object): "))
+                except ValueError:
+                    pass
+                if choice < 1 and choice > 2:
+                    print("Must be a 1 or 0")
+            if choice == 1:
+                self.tiles[tile_f]['type'] = 'obs'
+            elif choice == 2:
+                self.tiles[tile_f]['type'] = 'tile'
+            else:
+                pass
+            change = True
+
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit Applicable Tool Name? (y or n): ").lower()
+                if yn == 'n':
+                    change = False
+        if change == True:
+            tool = input("Please Enter the Tool Name: ").lower()
+            while len(tool) > 20 and len(tool) < 1:
+                print("Tool Name must be 1-20 Characters.")
+                tool = input("Please Enter the Tool Name: ").lower()
+            self.tiles[tile_f]['tool']['name'] = tool
+
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Tool Energy Requirements? (y or n): ").lower()
+                if yn == 'n':
+                    change = False
+        if change == True:
+            req = -1
+            while req < 0 or req > 5:
+                try:
+                    req = int(input("Please Enter the Tool Energy Requirement(0-5): "))
+                except ValueError:
+                    pass
+                if req < 0 and req > 5:
+                    print("Input Error: Must be 0-5")
+                    self.tiles[tile_f]['tool']['energy'] = req
+
+        change = True
+        if existing == True:
+            yn = ""
+            while yn != 'y' and yn != 'n':
+                yn = input("Edit the Tool Price? (y or n): ").lower()
+                if yn == 'n':
+                    change = False
+        if change == True:
+            price = 0
+            while price < 1 or price > 100:
+                try:
+                    price = int(input("Please Enter the Tool Price(1-100): "))
+                except ValueError:
+                    pass
+                if price < 1 or price > 100:
+                    print("Input Error: Must be 1-100")
+            self.tiles[tile_f]['tool']['price'] = price
+            self.store.clear()
 
         self.store = {
             '+10 energy': 10,
@@ -192,7 +333,10 @@ class Config:
               + '4. Rain Forest\n' + '5. Bog\n' + '6. Stony Swamp\n' + '7. Quarry\n' + "8. Custom\n")
 
         while self.map_Input['style'] == 0:  # User inputs difficulty choice
-            self.map_Input['style'] = int(input('Enter Selection (1-8): '))
+            try:
+                self.map_Input['style'] = int(input('Enter Selection (1-8): '))
+            except ValueError:
+                pass
             if self.map_Input['style'] == 1:
                 # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
                 self.__tile_counts(0.05, 0.05, 0, 0.20, 0, 0.05)
@@ -217,18 +361,28 @@ class Config:
             elif self.map_Input['style'] == 8:
                 # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
                 counts = [0] * len(self.tiles)
-                sum_t = 0
-                for i, tile in enumerate(self.tiles):
-                    counts[i] = int(input("Enter " + tile.capitalize() + " Count: "))
-                    sum_t += counts[i]
-                if sum_t < self.map['total']:
+                sum_t = self.map['total'] + 1
+                count = -1
+                print("Total tiles cannot exceed maximum allowed tiles:", self.map['total'])
+                while sum_t > self.map['total']:
+                    sum_t = 0
                     for i, tile in enumerate(self.tiles):
-                        self.tiles[tile]['count'] = counts[i]
-                else:
-                    print("Your entries for tile counts exceeds maximum allowed tiles!")
-                    self.map_Input['style'] = 0
+                        while count == -1:
+                            try:
+                                count = int(input("Enter " + tile.capitalize() + " Count: "))
+                            except ValueError:
+                                print("Must be an integer less than", self.map['total'])
+                        counts[i] = count
+                        count = -1
+                        sum_t += counts[i]
+                    if sum_t <= self.map['total']:
+                        for i, tile in enumerate(self.tiles):
+                            self.tiles[tile]['count'] = counts[i]
+                    else:
+                        print("Your entries for tile counts exceeds maximum allowed tiles:", self.map['total'])
+                        self.map_Input['style'] = 0
             else:  # default, for bad input
-                print("Must be 1-8!")
+                print("Must be 1-8")
                 self.map_Input['style'] = 0
 
     def change_stats(self, energy, money):  # Function sets player stats

@@ -1,0 +1,92 @@
+{
+    "player": {
+        "energy": 100,
+        "money": 25,
+        "p_r": 0,
+        "p_c": 0
+    },
+    "map": {
+        "total": 100,
+        "height": 10,
+        "width": 10,
+        "jewel_var": 200
+    },
+    "tiles": {
+        "tree": {
+            "type": "obs",
+            "energy_req": 3,
+            "count": 10,
+            "icon": "T",
+            "color": "green",
+            "tool": {
+                "name": "axe",
+                "energy": 1,
+                "price": 15
+            }
+        },
+        "blackberry": {
+            "type": "tile",
+            "energy_req": 2,
+            "count": 2,
+            "icon": "B",
+            "color": "magenta",
+            "tool": {
+                "name": "shears",
+                "energy": 1,
+                "price": 10
+            }
+        },
+        "boulder": {
+            "type": "obs",
+            "energy_req": 5,
+            "count": 20,
+            "icon": "R",
+            "color": "white",
+            "tool": {
+                "name": "pickaxe",
+                "energy": 1,
+                "price": 15
+            }
+        },
+        "water": {
+            "type": "tile",
+            "energy_req": 2,
+            "count": 20,
+            "icon": "W",
+            "color": "blue",
+            "tool": {
+                "name": "boat",
+                "energy": 0,
+                "price": 20
+            }
+        },
+        "mud": {
+            "type": "tile",
+            "energy_req": 2,
+            "count": 40,
+            "icon": "M",
+            "color": "yellow",
+            "tool": {
+                "name": "wood_planks",
+                "energy": 1,
+                "price": 10
+            }
+        },
+        "troll": {
+            "type": "tile",
+            "energy_req": 1,
+            "count": 1,
+            "icon": "L",
+            "color": "green",
+            "tool": {
+                "name": "Feet",
+                "energy": 1,
+                "price": 0
+            }
+        }
+    },
+    "map_Input": {
+        "style": 6,
+        "size": 1
+    }
+}

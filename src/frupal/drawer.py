@@ -1,7 +1,6 @@
+from time import sleep
+from platform import system
 import crayons
-import time
-import platform
-
 
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
@@ -10,6 +9,13 @@ class Drawer:
         self.width = window[0]
         self.height = window[1]
         self.debug = debug
+
+    def __spacer(self, buffer: int):
+        for i in range(buffer):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
 
     def title_screen(self):
         title = list()
@@ -22,22 +28,21 @@ class Drawer:
         title.append(" ░       ░▒ ░ ▒░░░▒░ ░ ░ ░▒ ░       ▒   ▒▒ ░░ ░ ▒  ░")
         title.append(" ░ ░     ░░   ░  ░░░ ░ ░ ░░         ░   ▒     ░ ░   ")
         title.append("          ░        ░                    ░  ░    ░  ░")
-        spacer = (self.height - len(title)) // 2
-        for i in range(spacer):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
+        buffer = (self.height - len(title)) // 2
+        self.__spacer(buffer)
         for line in title:
             print(crayons.green(line.center(self.width)))
-        for i in range(spacer):
-            if i == spacer // 2:
-                print(crayons.green("A Text Based Island Adventure Game!".rstrip("\n")).center(self.width))
+        for i in range(buffer - 2):
+            if i == buffer // 2:
+                print(crayons.green("A Text Based Island Adventure Game!").center(self.width))
             elif self.debug:
                 print("+ " + str(i))
             else:
                 print()
-        time.sleep(3)
+        print(crayons.green("Now Loading!").center(self.width))
+        for i in range(0, self.width, 1):
+            print(u"\u25A0", end='')
+            sleep(0.025)
 
     def final_screen(self, playing: int):
         lose = list()
@@ -64,28 +69,20 @@ class Drawer:
         win.append(" ░ ░         ░ ░     ░            ░     ░           ░  ░    ")
         win.append(" ░ ░                                                        ")
 
-        spacer = 0
+        buffer = 0
         if playing == 2:
-            spacer = (self.height - len(lose)) // 2
+            buffer = (self.height - len(lose)) // 2
         if playing == 3:
-            spacer = (self.height - len(win)) // 2
-        for i in range(spacer):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
+            buffer = (self.height - len(win)) // 2
+        self.__spacer(buffer)
         if playing == 2:
             for line in lose:
                 print(crayons.green(line.center(self.width)))
         if playing == 3:
             for line in win:
                 print(crayons.green(line.center(self.width)))
-        for i in range(spacer - 1):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
-        time.sleep(3)
+        self.__spacer(buffer - 1)
+        sleep(3)
 
     def print_game(self, player, game_map):
         border = u"\u25A0"
@@ -95,11 +92,7 @@ class Drawer:
         spacer_columns = (self.width - ((map_size[1] + 2) * 2)) // 2
 
         # Before Spacer
-        for a in range(spacer_lines):
-            if self.debug:
-                print("+ " + str(a))
-            else:
-                print()
+        self.__spacer(spacer_lines)
 
         # Spacer for centering map border top
         for m in range(spacer_columns):
@@ -147,7 +140,7 @@ class Drawer:
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:
-                        if platform.system() == "Windows":
+                        if system() == "Windows":
                             print('X', end=' ')
                         else:
                             print(u"\u25A0", end=' ')
@@ -165,11 +158,7 @@ class Drawer:
         print()
         print()
         print("(Press K) Keybindings!".center(self.width - 1))
-        for a in range(spacer_lines - 2):
-            if self.debug:
-                print("+ " + str(a))
-            else:
-                print()
+        self.__spacer(spacer_lines - 2)
         print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
         self.print_stats(player)
 

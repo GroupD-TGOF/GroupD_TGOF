@@ -18,7 +18,6 @@ if __name__ == "__main__":
             window = (os.get_terminal_size().columns - 1, os.get_terminal_size().lines)
         else:
             window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
-
     except OSError:
         window = (60, 50)
 

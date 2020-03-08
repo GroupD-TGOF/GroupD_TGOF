@@ -5,9 +5,8 @@ import platform
 
 
 class Config:
-    static = None
-
     def __init__(self):
+
         self.player = {  # Creates Player Library
             'energy': 25,  # Initializes player stats
             'money': 25,  # Initializes player energy
@@ -77,11 +76,14 @@ class Config:
             self.tiles['mud']['icon'] = 'M'
             self.tiles['troll']['icon'] = 'L'
 
-    def get_map(self, k):  # Defines get function for Map Library
-        return self.map[k]
+    def get_default(self):
+        return self.default
 
     def get_player(self, k):  # Defines get function for Player Stats Library
         return self.player[k]
+
+    def get_map(self, k):  # Defines get function for Map Library
+        return self.map[k]
 
     def get_tile(self, k):  # Defines get function for Tiles Library
         return self.tiles[k]
@@ -104,11 +106,6 @@ class Config:
         f.write(json.dumps(total, indent=4))
         f.close()
 
-    def reset_config(self):
-        self.system_finder()
-        os.remove(self.conf)
-        self.create_config()
-
     def load_config(self):  # Function loads previous settings from file
         try:
             with open(self.conf) as file:  # Open file
@@ -122,6 +119,11 @@ class Config:
                 return True  # If file exists return true
         except FileNotFoundError:
             return False  # If file does not exist yet return false
+
+    def reset_config(self):
+        self.system_finder()
+        os.remove(self.conf)
+        self.create_config()
 
     def map_size(self):  # Function sets Map size
         self.map_Input['size'] = 0
@@ -171,16 +173,23 @@ class Config:
 
     def jewel_change(self):
         jewels = -1
-        while jewels < 0 or jewels > self.map['total']:
-            try:
-                print("Reminder: Enter Value that fills the X in 1 in X, so by default its 1 in 200!")
-                jewels = int(input("Enter Jewel Spawn Probability (1-" + str(self.map['total']) + "): "))
-            except ValueError:
-                pass
-            if jewels > 1 or jewels < self.map["total"]:
-                self.map["jewel_var"] = jewels
-            else:
-                print("Must be " + "1-" + str(self.map['total']))
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Jewel Probability? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            while jewels < 0 or jewels > self.map['total']:
+                try:
+                    print("Reminder: Enter Value that fills the X in 1 in X, so by default its 1 in 200!")
+                    jewels = int(input("Enter Jewel Spawn Probability (1-" + str(self.map['total']) + "): "))
+                except ValueError:
+                    pass
+                if jewels > 1 or jewels < self.map["total"]:
+                    self.map["jewel_var"] = jewels
+                else:
+                    print("Must be " + "1-" + str(self.map['total']))
 
     def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
@@ -276,7 +285,7 @@ class Config:
                 except ValueError:
                     pass
                 if 1 > choice > 2:
-                    print("Must be a 1 or 0")
+                    print("Must be a 1 or 0!")
             if choice == 1:
                 self.tiles[tile_f]['type'] = 'obs'
             elif choice == 2:
@@ -409,28 +418,49 @@ class Config:
 
     def change_stats(self):  # Function sets player stats
         energy = 0
-        while energy < 1 or energy > 100:
-            try:
-                energy = int(
-                    input("Input your player's starting energy(1-100): "))  # User inputs Energy
-            except ValueError:
-                pass
-            if isinstance(energy, int) and (energy < 1 or energy > 100):
-                print("Input Error: Must be 1-100")
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Player's Starting Energy? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            while energy < 1 or energy > 100:
+                try:
+                    energy = int(
+                        input("Input your player's starting energy(1-100): "))  # User inputs Energy
+                except ValueError:
+                    pass
+                if isinstance(energy, int) and (energy < 1 or energy > 100):
+                    print("Input Error: Must be 1-100")
+            self.player['energy'] = energy
         money = 0
-        while money < 1 or money > 100:
-            try:
-                money = int(
-                    input("Input your player's starting money(1-100): "))  # User inputs Money
-            except ValueError:
-                pass
-            if isinstance(money, int) and (money < 1 or money > 100):
-                print("Input Error: Must be 1-100")
-        self.player['energy'] = energy
-        self.player['money'] = money
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Player's Starting Money? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            while money < 1 or money > 100:
+                try:
+                    money = int(
+                        input("Input your player's starting money(1-100): "))  # User inputs Money
+                except ValueError:
+                    pass
+                if isinstance(money, int) and (money < 1 or money > 100):
+                    print("Input Error: Must be 1-100")
+            self.player['money'] = money
 
     def change_price(self):
-        self.store['binoculars'] = int(input("Please Enter A New Price: "))
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the price of the Binoculars? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            self.store['binoculars'] = int(input("Please Enter A New Price: "))
 
     def print_config(self):
 

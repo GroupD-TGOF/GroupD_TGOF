@@ -1,7 +1,3 @@
-from random import randint
-import platform
-
-
 class Tile:
     def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, tool_eng: int, debug: bool):
         if debug:

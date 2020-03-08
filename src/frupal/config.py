@@ -1,12 +1,12 @@
+from platform import system
 import json
 import os
 import enum
-import platform
+
 
 
 class Config:
     def __init__(self):
-
         self.player = {  # Creates Player Library
             'energy': 25,  # Initializes player stats
             'money': 25,  # Initializes player energy
@@ -68,16 +68,13 @@ class Config:
         self.system_finder()
 
     def system_finder(self):
-        if platform.system() == "Windows":
+        if system() == "Windows":
             self.tiles['tree']['icon'] = 'T'
             self.tiles['blackberry']['icon'] = 'B'
             self.tiles['boulder']['icon'] = 'R'
             self.tiles['water']['icon'] = 'W'
             self.tiles['mud']['icon'] = 'M'
             self.tiles['troll']['icon'] = 'L'
-
-    def get_default(self):
-        return self.default
 
     def get_player(self, k):  # Defines get function for Player Stats Library
         return self.player[k]

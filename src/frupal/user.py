@@ -1,9 +1,8 @@
 from .player import Direction
 from .config import Config
-
+from time import sleep
 import crayons
 import readchar
-import time
 
 
 class User:
@@ -62,7 +61,7 @@ class User:
             self.config_menu(config)
         elif key == 'r':
             config.create_config()
-            time.sleep(2)
+            sleep(2)
         else:
             self.config_menu(config)
 
@@ -112,10 +111,10 @@ class User:
             if choice < len(keys):
                 if player.add_inv(keys[choice], self.store[keys[choice]]):
                     print(("Added: " + str(keys[choice]) + " to inventory").center(self.width))
-                    time.sleep(1)
+                    sleep(1)
                 else:
                     print("Not enough money to purchase item".center(self.width))
-                    time.sleep(1)
+                    sleep(1)
             print("\n\n\nprevious transactions above this line-------------\n\n\n".center(self.width))
 
     def key_menu(self):

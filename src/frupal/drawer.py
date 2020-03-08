@@ -2,6 +2,7 @@ from time import sleep
 from platform import system
 import crayons
 
+
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
         if debug:

@@ -1,8 +1,5 @@
-import sys
-import time
-import os
-import platform
-
+from platform import system
+from time import sleep
 from frupal import (
     Map,
     Config,
@@ -10,11 +7,13 @@ from frupal import (
     Drawer,
     User
 )
+import sys
+import os
 
 if __name__ == "__main__":
     # Try to get size of window if OS error then set default size.
     try:
-        if platform.system() == "Windows":
+        if system() == "Windows":
             window = (os.get_terminal_size().columns - 1, os.get_terminal_size().lines)
         else:
             window = (os.get_terminal_size().columns, os.get_terminal_size().lines)
@@ -66,7 +65,7 @@ if __name__ == "__main__":
             if playing == 2 or playing == 3:
                 # Print Map one more time and Print Final Screen
                 drawer.print_game(player, game_map)
-                time.sleep(3)
+                sleep(3)
                 drawer.final_screen(playing)
                 playing = 0
         running = user.main_menu(config)

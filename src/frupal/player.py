@@ -1,7 +1,7 @@
-import enum
 from .config import Config
 from .tiles import Tile
-import platform
+from platform import system
+import enum
 
 
 class Direction(enum.Enum):
@@ -49,7 +49,7 @@ class Player:
         prev = 0
         if game_map[self.position[1]][self.position[0]].has_used():
             base_icon = u"\u25A0"
-            if platform.system() == "Windows":
+            if system() == "Windows":
                 base_icon = "L"
             game_map[self.position[1]][self.position[0]] = Tile('grass', 1, base_icon, 'green', '', 1, True)
         prev = [self.position[0], self.position[1]]

@@ -4,7 +4,7 @@ Nick Grout 1/23/2020
 from .tiles import Tile, Water, Mud, Obstacle, Troll, Custom
 from .config import Config
 from random import randint
-import platform
+from platform import system
 
 
 class Map:
@@ -12,7 +12,6 @@ class Map:
     This is the main map class. It constructs and manages the 2d array of
     tiles
     """
-
     def __init__(self, config: Config, debug: bool):
         """
         :param rows: the x dimension of the map
@@ -25,7 +24,7 @@ class Map:
         jewel_variance = config.get_map('jewel_var')
         base_icon = u"\u25A0"
         base = 'grass'
-        if platform.system() == "Windows":
+        if system() == "Windows":
             base_icon = "L"
         base_color = 'green'
         base_tool = 'feet'

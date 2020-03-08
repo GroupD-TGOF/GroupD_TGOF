@@ -66,13 +66,17 @@ class User:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        buffer = self.middle - 2
-        self.__spacer(buffer)
-        print(crayons.green("The Game of Frupal!\n".center(self.width)))
+        title = []
+        self.__spacer(self.middle - 4)
+        print(crayons.green("The Game of Frupal!".center(self.width)))
+        print()
+        print()
         print(crayons.yellow("(Press S) Start Game!".center(self.width)))
+        print()
         print(crayons.yellow("(Press C) Configuration?".center(self.width)))
+        print()
         print(crayons.yellow("(Press Q) Exit Game.".center(self.width)))
-        self.__spacer(buffer)
+        self.__spacer(self.middle - 4)
         key = readchar.readkey()
         if key == 's' or key == '\n':
             return True

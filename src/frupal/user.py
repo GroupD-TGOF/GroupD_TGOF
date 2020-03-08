@@ -27,55 +27,28 @@ class User:
             else:
                 print()
         for i in range(len(sp)):
-            print(sp[i].center(self.width))
+            if sp[i] == '^':
+                print()
+            else:
+                print(sp[i].center(self.width))
         for i in range(self.middle - (len(sp) // 2)):
             if self.debug:
                 print("+ " + str(i))
             else:
                 print()
 
-    def config_stats(self, config: Config):
-        for i in range(self.middle - 1):
-            if self.debug:
-                print("+ ".rstrip("\n") + str(i))
-            else:
-                print()
-        energy = 0
-        while energy < 1 or energy > 100:
-            try:
-                energy = int(input("Input your player's starting energy(1-100): ".center(self.width)))  # User inputs Energy
-            except ValueError:
-                pass
-            if isinstance(energy, int) and (energy < 1 or energy > 100):
-                print("Input Error: Must be 1-100")
-        money = 0
-        while money < 1 or money > 100:
-            try:
-                money = int(input("Input your player's starting money(1-100): ".center(self.width)))  # User inputs Money
-            except ValueError:
-                pass
-            if isinstance(money, int) and (money < 1 or money > 100):
-                print("Input Error: Must be 1-100")
-        for i in range(self.middle - 1):
-            if self.debug:
-                print("+ ".rstrip("\n") + str(i))
-            else:
-                print()
-        config.change_stats(energy, money)
-
     def config_menu(self, config: Config):
         self.__print_config_menu(config)
         key = readchar.readkey().lower()
         if key == 'p':
-            self.config_stats(config)
+            config.change_stats()
             self.config_menu(config)
             config.system_finder()
         elif key == 's':
-            config.map_Input['size'] = 0
-            config.map_Input['style'] = 0
             config.map_size()
             config.map_style()
             config.system_finder()
+            config.jewel_change()
             self.config_menu(config)
         elif key == 't':
             config.change_tile()
@@ -87,7 +60,7 @@ class User:
         elif key == 'b':
             config.change_price()
             self.config_menu(config)
-        elif key == 'q':
+        elif key == 'r':
             config.create_config()
             time.sleep(2)
         else:
@@ -138,14 +111,14 @@ class User:
                         self.width))
                     index += 1
             print()
-            print("Enter 0 to leave the store".center(self.width + 1))
+            print("Enter 0 to leave the store".center(self.width))
             for i in range(self.middle - (spacer + 1)):
                 if self.debug:
                     print("+ " + str(i))
                 else:
                     print()
             try:
-                choice = int(input("What do you want to buy: ".center(self.width + 1)))
+                choice = int(input("What do you want to buy: "))
             except:
                 continue
             choice -= 1
@@ -184,13 +157,12 @@ class User:
             return
 
     def control(self, player, game_map):
-        if player.get_energy() == 0:
-            game_map.map_reveal()
-            return 2
-        # code that returns 3 for game win if game conditions are met
         if player.has_item('jewels'):
             game_map.map_reveal()
             return 3
+        if player.get_energy() == 0:
+            game_map.map_reveal()
+            return 2
         # end of game win conditions
         key = readchar.readkey()
         if key == 'w':

@@ -78,10 +78,11 @@ class Map:
         else:
             if info['type'] == 'tile':
                 self._array[x][y] = Custom(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
-                                       info['tool']['energy'], debug)
-            elif info['type'] == "obs":
-                self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
                                            info['tool']['energy'], debug)
+            elif info['type'] == "obs":
+                self._array[x][y] = Obstacle(tile, info['energy_req'], info['icon'], info['color'],
+                                             info['tool']['name'],
+                                             info['tool']['energy'], debug)
 
     def __getitem__(self, row: int):
         """

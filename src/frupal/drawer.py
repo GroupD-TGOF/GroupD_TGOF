@@ -5,9 +5,9 @@ import platform
 
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
-        self.width = window[0]
         if debug:
             print(window[0], window[1])
+        self.width = window[0]
         self.height = window[1]
         self.debug = debug
 
@@ -41,8 +41,29 @@ class Drawer:
 
     def final_screen(self, playing: int):
         lose = list()
+        lose.append("▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▓█████  ▐██▌ ")
+        lose.append(" ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓█   ▀  ▐██▌ ")
+        lose.append("  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒███    ▐██▌ ")
+        lose.append("  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒   ██▒▒▓█  ▄  ▓██▒ ")
+        lose.append("  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░▒██████▒▒░▒████▒ ▒▄▄  ")
+        lose.append("   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░░░ ▒░ ░ ░▀▀▒ ")
+        lose.append(" ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░ ░ ░▒  ░ ░ ░ ░  ░ ░  ░ ")
+        lose.append(" ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░     ░       ░ ")
+        lose.append(" ░ ░         ░ ░     ░            ░  ░    ░ ░        ░     ░  ░ ░    ")
+        lose.append(" ░ ░                                                                 ")
 
         win = list()
+        win.append("▓██   ██▓ ▒█████   █    ██     █     █░ ██▓ ███▄    █  ▐██▌ ")
+        win.append(" ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓█░ █ ░█░▓██▒ ██ ▀█   █  ▐██▌ ")
+        win.append("  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒█░ █ ░█ ▒██▒▓██  ▀█ ██▒ ▐██▌ ")
+        win.append("  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ░█░ █ ░█ ░██░▓██▒  ▐▌██▒ ▓██▒ ")
+        win.append("  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░░██▒██▓ ░██░▒██░   ▓██░ ▒▄▄  ")
+        win.append("   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▓░▒ ▒  ░▓  ░ ▒░   ▒ ▒  ░▀▀▒ ")
+        win.append(" ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░      ▒ ░ ░   ▒ ░░ ░░   ░ ▒░ ░  ░ ")
+        win.append(" ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░   ░   ▒ ░   ░   ░ ░     ░ ")
+        win.append(" ░ ░         ░ ░     ░            ░     ░           ░  ░    ")
+        win.append(" ░ ░                                                        ")
+
         spacer = 0
         if playing == 2:
             spacer = (self.height - len(lose)) // 2
@@ -53,10 +74,12 @@ class Drawer:
                 print("+ " + str(i))
             else:
                 print()
-        if playing == 3:
-            print(crayons.green("You Win!".center(self.width)))
         if playing == 2:
-            print(crayons.green("You Lose!".center(self.width)))
+            for line in lose:
+                print(crayons.green(line.center(self.width)))
+        if playing == 3:
+            for line in win:
+                print(crayons.green(line.center(self.width)))
         for i in range(spacer - 1):
             if self.debug:
                 print("+ " + str(i))

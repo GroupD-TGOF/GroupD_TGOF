@@ -63,7 +63,7 @@ class Tile:
     def used_tile(self):
         self.used = False
 
-    def has_tool(self, tool):
+    def has_tool(self, tool: str):
         return tool in self.tool
 
     def get_tool(self):
@@ -72,8 +72,7 @@ class Tile:
 
 class Obstacle(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, tool_eng: int, debug: bool):
-        Tile.__init__(self, title, energy_req, icon, color, tool, tool_eng, debug)  # the water_type also represent the energy
-        # requirements
+        Tile.__init__(self, title, energy_req, icon, color, tool, tool_eng, debug)
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
@@ -90,16 +89,15 @@ class Obstacle(Tile):
 
 class Water(Tile):
     def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, tool_eng: int, debug: bool):
-        Tile.__init__(self, title, energy_req, icon, color, tool, tool_eng, debug)  # the water_type also represent the energy
-        # requirements
+        Tile.__init__(self, title, energy_req, icon, color, tool, tool_eng, debug)
 
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
             r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "You entered this area without a boat, doing so made you spend " + str(
-                self.energy_req) + " energy to swim!"
+            r_str += "You entered this area without a boat, doing so made you spend " \
+                     + str(self.energy_req) + " energy to swim!"
         return r_str
 
 
@@ -137,7 +135,6 @@ class Custom(Tile):
         if self.tool in player_inventory:
             r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + " energy was " \
-                                                                                                      "spent to go around it!"
+            r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " \
+                     + str(self.energy_req) + " energy was spent break it by hand!"
         return r_str
-

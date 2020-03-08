@@ -19,7 +19,7 @@ class Config:
             'total': 100,  # Initializes map dimensions
             'height': 10,  # Initializes map height
             'width': 10,  # Initializes map width
-            'jewel_var': 400
+            'jewel_var': 200
         }
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
@@ -35,7 +35,7 @@ class Config:
             'mud': {'type': 'tile', 'energy_req': 2, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
                     'tool': {'name': 'wood_planks', 'energy': 1, 'price': 10}},
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
-                      'tool': {'name': ' ', 'energy': 1, 'price': 0}}
+                      'tool': {'name': 'Feet', 'energy': 1, 'price': 0}}
         }
 
         self.map_Input = {  # Creates Input Library
@@ -124,6 +124,7 @@ class Config:
             return False  # If file does not exist yet return false
 
     def map_size(self):  # Function sets Map size
+        self.map_Input['size'] = 0
         # Prints size options in ascending order
         print("Frupal Settings:\n" + "Set your game map size:\n" + "1. Small (10 x 10)\n" + "2. Medium (20 x 20)\n"
               + "3. Large (30 x 30)\n" + "4. Custom (N x N)\n")
@@ -168,6 +169,19 @@ class Config:
                 self.map_Input['size'] = 0
             self.map['total'] = self.map['height'] * self.map['width']
 
+    def jewel_change(self):
+        jewels = -1
+        while jewels < 0 or jewels > self.map['total']:
+            try:
+                print("Reminder: Enter Value that fills the X in 1 in X, so by default its 1 in 200!")
+                jewels = int(input("Enter Jewel Spawn Probability (1-" + str(self.map['total']) + "): "))
+            except ValueError:
+                pass
+            if jewels > 1 or jewels < self.map["total"]:
+                self.map["jewel_var"] = jewels
+            else:
+                print("Must be " + "1-" + str(self.map['total']))
+
     def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
             self.tiles[tile]['count'] = 0
@@ -182,9 +196,9 @@ class Config:
         name = False
         existing = True
         tile_f = ''
-        while name == False:
+        while not name:
             tile_f = input("Please enter a tile name: ").lower()
-            while len(tile_f) > 20 and len(tile_f) < 1:
+            while 20 < len(tile_f) < 1:
                 print("Tile name must be 1-20 characters.")
                 input("Please enter a tile name: ")
             if tile_f not in self.tiles:
@@ -194,45 +208,48 @@ class Config:
                     if yn == 'y':
                         name = True
                         existing = False
-                        self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green', 'tool': {'name': ' ', 'price': 0}}
+                        self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
+                                              'tool': {'name': ' ', 'price': 0}}
                         print("Creating a new Tile...")
             else:
                 name = True
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Tile Icon on the Map? (y or n): ").lower()
             if yn == 'n':
                 change = False
-        if change == True:
+        if change:
             icon = ''
             while len(icon) != 1:
                 icon = input("Please Enter the Tile Icon(Single Character, ie: T,&,*,8,etc...): ").capitalize()
             self.tiles[tile_f]['icon'] = icon
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Color of the Icon on the Map? (y or n): ").lower()
             if yn == 'n':
                 change = False
-        if change == True:
+        if change:
             color = ""
-            while color != 'red' and color != 'green' and color != 'yellow' and color != 'blue' and color != 'black' and color != 'magenta' and color != 'cyan' and color != 'white':
-                color = input("Please Enter the Tile Color(red, green, yellow, blue, black, magenta, cyan, or white): ").lower()
+            while color != 'red' and color != 'green' and color != 'yellow' and color != 'blue' and color != 'black' \
+                    and color != 'magenta' and color != 'cyan' and color != 'white':
+                color = input(
+                    "Please Enter the Tile Color(red, green, yellow, blue, black, magenta, cyan, or white): ").lower()
             self.tiles[tile_f]['color'] = color
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Energy Requirements? (y or n): ").lower()
             if yn == 'n':
                 change = False
-        if change == True:
+        if change:
             energy = 0
             while energy < 1 or energy > 10:
                 try:
@@ -244,20 +261,21 @@ class Config:
             self.tiles[tile_f]['energy_req'] = energy
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Tile Type? (y or n): ").lower()
             if yn == 'n':
                 change = False
-        if change == True:
+        if change:
             choice = 0
-            while choice < 1 and choice > 2:
+            while 1 > choice > 2:
                 try:
-                    choice = int(input("Please Enter the Tile Type (1 for Removable Obstacle, 2 for Immovable Object): "))
+                    choice = int(
+                        input("Please Enter the Tile Type (1 for Removable Obstacle, 2 for Immovable Object): "))
                 except ValueError:
                     pass
-                if choice < 1 and choice > 2:
+                if 1 > choice > 2:
                     print("Must be a 1 or 0")
             if choice == 1:
                 self.tiles[tile_f]['type'] = 'obs'
@@ -268,45 +286,45 @@ class Config:
             change = True
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit Applicable Tool Name? (y or n): ").lower()
                 if yn == 'n':
                     change = False
-        if change == True:
+        if change:
             tool = input("Please Enter the Tool Name: ").lower()
-            while len(tool) > 20 and len(tool) < 1:
+            while 20 < len(tool) < 1:
                 print("Tool Name must be 1-20 Characters.")
                 tool = input("Please Enter the Tool Name: ").lower()
             self.tiles[tile_f]['tool']['name'] = tool
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Tool Energy Requirements? (y or n): ").lower()
                 if yn == 'n':
                     change = False
-        if change == True:
+        if change:
             req = -1
             while req < 0 or req > 5:
                 try:
                     req = int(input("Please Enter the Tool Energy Requirement(0-5): "))
                 except ValueError:
                     pass
-                if req < 0 and req > 5:
+                if 0 > req > 5:
                     print("Input Error: Must be 0-5")
                     self.tiles[tile_f]['tool']['energy'] = req
 
         change = True
-        if existing == True:
+        if existing:
             yn = ""
             while yn != 'y' and yn != 'n':
                 yn = input("Edit the Tool Price? (y or n): ").lower()
                 if yn == 'n':
                     change = False
-        if change == True:
+        if change:
             price = 0
             while price < 1 or price > 100:
                 try:
@@ -315,8 +333,9 @@ class Config:
                     pass
                 if price < 1 or price > 100:
                     print("Input Error: Must be 1-100")
-            self.tiles[tile_f]['tool']['price'] = price
-            self.store.clear()
+                self.tiles[tile_f]['tool']['price'] = price
+
+        self.store.clear()
 
         self.store = {
             '+10 energy': 10,
@@ -329,6 +348,7 @@ class Config:
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
     def map_style(self):  # Function sets Map style
+        self.map_Input['style'] = 0
         # Prints map style options ranked by difficulty
         print('Select your game style (Ranked by difficulty)\n' + '1. Park\n' + '2. Forest\n' + '3. Rocky Forest\n'
               + '4. Rain Forest\n' + '5. Bog\n' + '6. Stony Swamp\n' + '7. Quarry\n' + "8. Custom\n")
@@ -364,7 +384,8 @@ class Config:
                 counts = [0] * len(self.tiles)
                 sum_t = self.map['total'] + 1
                 count = -1
-                print("(Reminder: When entering individual tile quantities, total tiles cannot exceed maximum allowed:", self.map['total'], ")")
+                print("(Reminder: When entering individual tile quantities, total tiles cannot exceed maximum allowed:",
+                      self.map['total'], ")")
                 while sum_t > self.map['total']:
                     sum_t = 0
                     for i, tile in enumerate(self.tiles):
@@ -386,7 +407,25 @@ class Config:
                 print("Must be 1-8")
                 self.map_Input['style'] = 0
 
-    def change_stats(self, energy, money):  # Function sets player stats
+    def change_stats(self):  # Function sets player stats
+        energy = 0
+        while energy < 1 or energy > 100:
+            try:
+                energy = int(
+                    input("Input your player's starting energy(1-100): "))  # User inputs Energy
+            except ValueError:
+                pass
+            if isinstance(energy, int) and (energy < 1 or energy > 100):
+                print("Input Error: Must be 1-100")
+        money = 0
+        while money < 1 or money > 100:
+            try:
+                money = int(
+                    input("Input your player's starting money(1-100): "))  # User inputs Money
+            except ValueError:
+                pass
+            if isinstance(money, int) and (money < 1 or money > 100):
+                print("Input Error: Must be 1-100")
         self.player['energy'] = energy
         self.player['money'] = money
 
@@ -411,24 +450,33 @@ class Config:
             Quarry = 7
             Custom = 8
 
-        r_str = ["Player's Statistics: ", "(Press P) Starting Energy: " + str(self.player['energy']),
-                 "(Press P) Starting Money: " + str(self.player['money']), "\n", "Map Statistics: ",
+        r_str = ["Player's Statistics: ",
+                 "(Press P) Starting Energy: " + str(self.player['energy']),
+                 "(Press P) Starting Money: " + str(self.player['money']),
+                 "^",
+
+                 "Map Statistics: ",
                  "(Press S) Map Type: " + Size(self.map_Input['size']).name + " " + Type(self.map_Input['style']).name,
-                 "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(
-                     self.map['width']) + ' SQ. Yards) or '
-                 + str(self.map['total']) + " Tiles"]
+                 "(Press S) Map Size: " + '(' + str(self.map['height']) + "x" + str(self.map['width']) +
+                 ' SQ. Yards) or ' + str(self.map['total']) + " Tiles!",
+                 "(Press S) Jewels: 1 in " + str(self.map['jewel_var']),
+                 "^",
+
+                 'Tile Statistics: ']
         for key in self.tiles:
             r_str.append(
-                "(Press T) " + str(key).replace('_', ' ').capitalize() + ": " + str(
-                    self.tiles[key]['count']) + " SQ. Yards, "
+                "(Press T) " + "Type: " + self.tiles[key]['type'] + ", " + str(key).replace('_', ' ').capitalize()
+                + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
                 + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                 + ", Color: " + str(self.tiles[key]['color']).capitalize())
             r_str.append("Tool Name: " + self.tiles[key]['tool']['name'].capitalize() + ", Energy Requirement: " +
-                         str(self.tiles[key]['tool']['energy']) + ", Tool Price: " +
+                         str(self.tiles[key]['tool']['energy']) + ", Tool Price: $" +
                          str(self.tiles[key]['tool']['price']))
-        r_str.append("\n")
-        r_str.append("(Press B) Change Binocular Price!")
-        r_str.append("(Press C) Clear the ConFig File and Recreate File!\n")
-        r_str.append("(Press Q) Exit Config")
+        r_str.append("^")
+        r_str.append("(Press B) Change Binocular Price! (Price: $" + str(self.store['binoculars']) + ")")
+        r_str.append("^")
+        r_str.append("(Press C) Clear the ConFig File and Recreate File!")
+        r_str.append("^")
+        r_str.append("(Press R) Exit Config and Return To Main Menu!")
 
         return r_str

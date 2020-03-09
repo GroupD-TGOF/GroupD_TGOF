@@ -5,23 +5,27 @@ import enum
 
 
 class Config:
-    def __init__(self):
-        self.player = {  # Creates Player Library
+    def __init__(self, window: tuple):
+        self.width = (window[0] // 2) - 4
+        self.height = (window[1]) - 10
+        self.player_d = {  # Creates Player Library
             'energy': 25,  # Initializes player stats
             'money': 25,  # Initializes player energy
             'p_r': 0,  # Initializes player position rows
             'p_c': 0  # Initializes player position columns
         }
+        self.player = self.player_d
 
-        self.map = {  # Creates Map Library
+        self.map_d = {  # Creates Map Library
             'total': 100,  # Initializes map dimensions
             'height': 10,  # Initializes map height
             'width': 10,  # Initializes map width
             'jewel_var': 400
         }
+        self.map = self.map_d
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
-        self.tiles = {
+        self.tiles_d = {
             'tree': {'type': 'obs', 'energy_req': 3, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
                      'tool': {'name': 'axe', 'energy': 1, 'price': 15}},
             'blackberry': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
@@ -33,13 +37,15 @@ class Config:
             'mud': {'type': 'tile', 'energy_req': 2, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
                     'tool': {'name': 'wood_planks', 'energy': 1, 'price': 10}},
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
-                      'tool': {'name': 'Feet', 'energy': 1, 'price': 0}}
+                      'tool': {'name': 'feet', 'energy': 1, 'price': 0}}
         }
+        self.tiles = self.tiles_d
 
-        self.map_Input = {  # Creates Input Library
+        self.map_Input_d = {  # Creates Input Library
             'style': 1,  # Initializes Input variables
             'size': 1  # Initializes Input variables
         }
+        self.map_Input = self.map_Input_d
 
         # Initialize Store
         self.store = {
@@ -121,53 +127,171 @@ class Config:
 
     def reset_config(self):
         os.remove(self.conf)
+
+        self.player = self.player_d
+        self.map = self.map_d
+        self.tiles = self.tiles_d
+        self.map_Input = self.map_Input_d
         self.create_config()
 
-    def map_size(self):  # Function sets Map size
-        self.map_Input['size'] = 0
-        # Prints size options in ascending order
-        print("Frupal Settings:\n" + "Set your game map size:\n" + "1. Small (10 x 10)\n" + "2. Medium (20 x 20)\n"
-              + "3. Large (30 x 30)\n" + "4. Custom (N x N)\n")
+    def change_stats(self):  # Function sets player stats
+        energy = 0
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Player's Starting Energy? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            while energy < 1 or energy > 100:
+                try:
+                    energy = int(
+                        input("Input your player's starting energy(1-100): "))  # User inputs Energy
+                except ValueError:
+                    pass
+                if isinstance(energy, int) and (energy < 1 or energy > 100):
+                    print("Input Error: Must be 1-100")
+            self.player['energy'] = energy
+        money = 0
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Player's Starting Money? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            while money < 1 or money > 100:
+                try:
+                    money = int(
+                        input("Input your player's starting money(1-100): "))  # User inputs Money
+                except ValueError:
+                    pass
+                if isinstance(money, int) and (money < 1 or money > 100):
+                    print("Input Error: Must be 1-100")
+            self.player['money'] = money
 
-        while self.map_Input['size'] == 0:  # User inputs size choice (H X W)
-            try:
-                self.map_Input['size'] = int(input("Enter selection (1-4): "))
-            except ValueError:
-                print("Input Error: ")
-            if self.map_Input['size'] == 1:  # Small 10 x 10
-                self.map["height"] = 10
-                self.map["width"] = 10
-            elif self.map_Input['size'] == 2:  # Medium 20 x 20
-                self.map["height"] = 20
-                self.map["width"] = 20
-            elif self.map_Input['size'] == 3:  # Large 30 x 30
-                self.map["height"] = 30
-                self.map["width"] = 30
-            elif self.map_Input['size'] == 4:
-                height = 0
-                while height < 2 or height > 35:
-                    try:
-                        height = int(input("Enter Height(2-35): "))
-                    except ValueError:
-                        pass
-                    if height > 1 or height < 36:
-                        self.map["height"] = height
-                    else:
-                        print("Must be 2-35")
-                width = 0
-                while width < 2 or width > 50:
-                    try:
-                        width = int(input("Enter Width(2-50): "))
-                    except ValueError:
-                        pass
-                    if width > 1 or width < 51:
-                        self.map["width"] = width
-                    else:
-                        print("Must be 2-50")
-            else:  # Bad input
-                print("Must be 1-4")
-                self.map_Input['size'] = 0
-            self.map['total'] = self.map['height'] * self.map['width']
+    def change_size(self):  # Function sets Map size
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Map Size Info? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            self.map_Input['size'] = 0
+            # Prints size options in ascending order
+            print("Frupal Settings:\n" + "Set your game map size:\n" + "1. Small (10 x 10)\n" + "2. Medium (20 x 20)\n"
+                  + "3. Large (30 x 30)\n" + "4. Custom (N x N)\n")
+
+            while self.map_Input['size'] == 0:  # User inputs size choice (H X W)
+                try:
+                    self.map_Input['size'] = int(input("Enter selection (1-4): "))
+                except ValueError:
+                    print("Input Error: ")
+                if self.map_Input['size'] == 1:  # Small 10 x 10
+                    self.map["height"] = 10
+                    self.map["width"] = 10
+                elif self.map_Input['size'] == 2:  # Medium 20 x 20
+                    self.map["height"] = 20
+                    self.map["width"] = 20
+                elif self.map_Input['size'] == 3:  # Large 30 x 30
+                    self.map["height"] = 30
+                    self.map["width"] = 30
+                elif self.map_Input['size'] == 4:
+                    height = 0
+                    while height < 2 or height > self.height:
+                        try:
+                            height = int(input("Enter Height (2-" + str(self.height) + "): "))
+                        except ValueError:
+                            pass
+                        if height > 1 or height < self.height + 1:
+                            self.map["height"] = height
+                        else:
+                            print("Must be 2-" + str(self.height))
+                    width = 0
+                    while width < 2 or width > self.width:
+                        try:
+                            width = int(input("Enter Width (2-" + str(self.width) + "): "))
+                        except ValueError:
+                            pass
+                        if width > 1 or width < self.width + 1:
+                            self.map["width"] = width
+                        else:
+                            print("Must be 2-" + str(self.width))
+                else:  # Bad input
+                    print("Must be 1-4")
+                    self.map_Input['size'] = 0
+                self.map['total'] = self.map['height'] * self.map['width']
+                for tile in self.tiles:
+                    self.tiles[tile]['count'] = 0
+
+    def change_style(self):  # Function sets Map style
+        change = True
+        yn = ""
+        while yn != 'y' and yn != 'n':
+            yn = input("Edit the Map Style Info? (y or n): ").lower()
+        if yn == 'n':
+            change = False
+        if change:
+            self.map_Input['style'] = 0
+            # Prints map style options ranked by difficulty
+            print('Select your game style (Ranked by difficulty)\n' + '1. Park\n' + '2. Forest\n' + '3. Rocky Forest\n'
+                  + '4. Rain Forest\n' + '5. Bog\n' + '6. Stony Swamp\n' + '7. Quarry\n' + "8. Custom\n")
+
+            while self.map_Input['style'] == 0:  # User inputs difficulty choice
+                try:
+                    self.map_Input['style'] = int(input('Enter Selection (1-8): '))
+                except ValueError:
+                    pass
+                if self.map_Input['style'] == 1:
+                    # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
+                    self.__tile_counts(0.05, 0.05, 0, 0.20, 0, 0.05)
+                elif self.map_Input['style'] == 2:
+                    # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
+                    self.__tile_counts(0.10, 0.05, 0, 0.40, 0.01, 0.05)
+                elif self.map_Input['style'] == 3:
+                    # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls 1%, mud 0%
+                    self.__tile_counts(0.20, 0.20, 0, 0.40, 0.01, 0.05)
+                elif self.map_Input['style'] == 4:
+                    # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%, trolls 1%
+                    self.__tile_counts(0.10, 0.05, 0.10, 0.50, 0.01, 0.10)
+                elif self.map_Input['style'] == 5:
+                    # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
+                    self.__tile_counts(0.05, 0.05, 0.40, 0.20, 0.01, 0.20)
+                elif self.map_Input['style'] == 6:
+                    # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%, trolls 1%
+                    self.__tile_counts(0.02, 0.20, 0.40, 0.10, 0.01, 0.20)
+                elif self.map_Input['style'] == 7:
+                    # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
+                    self.__tile_counts(0.02, 0.50, 0.05, 0.05, 0.01, 0.10)
+                elif self.map_Input['style'] == 8:
+                    # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
+                    counts = [0] * len(self.tiles)
+                    sum_t = self.map['total'] + 1
+                    count = -1
+                    print("(Reminder: When entering individual tile quantities, total tiles cannot "
+                          "exceed maximum allowed:" + str(self.map['total']) + ")")
+                    while sum_t > self.map['total']:
+                        sum_t = 0
+                        for i, tile in enumerate(self.tiles):
+                            while count == -1:
+                                try:
+                                    count = int(input("Enter " + tile.capitalize() + " Count: "))
+                                except ValueError:
+                                    print("Must be an integer less than", self.map['total'])
+                            counts[i] = count
+                            count = -1
+                            sum_t += counts[i]
+                        if sum_t <= self.map['total']:
+                            for i, tile in enumerate(self.tiles):
+                                self.tiles[tile]['count'] = counts[i]
+                        else:
+                            print("Your entries for tile counts exceeds maximum allowed tiles:"
+                                  + str(self.map['total']))
+                            self.map_Input['style'] = 0
+                else:  # default, for bad input
+                    print("Must be 1-8")
+                    self.map_Input['style'] = 0
 
     def jewel_change(self):
         jewels = -1
@@ -354,102 +478,6 @@ class Config:
             if not tile == 'troll':
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
-    def map_style(self):  # Function sets Map style
-        self.map_Input['style'] = 0
-        # Prints map style options ranked by difficulty
-        print('Select your game style (Ranked by difficulty)\n' + '1. Park\n' + '2. Forest\n' + '3. Rocky Forest\n'
-              + '4. Rain Forest\n' + '5. Bog\n' + '6. Stony Swamp\n' + '7. Quarry\n' + "8. Custom\n")
-
-        while self.map_Input['style'] == 0:  # User inputs difficulty choice
-            try:
-                self.map_Input['style'] = int(input('Enter Selection (1-8): '))
-            except ValueError:
-                pass
-            if self.map_Input['style'] == 1:
-                # Park: trees 20%, boulders 5%, bbush 5% water 5%, trolls 0%, mud 0%
-                self.__tile_counts(0.05, 0.05, 0, 0.20, 0, 0.05)
-            elif self.map_Input['style'] == 2:
-                # Forest: trees 40%, bbush 10%, boulders 5%, water 5%, trolls 1%, mud 0%
-                self.__tile_counts(0.10, 0.05, 0, 0.40, 0.01, 0.05)
-            elif self.map_Input['style'] == 3:
-                # RockyForest: trees 40%, bbush 20%, boulders 20%, water 5%, trolls 1%, mud 0%
-                self.__tile_counts(0.20, 0.20, 0, 0.40, 0.01, 0.05)
-            elif self.map_Input['style'] == 4:
-                # RainForest: trees 50%, bbush 10%, boulders 5%, water 10%, mud 10%, trolls 1%
-                self.__tile_counts(0.10, 0.05, 0.10, 0.50, 0.01, 0.10)
-            elif self.map_Input['style'] == 5:
-                # Bog: trees 20%, bbush 5%, boulders 5%, water 20%, mud 40%, trolls 1%
-                self.__tile_counts(0.05, 0.05, 0.40, 0.20, 0.01, 0.20)
-            elif self.map_Input['style'] == 6:
-                # StonySwamp: trees 10%, bbush 2%, boulders 20%, water 20%, mud 40%, trolls 1%
-                self.__tile_counts(0.02, 0.20, 0.40, 0.10, 0.01, 0.20)
-            elif self.map_Input['style'] == 7:
-                # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
-                self.__tile_counts(0.02, 0.50, 0.05, 0.05, 0.01, 0.10)
-            elif self.map_Input['style'] == 8:
-                # Quarry: trees 5%, bbush 2%, boulders 50%, water 10%, mud 5%, trolls 1%
-                counts = [0] * len(self.tiles)
-                sum_t = self.map['total'] + 1
-                count = -1
-                print("(Reminder: When entering individual tile quantities, total tiles cannot exceed maximum allowed:",
-                      self.map['total'], ")")
-                while sum_t > self.map['total']:
-                    sum_t = 0
-                    for i, tile in enumerate(self.tiles):
-                        while count == -1:
-                            try:
-                                count = int(input("Enter " + tile.capitalize() + " Count: "))
-                            except ValueError:
-                                print("Must be an integer less than", self.map['total'])
-                        counts[i] = count
-                        count = -1
-                        sum_t += counts[i]
-                    if sum_t <= self.map['total']:
-                        for i, tile in enumerate(self.tiles):
-                            self.tiles[tile]['count'] = counts[i]
-                    else:
-                        print("Your entries for tile counts exceeds maximum allowed tiles:", self.map['total'])
-                        self.map_Input['style'] = 0
-            else:  # default, for bad input
-                print("Must be 1-8")
-                self.map_Input['style'] = 0
-
-    def change_stats(self):  # Function sets player stats
-        energy = 0
-        change = True
-        yn = ""
-        while yn != 'y' and yn != 'n':
-            yn = input("Edit the Player's Starting Energy? (y or n): ").lower()
-        if yn == 'n':
-            change = False
-        if change:
-            while energy < 1 or energy > 100:
-                try:
-                    energy = int(
-                        input("Input your player's starting energy(1-100): "))  # User inputs Energy
-                except ValueError:
-                    pass
-                if isinstance(energy, int) and (energy < 1 or energy > 100):
-                    print("Input Error: Must be 1-100")
-            self.player['energy'] = energy
-        money = 0
-        change = True
-        yn = ""
-        while yn != 'y' and yn != 'n':
-            yn = input("Edit the Player's Starting Money? (y or n): ").lower()
-        if yn == 'n':
-            change = False
-        if change:
-            while money < 1 or money > 100:
-                try:
-                    money = int(
-                        input("Input your player's starting money(1-100): "))  # User inputs Money
-                except ValueError:
-                    pass
-                if isinstance(money, int) and (money < 1 or money > 100):
-                    print("Input Error: Must be 1-100")
-            self.player['money'] = money
-
     def change_price(self):
         change = True
         yn = ""
@@ -503,8 +531,8 @@ class Config:
         r_str.append("^")
         r_str.append("(Press B) Change Binocular Price! (Price: $" + str(self.store['binoculars']) + ")")
         r_str.append("^")
-        r_str.append("(Press C) Clear the ConFig File and Recreate File!")
+        r_str.append("(Press D) Reset Values to Default!")
         r_str.append("^")
-        r_str.append("(Press R) Exit Config and Return To Main Menu!")
+        r_str.append("(Press R) Return To Main Menu!")
 
         return r_str

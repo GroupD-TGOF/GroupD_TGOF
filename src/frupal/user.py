@@ -43,14 +43,14 @@ class User:
             config.change_stats()
             self.config_menu(config)
         elif key == 's':
-            config.map_size()
-            config.map_style()
+            config.change_size()
+            config.change_style()
             config.jewel_change()
             self.config_menu(config)
         elif key == 't':
             config.change_tile()
             self.config_menu(config)
-        elif key == 'c':
+        elif key == 'd':
             config.reset_config()
             self.config_menu(config)
         elif key == 'b':
@@ -58,7 +58,6 @@ class User:
             self.config_menu(config)
         elif key == 'r':
             config.create_config()
-            sleep(2)
         else:
             self.config_menu(config)
 

@@ -9,7 +9,7 @@
         "total": 100,
         "height": 10,
         "width": 10,
-        "jewel_var": 200
+        "jewel_var": 400
     },
     "tiles": {
         "tree": {
@@ -79,7 +79,7 @@
             "icon": "\u25a0",
             "color": "green",
             "tool": {
-                "name": "Feet",
+                "name": "feet",
                 "energy": 1,
                 "price": 0
             }

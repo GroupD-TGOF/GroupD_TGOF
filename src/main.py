@@ -28,7 +28,7 @@ if __name__ == "__main__":
             debug = True
 
     # Load Config and Pass Values
-    config = Config()
+    config = Config(window)
     user = User(window, config, debug)
 
     # Draw Game Title Screen
@@ -39,8 +39,8 @@ if __name__ == "__main__":
     running = user.main_menu(config)
 
     # Initialize Game Map and Player
-    game_map = Map(config, debug)
-    player = Player(config, debug)
+    game_map = Map()
+    player = Player()
 
     # Main Loop
     while running:

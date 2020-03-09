@@ -13,7 +13,7 @@ class Direction(enum.Enum):
 
 
 class Player:
-    def __init__(self, config: Config, debug):
+    def __init__(self):
         self.map_size = [0, 0]
         self.energy = 0
         self.money = 0

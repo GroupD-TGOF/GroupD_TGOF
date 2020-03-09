@@ -43,7 +43,7 @@ class Drawer:
         print(crayons.green("Now Loading!").center(self.width))
         for i in range(0, self.width, 1):
             print(u"\u25A0", end='')
-            sleep(0.025)
+            sleep(0.010)
 
     def final_screen(self, playing: int):
         lose = list()

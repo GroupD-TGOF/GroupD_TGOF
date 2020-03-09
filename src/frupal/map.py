@@ -12,7 +12,7 @@ class Map:
     This is the main map class. It constructs and manages the 2d array of
     tiles
     """
-    def __init__(self, config: Config, debug: bool):
+    def __init__(self):
         """
         :param rows: the x dimension of the map
         :param columns: the y dimension of the map
@@ -39,9 +39,14 @@ class Map:
         self.__random_gen(base, tiles, config, debug)
         if config.get_map('total') < jewel_variance:
             self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
-        for j in range(config.get_map('total') // jewel_variance):
-            self._array[randint(0, len(self._array) - 1)][randint(0, len(self._array[0]) - 1)].add_inv('jewels')
 
+        count = 0
+        while count < (config.get_map('total') // jewel_variance):
+            x = randint(0, len(self._array) - 1)
+            y = randint(0, len(self._array[0]) - 1)
+            if not self._array[x][y].has_item('jewels'):
+                self._array[x][y].add_inv('jewels')
+                count += 1
         self._array[0][0].seen_set(True)
 
     def __random_gen(self, base, tiles, config, debug):

@@ -17,7 +17,7 @@ class Config:
             'total': 100,  # Initializes map dimensions
             'height': 10,  # Initializes map height
             'width': 10,  # Initializes map width
-            'jewel_var': 200
+            'jewel_var': 400
         }
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices

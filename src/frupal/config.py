@@ -14,7 +14,7 @@ class Config:
             'p_r': 0,  # Initializes player position rows
             'p_c': 0  # Initializes player position columns
         }
-        self.player = self.player_d
+        self.player = self.player_d.copy()
 
         self.map_d = {  # Creates Map Library
             'total': 100,  # Initializes map dimensions
@@ -22,7 +22,7 @@ class Config:
             'width': 10,  # Initializes map width
             'jewel_var': 400
         }
-        self.map = self.map_d
+        self.map = self.map_d.copy()
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
         self.tiles_d = {
@@ -39,13 +39,13 @@ class Config:
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
                       'tool': {'name': 'feet', 'energy': 1, 'price': 0}}
         }
-        self.tiles = self.tiles_d
+        self.tiles = self.tiles_d.copy()
 
         self.map_Input_d = {  # Creates Input Library
             'style': 1,  # Initializes Input variables
             'size': 1  # Initializes Input variables
         }
-        self.map_Input = self.map_Input_d
+        self.map_Input = self.map_Input_d.copy()
 
         # Initialize Store
         self.store = {
@@ -128,10 +128,10 @@ class Config:
     def reset_config(self):
         os.remove(self.conf)
 
-        self.player = self.player_d
-        self.map = self.map_d
-        self.tiles = self.tiles_d
-        self.map_Input = self.map_Input_d
+        self.player = self.player_d.copy()
+        self.map = self.map_d.copy()
+        self.tiles = self.tiles_d.copy()
+        self.map_Input = self.map_Input_d.copy()
         self.create_config()
 
     def change_stats(self):  # Function sets player stats

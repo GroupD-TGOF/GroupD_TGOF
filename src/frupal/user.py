@@ -42,16 +42,13 @@ class User:
         if key == 'p':
             config.change_stats()
             self.config_menu(config)
-            config.system_finder()
         elif key == 's':
             config.map_size()
             config.map_style()
-            config.system_finder()
             config.jewel_change()
             self.config_menu(config)
         elif key == 't':
             config.change_tile()
-            config.system_finder()
             self.config_menu(config)
         elif key == 'c':
             config.reset_config()

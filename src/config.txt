@@ -1,6 +1,6 @@
 {
     "player": {
-        "energy": 100,
+        "energy": 25,
         "money": 25,
         "p_r": 0,
         "p_c": 0
@@ -15,8 +15,8 @@
         "tree": {
             "type": "obs",
             "energy_req": 3,
-            "count": 10,
-            "icon": "T",
+            "count": 20,
+            "icon": "\u25b2",
             "color": "green",
             "tool": {
                 "name": "axe",
@@ -27,8 +27,8 @@
         "blackberry": {
             "type": "tile",
             "energy_req": 2,
-            "count": 2,
-            "icon": "B",
+            "count": 5,
+            "icon": "\u25c9",
             "color": "magenta",
             "tool": {
                 "name": "shears",
@@ -39,8 +39,8 @@
         "boulder": {
             "type": "obs",
             "energy_req": 5,
-            "count": 20,
-            "icon": "R",
+            "count": 5,
+            "icon": "\u25cf",
             "color": "white",
             "tool": {
                 "name": "pickaxe",
@@ -51,8 +51,8 @@
         "water": {
             "type": "tile",
             "energy_req": 2,
-            "count": 20,
-            "icon": "W",
+            "count": 5,
+            "icon": "\u25a0",
             "color": "blue",
             "tool": {
                 "name": "boat",
@@ -63,8 +63,8 @@
         "mud": {
             "type": "tile",
             "energy_req": 2,
-            "count": 40,
-            "icon": "M",
+            "count": 0,
+            "icon": "\u25a7",
             "color": "yellow",
             "tool": {
                 "name": "wood_planks",
@@ -75,8 +75,8 @@
         "troll": {
             "type": "tile",
             "energy_req": 1,
-            "count": 1,
-            "icon": "L",
+            "count": 0,
+            "icon": "\u25a0",
             "color": "green",
             "tool": {
                 "name": "Feet",
@@ -86,7 +86,7 @@
         }
     },
     "map_Input": {
-        "style": 6,
+        "style": 1,
         "size": 1
     }
 }

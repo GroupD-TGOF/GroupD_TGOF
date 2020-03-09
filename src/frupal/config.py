@@ -4,7 +4,6 @@ import os
 import enum
 
 
-
 class Config:
     def __init__(self):
         self.player = {  # Creates Player Library
@@ -65,16 +64,6 @@ class Config:
         # If no config create one from defaults above
         if not self.load_config():
             self.create_config()
-        self.system_finder()
-
-    def system_finder(self):
-        if system() == "Windows":
-            self.tiles['tree']['icon'] = 'T'
-            self.tiles['blackberry']['icon'] = 'B'
-            self.tiles['boulder']['icon'] = 'R'
-            self.tiles['water']['icon'] = 'W'
-            self.tiles['mud']['icon'] = 'M'
-            self.tiles['troll']['icon'] = 'L'
 
     def get_player(self, k):  # Defines get function for Player Stats Library
         return self.player[k]
@@ -83,7 +72,21 @@ class Config:
         return self.map[k]
 
     def get_tile(self, k):  # Defines get function for Tiles Library
-        return self.tiles[k]
+        info = self.tiles[k]
+        if system() == "Windows":
+            if k == 'tree':
+                info['icon'] = 'T'
+            elif k == 'blackberry':
+                info['icon'] = 'B'
+            elif k == 'boulder':
+                info['icon'] = 'R'
+            elif k == 'water':
+                info['icon'] = 'W'
+            elif k == 'mud':
+                info['icon'] = 'M'
+            elif k == 'troll':
+                info['icon'] = 'L'
+        return info
 
     def get_tiles(self):  # Defines get function for Tiles Library to get list of tiles
         tiles = []
@@ -92,7 +95,6 @@ class Config:
         return tiles
 
     def create_config(self):  # Function saves settings to config file
-        self.system_finder()
         total = {
             "player": self.player,
             "map": self.map,
@@ -118,7 +120,6 @@ class Config:
             return False  # If file does not exist yet return false
 
     def reset_config(self):
-        self.system_finder()
         os.remove(self.conf)
         self.create_config()
 
@@ -492,8 +493,8 @@ class Config:
                  'Tile Statistics: ']
         for key in self.tiles:
             r_str.append(
-                "(Press T) " + "Type: " + self.tiles[key]['type'] + ", " + str(key).replace('_', ' ').capitalize()
-                + ": " + str(self.tiles[key]['count']) + " SQ. Yards, "
+                "(Press T) " + str(key).replace('_', ' ').capitalize()
+                + ": " + str(self.tiles[key]['count']) + " SQ. Yards, " + "Type: " + self.tiles[key]['type'] + ", "
                 + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
                 + ", Color: " + str(self.tiles[key]['color']).capitalize())
             r_str.append("Tool Name: " + self.tiles[key]['tool']['name'].capitalize() + ", Energy Requirement: " +

@@ -1,3 +1,4 @@
+# Create Easy Import for all modules
 from .config import Config
 from .map import Map
 from .drawer import Drawer

@@ -1,60 +1,101 @@
+from time import sleep
+from platform import system
+from string import capwords
 import crayons
-import os
-import time
-import platform
 
 
 class Drawer:
     def __init__(self, window: tuple, debug: bool):
+        if debug:
+            print(window[0], window[1])
         self.width = window[0]
         self.height = window[1]
-        self.middle = self.height // 2
         self.debug = debug
 
+    def __spacer(self, buffer: int):
+        for i in range(buffer):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
+
     def title_screen(self):
-        for i in range(self.middle - 1):
-            if self.debug:
+        title = list()
+        title.append("  █████▒██▀███   █    ██  ██▓███   ▄▄▄       ██▓    ")
+        title.append("▓██   ▒▓██ ▒ ██▒ ██  ▓██▒▓██░  ██▒▒████▄    ▓██▒    ")
+        title.append("▒████ ░▓██ ░▄█ ▒▓██  ▒██░▓██░ ██▓▒▒██  ▀█▄  ▒██░    ")
+        title.append("░▓█▒  ░▒██▀▀█▄  ▓▓█  ░██░▒██▄█▓▒ ▒░██▄▄▄▄██ ▒██░    ")
+        title.append("░▒█░   ░██▓ ▒██▒▒▒█████▓ ▒██▒ ░  ░ ▓█   ▓██▒░██████▒")
+        title.append(" ▒ ░   ░ ▒▓ ░▒▓░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░ ▒▒   ▓▒█░░ ▒░▓  ░")
+        title.append(" ░       ░▒ ░ ▒░░░▒░ ░ ░ ░▒ ░       ▒   ▒▒ ░░ ░ ▒  ░")
+        title.append(" ░ ░     ░░   ░  ░░░ ░ ░ ░░         ░   ▒     ░ ░   ")
+        title.append("          ░        ░                    ░  ░    ░  ░")
+        buffer = (self.height - len(title)) // 2
+        self.__spacer(buffer)
+        for line in title:
+            print(crayons.green(line.center(self.width)))
+        for i in range(buffer - 1):
+            if i == buffer // 2:
+                print(crayons.green("A Text Based Island Adventure Game!").center(self.width))
+            elif self.debug:
                 print("+ " + str(i))
             else:
                 print()
-        print(crayons.green("The Game of Frupal!".center(self.width)), end='')
-        for i in range(self.middle):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
-        time.sleep(3)
+        print(crayons.green("Now Loading!").center(self.width))
+        for i in range(0, self.width, 1):
+            print(u"\u25A0", end='')
+            sleep(0.010)
+        print()
 
     def final_screen(self, playing: int):
-        for i in range(self.middle):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
-        if playing == 3:
-            print(crayons.green("You Win!".center(self.width)))
+        lose = list()
+        lose.append("▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▓█████  ▐██▌ ")
+        lose.append(" ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓██▒    ▒██▒  ██▒▒██    ▒ ▓█   ▀  ▐██▌ ")
+        lose.append("  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒██░    ▒██░  ██▒░ ▓██▄   ▒███    ▐██▌ ")
+        lose.append("  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ▒██░    ▒██   ██░  ▒   ██▒▒▓█  ▄  ▓██▒ ")
+        lose.append("  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░██████▒░ ████▓▒░▒██████▒▒░▒████▒ ▒▄▄  ")
+        lose.append("   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▒░▓  ░░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░░░ ▒░ ░ ░▀▀▒ ")
+        lose.append(" ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░    ░ ░ ▒  ░  ░ ▒ ▒░ ░ ░▒  ░ ░ ░ ░  ░ ░  ░ ")
+        lose.append(" ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░ ░   ░ ░ ░ ▒  ░  ░  ░     ░       ░ ")
+        lose.append(" ░ ░         ░ ░     ░            ░  ░    ░ ░        ░     ░  ░ ░    ")
+        lose.append(" ░ ░                                                                 ")
+
+        win = list()
+        win.append("▓██   ██▓ ▒█████   █    ██     █     █░ ██▓ ███▄    █  ▐██▌ ")
+        win.append(" ▒██  ██▒▒██▒  ██▒ ██  ▓██▒   ▓█░ █ ░█░▓██▒ ██ ▀█   █  ▐██▌ ")
+        win.append("  ▒██ ██░▒██░  ██▒▓██  ▒██░   ▒█░ █ ░█ ▒██▒▓██  ▀█ ██▒ ▐██▌ ")
+        win.append("  ░ ▐██▓░▒██   ██░▓▓█  ░██░   ░█░ █ ░█ ░██░▓██▒  ▐▌██▒ ▓██▒ ")
+        win.append("  ░ ██▒▓░░ ████▓▒░▒▒█████▓    ░░██▒██▓ ░██░▒██░   ▓██░ ▒▄▄  ")
+        win.append("   ██▒▒▒ ░ ▒░▒░▒░ ░▒▓▒ ▒ ▒    ░ ▓░▒ ▒  ░▓  ░ ▒░   ▒ ▒  ░▀▀▒ ")
+        win.append(" ▓██ ░▒░   ░ ▒ ▒░ ░░▒░ ░ ░      ▒ ░ ░   ▒ ░░ ░░   ░ ▒░ ░  ░ ")
+        win.append(" ▒ ▒ ░░  ░ ░ ░ ▒   ░░░ ░ ░      ░   ░   ▒ ░   ░   ░ ░     ░ ")
+        win.append(" ░ ░         ░ ░     ░            ░     ░           ░  ░    ")
+        win.append(" ░ ░                                                        ")
+
+        buffer = 0
         if playing == 2:
-            print(crayons.green("You Lose!".center(self.width)))
-        for i in range(self.middle):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
-        time.sleep(3)
+            buffer = (self.height - len(lose)) // 2
+        if playing == 3:
+            buffer = (self.height - len(win)) // 2
+        self.__spacer(buffer)
+        if playing == 2:
+            for line in lose:
+                print(crayons.green(line.center(self.width)))
+        if playing == 3:
+            for line in win:
+                print(crayons.green(line.center(self.width)))
+        self.__spacer(buffer - 1)
+        sleep(3)
 
     def print_game(self, player, game_map):
         border = u"\u25A0"
         b = player.get_position()
         map_size = game_map.get_size()
-        spacer_lines = (self.height - map_size[0]) // 2
-        spacer_columns = (self.width - ((map_size[1]) * 2)) // 2
+        spacer_lines = (self.height - (map_size[0] + 2)) // 2
+        spacer_columns = (self.width - ((map_size[1] + 2) * 2)) // 2
 
         # Before Spacer
-        for a in range(spacer_lines):
-            if self.debug:
-                print("+ " + str(a))
-            else:
-                print()
+        self.__spacer(spacer_lines)
 
         # Spacer for centering map border top
         for m in range(spacer_columns):
@@ -97,16 +138,18 @@ class Drawer:
                                 print(crayons.cyan(game_map[j][k]).get_icon(), end=' ')
                             elif game_map[j][k].get_color() == 'white':
                                 print(crayons.white(game_map[j][k]).get_icon(), end=' ')
+                            else:
+                                print(crayons.green(game_map[j][k]).get_icon(), end=' ')
                         else:
                             print(crayons.cyan("J"), end=' ')
                     else:
-                        if platform.system() == "Windows":
+                        if system() == "Windows":
                             print('X', end=' ')
                         else:
                             print(u"\u25A0", end=' ')
 
             # End border for each line
-            print(crayons.blue(border), end='\n')
+            print(crayons.blue(border))
 
         # Spacer for centering map border bottom
         for m in range(spacer_columns):
@@ -116,15 +159,11 @@ class Drawer:
         for l in range(map_size[1] + 2):
             print(crayons.blue(border), end=' ')
         print()
-
-        # After Spacer
-        for a in range(spacer_lines - 1):
-            if self.debug:
-                print("+ " + str(a))
-            else:
-                print()
-            if a == 2:
-                print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
+        print()
+        print("(Press K) Keybindings!".center(self.width - 1))
+        self.__spacer(spacer_lines - 2)
+        print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
+        self.print_stats(player)
 
     def print_stats(self, player):
         s_str = "Energy: "
@@ -132,5 +171,5 @@ class Drawer:
         s_str += "     Money: "
         s_str += str(player.get_money())
         s_str += "     Inventory: "
-        s_str += ' '.join([str(elem).capitalize() for elem in player.inventory])
+        s_str += ' | '.join([capwords(str(elem).replace('_', ' ')) for elem in player.inventory])
         print(crayons.yellow(s_str.center(self.width)))

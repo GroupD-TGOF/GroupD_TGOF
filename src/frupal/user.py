@@ -1,11 +1,9 @@
 from .player import Direction
 from .config import Config
-from .drawer import Drawer
-
-import os
+from time import sleep
+from string import capwords
 import crayons
 import readchar
-import time
 
 
 class User:
@@ -17,64 +15,65 @@ class User:
         self.store = config.store
         self.debug = debug
 
-    def config_menu(self, config: Config):
+    def update_store(self, config, debug):
+        self.store = config.store
+        self.debug = debug
+
+    def __spacer(self, buffer: int):
+        for i in range(buffer):
+            if self.debug:
+                print("+ " + str(i))
+            else:
+                print()
+
+    def __print_config_menu(self, config: Config):
         sp = config.print_config()
-        for i in range(self.middle - (len(sp) // 2)):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
+        buffer = self.middle - (len(sp) // 2)
+        self.__spacer(buffer)
         for i in range(len(sp)):
-            print(sp[i].center(self.width))
-        for i in range(self.middle - (len(sp) // 2)):
-            if self.debug:
-                print("+ " + str(i))
-            else:
+            if sp[i] == '^':
                 print()
-        key = readchar.readkey()
+            else:
+                print(sp[i].center(self.width))
+        self.__spacer(buffer)
+
+    def config_menu(self, config: Config):
+        self.__print_config_menu(config)
+        key = readchar.readkey().lower()
         if key == 'p':
-            config.player_stats()
+            config.change_stats()
             self.config_menu(config)
         elif key == 's':
-            config.map_Input['size'] = 0
-            config.map_Input['style'] = 0
-            config.map_size()
-            config.map_style()
+            config.change_size()
+            config.change_style()
+            config.jewel_change()
             self.config_menu(config)
-        elif key == 'q':
+        elif key == 't':
+            config.change_tile()
+            self.config_menu(config)
+        elif key == 'd':
+            config.reset_config()
+            self.config_menu(config)
+        elif key == 'b':
+            config.change_bin()
+            self.config_menu(config)
+        elif key == 'r':
             config.create_config()
-            sp = config.print_config()
-            for i in range(self.middle - (len(sp) // 2)):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
-            for i in range(len(sp)):
-                print(sp[i].center(self.width))
-            for i in range(self.middle - (len(sp) // 2)):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
-            time.sleep(2)
         else:
             self.config_menu(config)
 
     def main_menu(self, config: Config):
-        for i in range(self.middle - 2):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
+        title = []
+        self.__spacer(self.middle - 4)
         print(crayons.green("The Game of Frupal!".center(self.width)))
-        print(crayons.yellow("(S) Start Game!".center(self.width)))
-        print(crayons.yellow("(C) Configuration?".center(self.width)))
-        print(crayons.yellow("(Q) Exit Game.".center(self.width)), end='')
-        for i in range(self.middle - 2):
-            if self.debug:
-                print("+ " + str(i))
-            else:
-                print()
+        print()
+        print()
+        print(crayons.yellow("(Press S) Start Game!".center(self.width)))
+        print()
+        print(crayons.yellow("(Press C) Configuration?".center(self.width)))
+        print()
+        print(crayons.yellow("(Press Q) Exit Game!".center(self.width)))
+        self.__spacer(self.middle - 4)
         key = readchar.readkey()
         if key == 's' or key == '\n':
             return True
@@ -87,54 +86,79 @@ class User:
             return self.main_menu(config)
 
     def store_menu(self, player):
-        spacer = (len(self.store) + 4) // 2
+        start = 0
         while True:
-            for i in range(self.middle - spacer):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
-            print("Welcome to the Store.".center(self.width))
-            print("Your Money: {}".format(player.get_money()).center(self.width))
+            buffer = self.middle - ((len(self.store) + 6) // 2)
+            self.__spacer(buffer)
+            print("Welcome to the Store!".center(self.width))
+            print("Your Money: ${}".format(player.get_money()).center(self.width))
+            print()
+            print("Items Available For Purchase: ".center(self.width))
             index = 1
             keys = []
             for key in self.store:
                 if not player.has_item(key):
                     keys.append(key)
-                    print(("Enter " + str(index) + " to buy: " + str(key) + " Price: " + str(self.store[key])).center(
-                        self.width))
+                    print(("Enter " + str(index) + " to Buy: " + capwords(str(key).replace("_", " ")) +
+                           " @ Price: $" + str(self.store[key])).center(self.width))
                     index += 1
             print()
-            print("Enter 0 to leave the store".center(self.width))
-            for i in range(self.middle - (spacer + 1)):
-                if self.debug:
-                    print("+ " + str(i))
-                else:
-                    print()
+            print("Enter 0 to Leave the Store!".center(self.width))
+            self.__spacer((buffer - 1) + start)
             try:
-                choice = int(input("What do you want to buy: ".center(self.width)))
-            except:
+                choice = int(input("What Do You Want to Buy: "))
+            except ValueError:
                 continue
             choice -= 1
             if choice == -1:
                 return
             if choice < len(keys):
                 if player.add_inv(keys[choice], self.store[keys[choice]]):
-                    print(("Added: " + str(keys[choice]) + " to inventory").center(self.width))
-                    time.sleep(1)
+                    print(("Added: " + capwords(str(keys[choice].replace("_", " "))) +
+                           " to Inventory!").center(self.width))
+                    start += 1
+                    sleep(1)
                 else:
-                    print("Not enough money to purchase item".center(self.width))
-                    time.sleep(1)
-            print("\n\n\nprevious transactions above this line-------------\n\n\n".center(self.width))
+                    print("Not Enough Money to Purchase Item!".center(self.width))
+                    sleep(1)
+
+    def key_menu(self):
+        key_binds = ["Use keys on the keyboard to navigate and control the game and its menus!",
+                     "^",
+                     "Movements: ",
+                     "(W) Move North!",
+                     "(A) Move West!               (D) Move East!",
+                     "(S) Move South!",
+                     "^",
+                     "Utilities: ",
+                     "(B) Store!",
+                     "(C) Cheat!",
+                     "(K) Keybindings!",
+                     "(Q) Quit!"]
+        buffer = self.middle - (len(key_binds) // 2)
+
+        self.__spacer(buffer)
+        for i in range(len(key_binds)):
+            if key_binds[i] == '^':
+                print()
+            else:
+                print(key_binds[i].center(self.width))
+        self.__spacer(buffer)
+
+        print("(Press R) Return!".center(self.width))
+        key = readchar.readkey()
+        if key != 'r':
+            self.key_menu()
+        else:
+            return
 
     def control(self, player, game_map):
-        if player.get_energy() == 0:
-            game_map.map_reveal()
-            return 2
-        # code that returns 3 for game win if game conditions are met
         if player.has_item('jewels'):
             game_map.map_reveal()
             return 3
+        if player.get_energy() == 0:
+            game_map.map_reveal()
+            return 2
         # end of game win conditions
         key = readchar.readkey()
         if key == 'w':
@@ -152,6 +176,8 @@ class User:
         elif key == 'c':
             game_map.map_reveal()
             return 3
+        elif key == 'k':
+            self.key_menu()
         elif key == 'b':
             self.store_menu(player)
             return 1

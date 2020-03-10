@@ -10,24 +10,22 @@ class Config:
     def __init__(self, window: tuple):
         self.width = (window[0] // 2) - 4
         self.height = (window[1]) - 10
-        self.player_d = {  # Creates Player Library
+        self.player = {  # Creates Player Library
             'energy': 25,  # Initializes player stats
             'money': 25,  # Initializes player energy
             'p_r': 0,  # Initializes player position rows
             'p_c': 0  # Initializes player position columns
         }
-        self.player = deepcopy(self.player_d)
 
-        self.map_d = {  # Creates Map Library
+        self.map = {  # Creates Map Library
             'total': 100,  # Initializes map dimensions
             'height': 10,  # Initializes map height
             'width': 10,  # Initializes map width
             'jewel_var': 400
         }
-        self.map = deepcopy(self.map_d.copy)
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
-        self.tiles_d = {
+        self.tiles = {
             'tree': {'type': 'obs', 'energy_req': 3, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
                      'tool': {'name': 'axe', 'energy': 1, 'price': 15}},
             'blackberry': {'type': 'obs', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
@@ -41,21 +39,18 @@ class Config:
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
                       'tool': {'name': 'feet', 'energy': 1, 'price': 0}}
         }
-        self.tiles = deepcopy(self.tiles_d)
 
-        self.map_Input_d = {  # Creates Input Library
+        self.map_Input = {  # Creates Input Library
             'style': 1,  # Initializes Input variables
             'size': 1  # Initializes Input variables
         }
-        self.map_Input = deepcopy(self.map_Input_d)
 
         # Initialize Store
-        self.store_d = {
+        self.store = {
             '+10 energy': 10,
             "+25 energy": 20,
             'binoculars': 15,
         }
-        self.store = deepcopy(self.store_d)
 
         # Visit each tile in the tile list and add their tool's name and price to the store
         for tile in self.tiles:
@@ -130,12 +125,46 @@ class Config:
 
     def reset_config(self):
         os.remove(self.conf)
+        self.player = {  # Creates Player Library
+            'energy': 25,  # Initializes player stats
+            'money': 25,  # Initializes player energy
+            'p_r': 0,  # Initializes player position rows
+            'p_c': 0  # Initializes player position columns
+        }
+        self.map = {  # Creates Map Library
+            'total': 100,  # Initializes map dimensions
+            'height': 10,  # Initializes map height
+            'width': 10,  # Initializes map width
+            'jewel_var': 400
+        }
 
-        self.player = deepcopy(self.player_d)
-        self.map = deepcopy(self.map_d)
-        self.tiles = deepcopy(self.tiles_d)
-        self.map_Input = deepcopy(self.map_Input_d)
-        self.store = deepcopy(self.store_d)
+        # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
+        self.tiles = {
+            'tree': {'type': 'obs', 'energy_req': 3, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
+                     'tool': {'name': 'axe', 'energy': 1, 'price': 15}},
+            'blackberry': {'type': 'obs', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
+                           'tool': {'name': 'shears', 'energy': 1, 'price': 10}},
+            'boulder': {'type': 'obs', 'energy_req': 5, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
+                        'tool': {'name': 'pickaxe', 'energy': 1, 'price': 15}},
+            'water': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25A0", 'color': 'blue',
+                      'tool': {'name': 'boat', 'energy': 0, 'price': 20}},
+            'mud': {'type': 'tile', 'energy_req': 2, 'count': 0, 'icon': u"\u25A7", 'color': 'yellow',
+                    'tool': {'name': 'wood_planks', 'energy': 1, 'price': 10}},
+            'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
+                      'tool': {'name': 'feet', 'energy': 1, 'price': 0}}
+        }
+
+        self.map_Input = {  # Creates Input Library
+            'style': 1,  # Initializes Input variables
+            'size': 1  # Initializes Input variables
+        }
+
+        # Initialize Store
+        self.store = {
+            '+10 energy': 10,
+            "+25 energy": 20,
+            'binoculars': 15,
+        }
         self.create_config()
 
     def change_stats(self):  # Function sets player stats
@@ -343,8 +372,8 @@ class Config:
                     if yn == 'y':
                         name = True
                         existing = False
-                        self.tiles[tile_f] = {'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
-                                              'tool': {'name': ' ', 'price': 0}}
+                        self.tiles[tile_f] = {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0",
+                                              'color': 'green','tool': {'name': 'axe', 'energy': 1, 'price': 15}}
                         print("Creating a new Tile...")
             else:
                 name = True
@@ -404,20 +433,17 @@ class Config:
                 change = False
         if change:
             choice = 0
-            while 1 > choice > 2:
+            while choice < 1 or choice > 2:
                 try:
-                    choice = int(
-                        input("Please Enter the Tile Type (1 for Removable Obstacle, 2 for Immovable Object): "))
+                    choice = int(input("Please Enter the Tile Type (1 for Removable Obstacle, 2 for Immovable Object): "))
                 except ValueError:
                     pass
-                if 1 > choice > 2:
-                    print("Must be a 1 or 0!")
+                if choice < 1 or choice > 2:
+                    print("Must be a 1 or 2!")
             if choice == 1:
                 self.tiles[tile_f]['type'] = 'obs'
             elif choice == 2:
                 self.tiles[tile_f]['type'] = 'tile'
-            else:
-                pass
 
         change = True
         if existing:
@@ -449,7 +475,7 @@ class Config:
                     pass
                 if 1 > req > 5:
                     print("Input Error: Must be 1c-5")
-                self.tiles[tile_f]['tool']['energy'] = req
+            self.tiles[tile_f]['tool']['energy'] = req
 
         change = True
         if existing:
@@ -467,7 +493,7 @@ class Config:
                     pass
                 if price < 1 or price > self.player['money']:
                     print("Input Error: Must be 1-" + str(self.player['money']))
-                self.tiles[tile_f]['tool']['price'] = price
+            self.tiles[tile_f]['tool']['price'] = price
 
         self.store.clear()
 
@@ -497,7 +523,7 @@ class Config:
                     pass
                 if price < 1 or price > self.player['money']:
                     print("Input Error: Must be 1-" + str(self.player['money']))
-                self.store['binoculars'] = price
+            self.store['binoculars'] = price
 
     def print_config(self):
 

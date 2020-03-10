@@ -25,7 +25,7 @@
             }
         },
         "blackberry": {
-            "type": "tile",
+            "type": "obs",
             "energy_req": 2,
             "count": 5,
             "icon": "\u25c9",

@@ -1,3 +1,6 @@
+from string import capwords
+
+
 class Tile:
     def __init__(self, title: str, energy_req: int, icon, color: str, tool: str, tool_eng: int, debug: bool):
         if debug:
@@ -73,10 +76,10 @@ class Obstacle(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
+            r_str += capwords(self.tool.replace("_", " ")) + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " + str(self.energy_req) + \
-                     " energy was spent to break the object by hand!"
+            r_str += "A " + capwords(self.title.replace("_", " ")) + " Blocks Your Path!, " + str(self.energy_req) + \
+                     " energy was spent to break the " + capwords(self.title.replace("_", " ")) + " by hand!"
         return r_str
 
     def used_tile(self):
@@ -90,10 +93,10 @@ class Water(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
+            r_str += capwords(self.tool.replace("_", " ")) + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "You entered this area without a boat, doing so made you spend " \
-                     + str(self.energy_req) + " energy to swim!"
+            r_str += "You entered this area without a " + capwords(self.tool.replace("_", " ")) \
+                     + ", doing so made you spend " + str(self.energy_req) + " energy to swim!"
         return r_str
 
 
@@ -104,9 +107,10 @@ class Mud(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
+            r_str += capwords(self.tool.replace("_", " ")) + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "No wood plank available, " + str(self.energy_req) + " energy was spent to wallow through the mud!"
+            r_str += "No " + capwords(self.tool.replace("_", " ")) + " available, " + str(self.energy_req) + \
+                     " energy was spent to wallow through the " + capwords(self.title.replace("_", " ")) + "!"
         return r_str
 
 
@@ -129,8 +133,9 @@ class Custom(Tile):
     def print_tile(self, player_inventory: dict):
         r_str = ''
         if self.tool in player_inventory:
-            r_str += self.tool.capitalize() + " used!, " + str(self.tool_eng) + " energy was spent!"
+            r_str += capwords(self.tool.replace("_", " ")) + " used!, " + str(self.tool_eng) + " energy was spent!"
         else:
-            r_str += "A " + self.title.capitalize() + " Blocks Your Path!, " \
-                     + str(self.energy_req) + " energy was spent break it by hand!"
+            r_str += "A " + capwords(self.title.replace("_", " ")) + " Blocks Your Path!, " \
+                     + str(self.energy_req) + " energy was spent to bypass the " \
+                     + capwords(self.title.replace("_", " ")) + "!"
         return r_str

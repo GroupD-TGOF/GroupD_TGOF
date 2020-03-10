@@ -1,5 +1,6 @@
 from time import sleep
 from platform import system
+from string import capwords
 import crayons
 
 
@@ -33,7 +34,7 @@ class Drawer:
         self.__spacer(buffer)
         for line in title:
             print(crayons.green(line.center(self.width)))
-        for i in range(buffer - 2):
+        for i in range(buffer - 1):
             if i == buffer // 2:
                 print(crayons.green("A Text Based Island Adventure Game!").center(self.width))
             elif self.debug:
@@ -44,6 +45,7 @@ class Drawer:
         for i in range(0, self.width, 1):
             print(u"\u25A0", end='')
             sleep(0.010)
+        print()
 
     def final_screen(self, playing: int):
         lose = list()
@@ -169,5 +171,5 @@ class Drawer:
         s_str += "     Money: "
         s_str += str(player.get_money())
         s_str += "     Inventory: "
-        s_str += ' '.join([str(elem).replace('_', ' ').capitalize() for elem in player.inventory])
+        s_str += ' | '.join([capwords(str(elem).replace('_', ' ')) for elem in player.inventory])
         print(crayons.yellow(s_str.center(self.width)))

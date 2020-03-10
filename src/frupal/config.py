@@ -1,4 +1,6 @@
 from platform import system
+from string import capwords
+from copy import deepcopy
 import json
 import os
 import enum
@@ -14,7 +16,7 @@ class Config:
             'p_r': 0,  # Initializes player position rows
             'p_c': 0  # Initializes player position columns
         }
-        self.player = self.player_d.copy()
+        self.player = deepcopy(self.player_d)
 
         self.map_d = {  # Creates Map Library
             'total': 100,  # Initializes map dimensions
@@ -22,13 +24,13 @@ class Config:
             'width': 10,  # Initializes map width
             'jewel_var': 400
         }
-        self.map = self.map_d.copy()
+        self.map = deepcopy(self.map_d.copy)
 
         # Initialize Base Tiles with energy, counts, icons, color, and tools and their names and prices
         self.tiles_d = {
             'tree': {'type': 'obs', 'energy_req': 3, 'count': 20, 'icon': u"\u25B2", 'color': 'green',
                      'tool': {'name': 'axe', 'energy': 1, 'price': 15}},
-            'blackberry': {'type': 'tile', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
+            'blackberry': {'type': 'obs', 'energy_req': 2, 'count': 5, 'icon': u"\u25C9", 'color': 'magenta',
                            'tool': {'name': 'shears', 'energy': 1, 'price': 10}},
             'boulder': {'type': 'obs', 'energy_req': 5, 'count': 5, 'icon': u"\u25CF", 'color': 'white',
                         'tool': {'name': 'pickaxe', 'energy': 1, 'price': 15}},
@@ -39,20 +41,21 @@ class Config:
             'troll': {'type': 'tile', 'energy_req': 1, 'count': 0, 'icon': u"\u25A0", 'color': 'green',
                       'tool': {'name': 'feet', 'energy': 1, 'price': 0}}
         }
-        self.tiles = self.tiles_d.copy()
+        self.tiles = deepcopy(self.tiles_d)
 
         self.map_Input_d = {  # Creates Input Library
             'style': 1,  # Initializes Input variables
             'size': 1  # Initializes Input variables
         }
-        self.map_Input = self.map_Input_d.copy()
+        self.map_Input = deepcopy(self.map_Input_d)
 
         # Initialize Store
-        self.store = {
+        self.store_d = {
             '+10 energy': 10,
             "+25 energy": 20,
             'binoculars': 15,
         }
+        self.store = deepcopy(self.store_d)
 
         # Visit each tile in the tile list and add their tool's name and price to the store
         for tile in self.tiles:
@@ -128,10 +131,11 @@ class Config:
     def reset_config(self):
         os.remove(self.conf)
 
-        self.player = self.player_d.copy()
-        self.map = self.map_d.copy()
-        self.tiles = self.tiles_d.copy()
-        self.map_Input = self.map_Input_d.copy()
+        self.player = deepcopy(self.player_d)
+        self.map = deepcopy(self.map_d)
+        self.tiles = deepcopy(self.tiles_d)
+        self.map_Input = deepcopy(self.map_Input_d)
+        self.store = deepcopy(self.store_d)
         self.create_config()
 
     def change_stats(self):  # Function sets player stats
@@ -414,7 +418,6 @@ class Config:
                 self.tiles[tile_f]['type'] = 'tile'
             else:
                 pass
-            change = True
 
         change = True
         if existing:
@@ -438,15 +441,15 @@ class Config:
                 if yn == 'n':
                     change = False
         if change:
-            req = -1
-            while req < 0 or req > 5:
+            req = 0
+            while req < 1 or req > 5:
                 try:
-                    req = int(input("Please Enter the Tool Energy Requirement(0-5): "))
+                    req = int(input("Please Enter the Tool Energy Requirement(1-5): "))
                 except ValueError:
                     pass
-                if 0 > req > 5:
-                    print("Input Error: Must be 0-5")
-                    self.tiles[tile_f]['tool']['energy'] = req
+                if 1 > req > 5:
+                    print("Input Error: Must be 1c-5")
+                self.tiles[tile_f]['tool']['energy'] = req
 
         change = True
         if existing:
@@ -457,13 +460,13 @@ class Config:
                     change = False
         if change:
             price = 0
-            while price < 1 or price > 100:
+            while price < 1 or price > self.player['money']:
                 try:
-                    price = int(input("Please Enter the Tool Price(1-100): "))
+                    price = int(input("Please Enter the Tool Price (1-" + str(self.player['money']) + "): "))
                 except ValueError:
                     pass
-                if price < 1 or price > 100:
-                    print("Input Error: Must be 1-100")
+                if price < 1 or price > self.player['money']:
+                    print("Input Error: Must be 1-" + str(self.player['money']))
                 self.tiles[tile_f]['tool']['price'] = price
 
         self.store.clear()
@@ -478,7 +481,7 @@ class Config:
             if not tile == 'troll':
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
-    def change_price(self):
+    def change_bin(self):
         change = True
         yn = ""
         while yn != 'y' and yn != 'n':
@@ -486,7 +489,15 @@ class Config:
         if yn == 'n':
             change = False
         if change:
-            self.store['binoculars'] = int(input("Please Enter A New Price: "))
+            price = 0
+            while price < 1 or price > self.player['money']:
+                try:
+                    price = int(input("Please Enter the Tool Price (1-" + str(self.player['money']) + "): "))
+                except ValueError:
+                    pass
+                if price < 1 or price > self.player['money']:
+                    print("Input Error: Must be 1-" + str(self.player['money']))
+                self.store['binoculars'] = price
 
     def print_config(self):
 
@@ -521,12 +532,12 @@ class Config:
                  'Tile Statistics: ']
         for key in self.tiles:
             r_str.append(
-                "(Press T) " + str(key).replace('_', ' ').capitalize()
-                + ": " + str(self.tiles[key]['count']) + " SQ. Yards, " + "Type: " + self.tiles[key]['type'] + ", "
-                + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
-                + ", Color: " + str(self.tiles[key]['color']).capitalize())
-            r_str.append("Tool Name: " + self.tiles[key]['tool']['name'].capitalize() + ", Energy Requirement: " +
-                         str(self.tiles[key]['tool']['energy']) + ", Tool Price: $" +
+                "(Press T) " + capwords(str(key).replace('_', ' '))
+                + ": " + str(self.tiles[key]['count']) + " SQ. Yards, " + "Type: " + capwords(self.tiles[key]['type'])
+                + ", " + "Energy Req: " + str(self.tiles[key]['energy_req']) + ", Icon: " + str(self.tiles[key]['icon'])
+                + ", Color: " + capwords(str(self.tiles[key]['color'])))
+            r_str.append("Tool Name: " + capwords(self.tiles[key]['tool']['name'].replace("_", " ")) +
+                         ", Energy Requirement: " + str(self.tiles[key]['tool']['energy']) + ", Tool Price: $" +
                          str(self.tiles[key]['tool']['price']))
         r_str.append("^")
         r_str.append("(Press B) Change Binocular Price! (Price: $" + str(self.store['binoculars']) + ")")

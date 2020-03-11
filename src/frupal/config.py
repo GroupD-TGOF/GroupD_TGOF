@@ -165,6 +165,9 @@ class Config:
             "+25 energy": 20,
             'binoculars': 15,
         }
+        for tile in self.tiles:
+            if not tile == 'troll':
+                self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
         self.create_config()
 
     def change_stats(self):  # Function sets player stats

@@ -1,7 +1,7 @@
 {
     "player": {
         "energy": 25,
-        "money": 25,
+        "money": 100,
         "p_r": 0,
         "p_c": 0
     },

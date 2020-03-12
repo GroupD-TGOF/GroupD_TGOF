@@ -84,7 +84,7 @@ class Drawer:
         if playing == 3:
             for line in win:
                 print(crayons.green(line.center(self.width)))
-        self.__spacer(buffer - 1)
+        self.__spacer(buffer)
         sleep(3)
 
     def print_game(self, player, game_map):

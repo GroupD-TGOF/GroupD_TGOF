@@ -14,10 +14,12 @@ class User:
         self.middle = self.height // 2
         self.store = config.store
         self.debug = debug
+        self.start = 0
 
     def update_store(self, config, debug):
         self.store = config.store
         self.debug = debug
+        self.start = 0
 
     def __spacer(self, buffer: int):
         for i in range(buffer):
@@ -28,7 +30,7 @@ class User:
 
     def __print_config_menu(self, config: Config):
         sp = config.print_config()
-        buffer = self.middle - (len(sp) // 2)
+        buffer = (self.height - len(sp)) // 2
         self.__spacer(buffer)
         for i in range(len(sp)):
             if sp[i] == '^':
@@ -86,9 +88,8 @@ class User:
             return self.main_menu(config)
 
     def store_menu(self, player):
-        start = 0
         while True:
-            buffer = self.middle - ((len(self.store) + 6) // 2)
+            buffer = (self.height - (len(self.store) + 6)) // 2
             self.__spacer(buffer)
             print("Welcome to the Store!".center(self.width))
             print("Your Money: ${}".format(player.get_money()).center(self.width))
@@ -104,7 +105,7 @@ class User:
                     index += 1
             print()
             print("Enter 0 to Leave the Store!".center(self.width))
-            self.__spacer((buffer - 1) + start)
+            self.__spacer(buffer + self.start)
             try:
                 choice = int(input("What Do You Want to Buy: "))
             except ValueError:
@@ -113,10 +114,11 @@ class User:
             if choice == -1:
                 return
             if choice < len(keys):
-                if player.add_inv(keys[choice], self.store[keys[choice]]):
+               	if player.add_inv(keys[choice], self.store[keys[choice]]):
                     print(("Added: " + capwords(str(keys[choice].replace("_", " "))) +
                            " to Inventory!").center(self.width))
-                    start += 1
+                    if keys[choice] != "+10 energy" and keys[choice] != "+25 energy":
+                        self.start += 1
                     sleep(1)
                 else:
                     print("Not Enough Money to Purchase Item!".center(self.width))

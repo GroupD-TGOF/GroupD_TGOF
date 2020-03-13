@@ -1,6 +1,8 @@
+"""
+Matthew Cole 3/12/2020
+"""
 from platform import system
 from string import capwords
-from copy import deepcopy
 import json
 import os
 import enum
@@ -123,7 +125,7 @@ class Config:
         except FileNotFoundError:
             return False  # If file does not exist yet return false
 
-    def reset_config(self):
+    def reset_config(self): # Resets Config to its defaults
         os.remove(self.conf)
         self.player = {  # Creates Player Library
             'energy': 25,  # Initializes player stats
@@ -329,6 +331,7 @@ class Config:
                     print("Must be 1-8")
                     self.map_Input['style'] = 0
 
+    # Function that allows jewel counts to be changed
     def jewel_change(self):
         jewels = -1
         change = True
@@ -349,6 +352,7 @@ class Config:
                 else:
                     print("Must be " + "1-" + str(self.map['total']))
 
+    # Prevents repeated code by merging the repeated code into one function, used by map style
     def __tile_counts(self, blackberry_count, boulder_count, mud_count, tree_count, troll_count, water_count):
         for tile in self.tiles:
             self.tiles[tile]['count'] = 0
@@ -359,6 +363,7 @@ class Config:
         self.tiles['troll']['count'] = int(self.map['total'] * troll_count)
         self.tiles['water']['count'] = int(self.map['total'] * water_count)
 
+    # Function used to add or change the info of a tile
     def change_tile(self):
         name = False
         existing = True
@@ -510,6 +515,7 @@ class Config:
             if not tile == 'troll':
                 self.store[self.tiles[tile]['tool']['name']] = self.tiles[tile]['tool']['price']
 
+    # Function that allows the binocular price to be changed
     def change_bin(self):
         change = True
         yn = ""
@@ -528,8 +534,8 @@ class Config:
                     print("Input Error: Must be 1-" + str(self.player['money']))
             self.store['binoculars'] = price
 
+    # Function that passes config printout that returns a string to the printout class
     def print_config(self):
-
         class Size(enum.Enum):  # Creates enum classes for print_settings
             Small = 1
             Medium = 2

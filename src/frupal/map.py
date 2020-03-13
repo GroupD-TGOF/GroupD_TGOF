@@ -1,5 +1,5 @@
 """
-Nick Grout 1/23/2020
+Nick Grout 3/12/2020
 """
 from .tiles import Tile, Water, Mud, Obstacle, Troll, Custom
 from .config import Config
@@ -20,6 +20,7 @@ class Map:
         """
         self._array = []
 
+    # Function used to update data on new pipethrough
     def update_map(self, config: Config, debug: bool):
         jewel_variance = config.get_map('jewel_var')
         base_icon = u"\u25A0"
@@ -49,6 +50,7 @@ class Map:
                 count += 1
         self._array[0][0].seen_set(True)
 
+    # Function used to randomly generate a map of tiles specified by the config
     def __random_gen(self, base, tiles, config, debug):
         for tile in tiles:
             count = 0
@@ -60,6 +62,7 @@ class Map:
                     self.__set_tile(tile, info, x, y, debug)
                     count += 1
 
+    # Function used to set a tile to its respective object and x and y location
     def __set_tile(self, tile, info, x, y, debug):
         if tile == 'water':
             self._array[x][y] = Water(tile, info['energy_req'], info['icon'], info['color'], info['tool']['name'],
@@ -88,12 +91,14 @@ class Map:
                                              info['tool']['name'],
                                              info['tool']['energy'], debug)
 
+    # Access item in the array
     def __getitem__(self, row: int):
         """
         Access an item in the 2d array
         """
         return self._array[row]
 
+    # Debug print out of array
     def __str__(self):
         """
         Output a representation of the map to a string
@@ -106,6 +111,7 @@ class Map:
             return_str += "\n"
         return return_str
 
+    # Function used to get the size of the map, returns a tuple
     def get_size(self):
         """
         Returns (ROWS, COLUMNS)
@@ -113,6 +119,7 @@ class Map:
         """
         return len(self._array), len(self._array[0])
 
+    # Reveal the map, sets the seen status of all tiles to true
     def map_reveal(self):
         for i in range(len(self._array[0])):
             for j in range(len(self._array)):

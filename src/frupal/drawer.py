@@ -1,7 +1,11 @@
+"""
+Adam La Fleur 3/12/2020Silas Marvin
+"""
 from time import sleep
 from platform import system
 from string import capwords
 import crayons
+import readchar
 
 
 class Drawer:
@@ -12,6 +16,7 @@ class Drawer:
         self.height = window[1]
         self.debug = debug
 
+    # Function that spaces out printouts based on a buffer that is passed in
     def __spacer(self, buffer: int):
         for i in range(buffer):
             if self.debug:
@@ -19,6 +24,7 @@ class Drawer:
             else:
                 print()
 
+    # Prints out the title screen, its welcome message and loading bar
     def title_screen(self):
         title = list()
         title.append("  █████▒██▀███   █    ██  ██▓███   ▄▄▄       ██▓    ")
@@ -47,6 +53,7 @@ class Drawer:
             sleep(0.010)
         print()
 
+    # Function that printouts whether the player wins or loses baaed on input given to it
     def final_screen(self, playing: int):
         lose = list()
         lose.append("▓██   ██▓ ▒█████   █    ██     ██▓     ▒█████    ██████ ▓█████  ▐██▌ ")
@@ -84,9 +91,10 @@ class Drawer:
         if playing == 3:
             for line in win:
                 print(crayons.green(line.center(self.width)))
-        self.__spacer(buffer)
-        sleep(3)
+        self.__spacer(buffer - 1)
+        choice = readchar.readkey()
 
+    # Print the screen for the game as it runs
     def print_game(self, player, game_map):
         border = u"\u25A0"
         b = player.get_position()
@@ -165,6 +173,7 @@ class Drawer:
         print(game_map[b[1]][b[0]].print_tile(player.inventory).center(self.width))
         self.print_stats(player)
 
+    # Print the stats and the inventory of the player
     def print_stats(self, player):
         s_str = "Energy: "
         s_str += str(player.get_energy())

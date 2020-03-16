@@ -30,8 +30,9 @@ pip3 install -r requirements.txt
 
 ## Running
 
-* Navigate to root directory
-* run `python3 main.py`
+* Navigate to GroupD_TGOF\src
+* run `python -m frupal`
+* or run `python3 -m frupal`if you have python2 and python3 installed
 
 ## Compiling Into Program Executable
 ```bash
